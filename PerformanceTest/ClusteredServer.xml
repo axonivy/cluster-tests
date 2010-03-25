@@ -55,11 +55,9 @@
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="1"/>
 		</antcall>
-
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="5"/>
 		</antcall>
-		<!--
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="10"/>
 		</antcall>
@@ -72,11 +70,10 @@
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="100"/>
 		</antcall>
-
+		<!--
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="250"/>
 		</antcall>
-
 		-->
 	</target>
 	
@@ -107,7 +104,6 @@
 		</antcall>
 		-->
 	</target>
-
 	<!-- 
 		Required parameter:
 		- singleRequest.name
@@ -115,7 +111,6 @@
 		- singleRequest.loops
 		- singleRequest.threads
 	-->
-	
 	<target name="singleRequest">
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
