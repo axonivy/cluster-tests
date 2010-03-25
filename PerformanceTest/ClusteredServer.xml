@@ -59,7 +59,6 @@
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="5"/>
 		</antcall>
-
 		<!--
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="10"/>
@@ -87,7 +86,6 @@
 			execute.threads
 	-->
 	<target name="executeAllPages">
-
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="ivyScript"/>
 			<param name="singleRequest.page" value="${performance.ivyscript}"/>
@@ -100,7 +98,6 @@
 			<param name="singleRequest.loops" value="${performance.loops}"/>
 			<param name="singleRequest.threads" value="${execute.threads}"/>
 		</antcall>
-
 		<!--
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="oneTask"/>
@@ -125,6 +122,7 @@
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="results/jtl/singleRequest-${singleRequest.name}_${singleRequest.loops}-loops-with-${singleRequest.threads}-threads.jtl">
 			
+			<property name="runner.name" value="${performance.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
 			<property name="runner.port" value="${performance.port}}"/>
 			<property name="runner.page" value="${singleRequest.page}"/>

@@ -68,7 +68,7 @@
           <stringProp name="CookieManager.policy">rfc2109</stringProp>
         </CookieManager>
         <hashTree/>
-        <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="HTTP Request - ivy script" enabled="true">
+        <HTTPSampler guiclass="HttpTestSampleGui" testclass="HTTPSampler" testname="HTTP Request - ${__P(runner.name)}" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="Benutzer definierte Variablen" enabled="true">
             <collectionProp name="Arguments.arguments"/>
           </elementProp>
