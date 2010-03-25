@@ -94,7 +94,7 @@
 		</antcall>
 		<antcall target="singleRequest">
 		    <param name="singleRequest.name" value="dbQuery"/>
-			<param name="singleRequest.page" value="${performance.dbquery}}"/>
+			<param name="singleRequest.page" value="${performance.dbquery}"/>
 			<param name="singleRequest.loops" value="${performance.loops}"/>
 			<param name="singleRequest.threads" value="${execute.threads}"/>
 		</antcall>
