@@ -218,7 +218,7 @@
               <bytes>true</bytes>
             </value>
           </objProp>
-          <stringProp name="filename"></stringProp>
+          <stringProp name="filename">results/log/content</stringProp>
         </ResultCollector>
         <hashTree/>
       </hashTree>

@@ -122,7 +122,7 @@
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="results/jtl/singleRequest-${singleRequest.name}_${singleRequest.loops}-loops-with-${singleRequest.threads}-threads.jtl">
 			
-			<property name="runner.name" value="${performance.name}"/>
+			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
 			<property name="runner.port" value="${performance.port}}"/>
 			<property name="runner.page" value="${singleRequest.page}"/>
