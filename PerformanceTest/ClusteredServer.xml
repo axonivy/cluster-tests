@@ -56,11 +56,11 @@
 			<param name="execute.threads" value="1"/>
 		</antcall>
 
-		<!--
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="5"/>
 		</antcall>
 
+		<!--
 		<antcall target="executeAllPages">
 			<param name="execute.threads" value="10"/>
 		</antcall>
@@ -88,7 +88,6 @@
 	-->
 	<target name="executeAllPages">
 
-		<!--
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="ivyScript"/>
 			<param name="singleRequest.page" value="${performance.ivyscript}"/>
@@ -101,13 +100,15 @@
 			<param name="singleRequest.loops" value="${performance.loops}"/>
 			<param name="singleRequest.threads" value="${execute.threads}"/>
 		</antcall>
-		-->
+
+		<!--
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="oneTask"/>
 			<param name="singleRequest.page" value="${performance.onetask}"/>
 			<param name="singleRequest.loops" value="${performance.loops}"/>
 			<param name="singleRequest.threads" value="${execute.threads}"/>
 		</antcall>
+		-->
 	</target>
 
 	<!-- 
