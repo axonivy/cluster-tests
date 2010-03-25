@@ -1,0 +1,144 @@
+<project default="all">
+
+	<!--
+	jmeter manual:
+	http://jakarta.apache.org/jmeter/usermanual/component_reference.html
+	
+	-->
+	
+	<description>
+		Executes performance tests
+	</description>
+
+	<!-- Define performance test properties -->
+	<!--
+	<property name="performance.server" value="zugpcfsa"/>
+	<property name="performance.port" value="18080"/>
+	-->
+	<property name="performance.server" value="zugtstsrv2w0332"/>
+	<property name="performance.port" value="80"/>
+	
+	<property name="performance.loops" value="1"/>
+	<property name="performance.ivyscript" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeIvyScript.ivp"/>
+	<property name="performance.dbquery" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeSqlQuery.ivp"/>
+	<property name="performance.onetask" value="ivy/pro/performancetest/performance/127755AEEB3C441C/createOneTask.ivp"/>
+	
+	<!-- Define an environment variable pointing to JMETER folder or change this -->
+	<property environment="env"/>
+	<!--property name="jmeter-home" location="${env.JMETER_DIR}"/-->
+	<property name="jmeter-home" location="lib/jmeter/"/>
+
+	<!-- ant-jmeter.jar comes with jmeter, be sure this is the release you have -->
+	<path id="ant.jmeter.classpath">
+		<pathelement
+       location="${jmeter-home}/extras/ant-jmeter-1.0.9.jar" />
+	</path>
+
+	<taskdef 
+	    name="jmeter"
+	    classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
+	    classpathref="ant.jmeter.classpath" />
+
+	<target name="all" depends="executeAllTests, report"/>
+	
+	<target name="clean">
+		<delete dir="results"/>
+		<delete file="jmeter.log"/>
+		<mkdir dir="results/jtl"/>
+		<mkdir dir="results/html"/>
+	</target>
+	
+	<!--
+		Executes the full test 
+	-->
+	<target name="executeAllTests" depends="clean">
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="1"/>
+		</antcall>
+
+		<!--
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="5"/>
+		</antcall>
+
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="10"/>
+		</antcall>
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="20"/>
+		</antcall>
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="50"/>
+		</antcall>
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="100"/>
+		</antcall>
+
+		<antcall target="executeAllPages">
+			<param name="execute.threads" value="250"/>
+		</antcall>
+
+		-->
+	</target>
+	
+	<!--
+		Executes all test cases with the given thread count 
+		Parameter:
+			execute.threads
+	-->
+	<target name="executeAllPages">
+
+		<!--
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="ivyScript"/>
+			<param name="singleRequest.page" value="${performance.ivyscript}"/>
+			<param name="singleRequest.loops" value="${performance.loops}"/>
+			<param name="singleRequest.threads" value="${execute.threads}"/>
+		</antcall>
+		<antcall target="singleRequest">
+		    <param name="singleRequest.name" value="dbQuery"/>
+			<param name="singleRequest.page" value="${performance.dbquery}}"/>
+			<param name="singleRequest.loops" value="${performance.loops}"/>
+			<param name="singleRequest.threads" value="${execute.threads}"/>
+		</antcall>
+		-->
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="oneTask"/>
+			<param name="singleRequest.page" value="${performance.onetask}"/>
+			<param name="singleRequest.loops" value="${performance.loops}"/>
+			<param name="singleRequest.threads" value="${execute.threads}"/>
+		</antcall>
+	</target>
+
+	<!-- 
+		Required parameter:
+		- singleRequest.name
+		- singleRequest.page
+		- singleRequest.loops
+		- singleRequest.threads
+	-->
+	
+	<target name="singleRequest">
+		<jmeter 
+			jmeterhome="${jmeter-home}" 
+			testplan="jmetertest/singleRequest.jmx"
+			resultlog="results/jtl/singleRequest-${singleRequest.name}_${singleRequest.loops}-loops-with-${singleRequest.threads}-threads.jtl">
+			
+			<property name="runner.server" value="${performance.server}"/>
+			<property name="runner.port" value="${performance.port}}"/>
+			<property name="runner.page" value="${singleRequest.page}"/>
+			<property name="runner.loops" value="${singleRequest.loops}"/>
+			<property name="runner.threads" value="${singleRequest.threads}"/>
+
+		</jmeter>		
+	</target>
+
+	<target name="report">
+		<xslt
+       basedir="results/jtl"
+       destdir="results/html"
+       includes="*.jtl"
+       style="${jmeter-home}/extras/jmeter-results-detail-report_21.xsl"/>
+	</target>
+
+</project>
