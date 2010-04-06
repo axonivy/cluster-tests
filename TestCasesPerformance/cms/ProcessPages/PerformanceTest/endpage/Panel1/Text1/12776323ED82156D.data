@@ -1,0 +1,6 @@
+<P>
+<B><FONT size=5>Last time in millis</B></FONT>
+</P>
+<P>
+<B><FONT color="#FF9933" size=5><%=ivy.html.get("in.duration")%> </B></FONT>
+</P>

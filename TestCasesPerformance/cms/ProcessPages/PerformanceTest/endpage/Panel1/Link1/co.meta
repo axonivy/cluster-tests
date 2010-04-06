@@ -1,0 +1,2 @@
+co: name={Link1} description={} changed={2010-03-19 11:47:59 GMT} changedby={fs} visualorder={0} guid={127761CF3C4D311F} parentguid={} typeguid={E6AFEA1F2184828C} id={} parentid={} typeid={}
+val: guid={127761CF3E4D95D1} datatype={} isdefault={true} langid={en} description={} validfrom={2010-03-19 11:09:21 GMT} validto={} changed={2010-03-19 11:47:59 GMT} changedby={fs} properties={###r#n##Fri Mar 19 12:47:59 CET 2010#r#n.KIND=timed#r#n.LREF=../../127755AEEB3C441C/systemTasks.ivp?repeated\=true&startedTime\=<%\=in.startedTime.toString()%>#r#n.SBMT=#r#n=0#r#n} id={}

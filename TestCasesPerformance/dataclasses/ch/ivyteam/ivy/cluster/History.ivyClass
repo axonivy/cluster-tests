@@ -1,0 +1,8 @@
+History #class
+ch.ivyteam.ivy.cluster #namespace
+start Number #field
+start 'In millis' #fieldComment
+start PERSISTENT #fieldModifier
+end Number #field
+end 'In millis' #fieldComment
+end PERSISTENT #fieldModifier

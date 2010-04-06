@@ -1,0 +1,12 @@
+#Mon Mar 22 10:45:53 CET 2010
+default.sort.value=-1
+table.default.page.size.value=
+table.source=in.histories
+footer.show.value=false
+table.empty.value=
+col2=\#Mon Mar 22 10\:45\:53 CET 2010\r\nbody.value\=it.end-it.start\r\nheader.value\=Duration\r\n
+header.show.value=true
+col1=\#Mon Mar 22 10\:45\:53 CET 2010\r\nbody.value\=(new Time((new java.util.Date(it.start)))).format("performance")\r\nheader.value\=End\r\n
+table.caption.value=Last executions
+col0=\#Mon Mar 22 10\:45\:53 CET 2010\r\nbody.value\=(new Time((new java.util.Date(it.start)))).format("performance")\r\nheader.value\=Start\r\nname.value\=\r\n
+auto.header.value=false
