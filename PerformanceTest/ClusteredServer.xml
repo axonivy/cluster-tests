@@ -52,58 +52,84 @@
 		Executes the full test 
 	-->
 	<target name="executeAllTests" depends="clean">
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="1"/>
+		<antcall target="executeTests">
+			<param name="execute.name" value="ivyScript"/>
+			<param name="execute.page" value="${performance.ivyscript}"/>
 		</antcall>
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="5"/>
+		<antcall target="executeTests">
+			<param name="execute.name" value="dbQuery"/>
+			<param name="execute.page" value="${performance.dbquery}"/>
 		</antcall>
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="10"/>
+		<antcall target="executeTests">
+			<param name="execute.name" value="oneTask"/>
+			<param name="execute.page" value="${performance.onetask}"/>
 		</antcall>
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="20"/>
-		</antcall>
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="50"/>
-		</antcall>
-		<!--
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="100"/>
-		</antcall>
-		<antcall target="executeAllPages">
-			<param name="execute.threads" value="250"/>
-		</antcall>
-		-->
 	</target>
 	
 	<!--
-		Executes all test cases with the given thread count 
-		Parameter:
-			execute.threads
+	Executes a test 1000 times with 1, 5, 10, 15, 20, 30, 50, 100 users
+	Required parameter:
+		execute.name
+		exeucte.page	
 	-->
-	<target name="executeAllPages">
+	<target name="executeTests">
 		<antcall target="singleRequest">
-			<param name="singleRequest.name" value="ivyScript"/>
-			<param name="singleRequest.page" value="${performance.ivyscript}"/>
-			<param name="singleRequest.loops" value="${performance.loops}"/>
-			<param name="singleRequest.threads" value="${execute.threads}"/>
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="1000"/>
+			<param name="singleRequest.threads" value="1"/>
 		</antcall>
+	
 		<antcall target="singleRequest">
-		    <param name="singleRequest.name" value="dbQuery"/>
-			<param name="singleRequest.page" value="${performance.dbquery}"/>
-			<param name="singleRequest.loops" value="${performance.loops}"/>
-			<param name="singleRequest.threads" value="${execute.threads}"/>
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="200"/>
+			<param name="singleRequest.threads" value="5"/>
 		</antcall>
+
 		<antcall target="singleRequest">
-			<param name="singleRequest.name" value="oneTask"/>
-			<param name="singleRequest.page" value="${performance.onetask}"/>
-			<param name="singleRequest.loops" value="${performance.loops}"/>
-			<param name="singleRequest.threads" value="${execute.threads}"/>
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="100"/>
+			<param name="singleRequest.threads" value="10"/>
 		</antcall>
-		<!--
-		-->
+
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="66"/>
+			<param name="singleRequest.threads" value="15"/>
+		</antcall>
+
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="50"/>
+			<param name="singleRequest.threads" value="20"/>
+		</antcall>
+		
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="33"/>
+			<param name="singleRequest.threads" value="30"/>
+		</antcall>
+
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="20"/>
+			<param name="singleRequest.threads" value="50"/>
+		</antcall>
+		
+		<antcall target="singleRequest">
+			<param name="singleRequest.name" value="${execute.name}"/>
+			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.loops" value="10"/>
+			<param name="singleRequest.threads" value="100"/>
+		</antcall>
 	</target>
+	
 	<!-- 
 		Required parameter:
 		- singleRequest.name
