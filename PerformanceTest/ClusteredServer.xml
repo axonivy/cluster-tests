@@ -75,56 +75,56 @@
 	<target name="executeTests">
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="1000"/>
 			<param name="singleRequest.threads" value="1"/>
 		</antcall>
 	
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="200"/>
 			<param name="singleRequest.threads" value="5"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="100"/>
 			<param name="singleRequest.threads" value="10"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="66"/>
 			<param name="singleRequest.threads" value="15"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="50"/>
 			<param name="singleRequest.threads" value="20"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="33"/>
 			<param name="singleRequest.threads" value="30"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="20"/>
 			<param name="singleRequest.threads" value="50"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
-			<param name="singleRequest.page" value="${execute.page"/>
+			<param name="singleRequest.page" value="${execute.page}"/>
 			<param name="singleRequest.loops" value="10"/>
 			<param name="singleRequest.threads" value="100"/>
 		</antcall>
