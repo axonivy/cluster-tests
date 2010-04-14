@@ -1,5 +1,5 @@
 [Ivy]
-[>Created: Tue Apr 06 08:58:07 CEST 2010]
+[>Created: Fri Apr 09 17:47:31 CEST 2010]
 127755AEEB3C441C 3.14 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
@@ -616,9 +616,8 @@ Pt0 f44 requestEnabled true #txt
 Pt0 f44 triggerEnabled false #txt
 Pt0 f44 callSignature executeIvyScript() #txt
 Pt0 f44 persist false #txt
-Pt0 f44 startDescription 'Executes 5x GuidUtil.generateID()' #txt
 Pt0 f44 taskData '#
-#Tue Mar 23 08:45:42 CET 2010
+#Fri Apr 09 17:47:30 CEST 2010
 TaskTriggered.ROL=Everybody
 TaskTriggered.EXTYPE=0
 TaskTriggered.EXPRI=2
@@ -627,7 +626,7 @@ TaskTriggered.PRI=2
 TaskTriggered.EXROL=Everybody
 ' #txt
 Pt0 f44 caseData '#
-#Tue Mar 23 08:45:42 CET 2010
+#Fri Apr 09 17:47:30 CEST 2010
 businessCreator.user=
 businessMilestone.timestamp=
 businessObject.code=
@@ -679,10 +678,9 @@ Pt0 f47 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 ' #txt
 Pt0 f47 actionTable 'out=in;
 ' #txt
-Pt0 f47 actionCode 'import ch.ivyteam.util.GuidUtil;
-
-for (int i = 0; i < 5; i++) {
-	GuidUtil.generateID();
+Pt0 f47 actionCode 'String str = "start";
+for (int i = 0; i < 1000; i++) {
+	str + i.toString();
 }' #txt
 Pt0 f47 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f47 318 132 36 24 20 -2 #rect
