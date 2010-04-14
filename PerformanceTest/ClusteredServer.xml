@@ -18,7 +18,6 @@
 	<property name="performance.server" value="zugtstsrv2w0332"/>
 	<property name="performance.port" value="80"/>
 	
-	<property name="performance.loops" value="500"/>
 	<property name="performance.ivyscript" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeIvyScript.ivp"/>
 	<property name="performance.dbquery" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeSqlQuery.ivp"/>
 	<property name="performance.onetask" value="ivy/pro/performancetest/performance/127755AEEB3C441C/createOneTask.ivp"/>
@@ -55,6 +54,14 @@
 		<antcall target="executeTests">
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
+			<param name="execute.1.loops" value="5000"/>
+			<param name="execute.5.loops" value="1000"/>
+			<param name="execute.10.loops" value="500"/>
+			<param name="execute.15.loops" value="330"/>
+			<param name="execute.20.loops" value="250"/>
+			<param name="execute.30.loops" value="165"/>
+			<param name="execute.50.loops" value="100"/>
+			<param name="execute.100.loops" value="50"/>			
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
@@ -63,6 +70,14 @@
 		<antcall target="executeTests">
 			<param name="execute.name" value="oneTask"/>
 			<param name="execute.page" value="${performance.onetask}"/>
+			<param name="execute.1.loops" value="500"/>
+			<param name="execute.5.loops" value="100"/>
+			<param name="execute.10.loops" value="50"/>
+			<param name="execute.15.loops" value="33"/>
+			<param name="execute.20.loops" value="25"/>
+			<param name="execute.30.loops" value="16"/>
+			<param name="execute.50.loops" value="10"/>
+			<param name="execute.100.loops" value="5"/>				
 		</antcall>
 	</target>
 	
@@ -73,31 +88,40 @@
 		exeucte.page	
 	-->
 	<target name="executeTests">
+		<property name="execute.1.loops" value="2000"/>
+	    <property name="execute.5.loops" value="400"/>
+	    <property name="execute.10.loops" value="200"/>
+	    <property name="execute.15.loops" value="132"/>
+	    <property name="execute.20.loops" value="100"/>
+        <property name="execute.30.loops" value="66"/>
+ 	    <property name="execute.50.loops" value="40"/>
+		<property name="execute.100.loops" value="20"/>
+
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="1000"/>
+			<param name="singleRequest.loops" value="${execute.1.loops}"/>
 			<param name="singleRequest.threads" value="1"/>
 		</antcall>
 	
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="200"/>
+			<param name="singleRequest.loops" value="${execute.5.loops}"/>
 			<param name="singleRequest.threads" value="5"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="100"/>
+			<param name="singleRequest.loops" value="${execute.10.loops}"/>
 			<param name="singleRequest.threads" value="10"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="66"/>
+			<param name="singleRequest.loops" value="${execute.15.loops}"/>
 			<param name="singleRequest.threads" value="15"/>
 		</antcall>
 
