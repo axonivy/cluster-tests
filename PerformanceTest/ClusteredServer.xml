@@ -51,7 +51,7 @@
 		Executes the full test 
 	-->
 	<target name="executeAllTests" depends="clean">
-		<antcall target="executeTests">
+		<!--<antcall target="executeTests">
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.1.loops" value="5000"/>
@@ -62,7 +62,7 @@
 			<param name="execute.30.loops" value="165"/>
 			<param name="execute.50.loops" value="100"/>
 			<param name="execute.100.loops" value="50"/>			
-		</antcall>
+		</antcall>-->
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
 			<param name="execute.page" value="${performance.dbquery}"/>
