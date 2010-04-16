@@ -55,14 +55,14 @@
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="2"/>
-<!--			<param name="execute.1.loops" value="5000"/>
-			<param name="execute.5.loops" value="1000"/>
-			<param name="execute.10.loops" value="500"/>
-			<param name="execute.15.loops" value="330"/>
-			<param name="execute.20.loops" value="250"/>
-			<param name="execute.30.loops" value="165"/>
-			<param name="execute.50.loops" value="100"/>
-			<param name="execute.100.loops" value="50"/>			-->
+			<param name="execute.1.loops" value="500"/>
+			<param name="execute.5.loops" value="100"/>
+			<param name="execute.10.loops" value="50"/>
+			<param name="execute.15.loops" value="33"/>
+			<param name="execute.20.loops" value="25"/>
+			<param name="execute.30.loops" value="16"/>
+			<param name="execute.50.loops" value="10"/>
+			<param name="execute.100.loops" value="5"/>			
 		</antcall>
 		<!--
 		<antcall target="executeTests">
