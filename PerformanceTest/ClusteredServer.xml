@@ -1,4 +1,6 @@
 <project default="all">
+    <import file="..\..\buildUtil\IvyServerAntTasks\remote_cluster_build.xml"/>
+	<property file="ClusteredServer.properties" />
 
 	<!--
 	jmeter manual:
@@ -9,12 +11,7 @@
 	<description>
 		Executes performance tests
 	</description>
-
-	<!-- Define performance test properties -->
-	<!--
-	<property name="performance.server" value="zugpcfsa"/>
-	<property name="performance.port" value="18080"/>
-	-->
+	
 	<property name="performance.server" value="zugtstsrv2w0332"/>
 	<property name="performance.port" value="80"/>
 	
@@ -38,7 +35,7 @@
 	    classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
 	    classpathref="ant.jmeter.classpath" />
 
-	<target name="all" depends="executeAllTests, report"/>
+	<target name="all" depends="executeAllTestsOnAllConfiguration, report"/>
 	
 	<target name="clean">
 		<delete dir="results"/>
@@ -47,14 +44,56 @@
 		<mkdir dir="results/html"/>
 	</target>
 	
+	<target name="executeAllTestsOnAllConfiguration" depends="clean">
+	  <antcall target="install-and-run-remote-cluster"/>	  
+
+	<!--	  <antcall target="executeAllTests">
+		<param name="execute.nodes" values="4"/>
+	  </antcall>
+	  
+	  <antcall target="remote-server-stop">
+	    <param name="remote.host" value="${performance.node4.host}"/>
+		<param name="instance.id" value="${performance.instance.id}"/>
+	  </antcall>
+	
+	  <antcall target="remote-server-stop">
+	    <param name="remote.host" value="${performance.node3.host}"/>
+		<param name="instance.id" value="${performance.instance.id}"/>
+	  </antcall>-->
+
+	  <antcall target="executeAllTests">
+		<param name="execute.nodes" values="2"/>
+	  </antcall>
+
+	  <antcall target="remote-server-stop">
+	    <param name="remote.host" value="${node2.remote.host}"/>
+		<param name="instance.id" value="${node2.instance.id}"/>
+	  </antcall>
+
+	  <antcall target="executeAllTests">
+		<param name="execute.nodes" values="1"/>
+	  </antcall>
+	  
+	  <!-- uninstall all cluster nodes -->
+	  <antcall target="uninstall-remote-cluster"/>
+    </target>
+	
 	<!--
 		Executes the full test 
 	-->
-	<target name="executeAllTests" depends="clean">
+	<target name="executeAllTests">
 		<antcall target="executeTests">
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="2"/>
+			<param name="execute.1.loops" value="5000"/>
+			<param name="execute.5.loops" value="1000"/>
+			<param name="execute.10.loops" value="500"/>
+			<param name="execute.15.loops" value="330"/>
+			<param name="execute.20.loops" value="250"/>
+			<param name="execute.30.loops" value="160"/>
+			<param name="execute.50.loops" value="100"/>
+			<param name="execute.100.loops" value="50"/>				
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
