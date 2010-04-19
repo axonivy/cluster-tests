@@ -63,7 +63,7 @@
 	  </antcall>-->
 
 	  <antcall target="executeAllTests">
-		<param name="execute.nodes" values="2"/>
+		<param name="execute.nodes" value="2"/>
 	  </antcall>
 
 	  <antcall target="remote-server-stop">
@@ -72,7 +72,7 @@
 	  </antcall>
 
 	  <antcall target="executeAllTests">
-		<param name="execute.nodes" values="1"/>
+		<param name="execute.nodes" value="1"/>
 	  </antcall>
 	  
 	  <!-- uninstall all cluster nodes -->
