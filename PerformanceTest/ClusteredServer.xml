@@ -1,5 +1,5 @@
 <project default="all">
-    <import file="..\..\buildUtil\IvyServerAntTasks\remote_cluster_build.xml"/>
+    <import file="..\IvyServerAntTasks\remote_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
 
 	<!--
@@ -45,6 +45,7 @@
 	</target>
 	
 	<target name="executeAllTestsOnAllConfiguration" depends="clean">
+	  
 	  <antcall target="install-and-run-remote-cluster"/>	  
 
 	<!--	  <antcall target="executeAllTests">
