@@ -1,8 +1,8 @@
 <project default="all">
     <import file="..\IvyServerAntTasks\remote_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
-
 	<taskdef resource="net/sf/antcontrib/antlib.xml" />
+
 	<!--
 	jmeter manual:
 	http://jakarta.apache.org/jmeter/usermanual/component_reference.html
@@ -47,40 +47,42 @@
 	
 	<target name="executeAllTestsOnAllConfiguration" depends="clean">
 	  
-	  <try>
-		<antcall target="install-and-run-remote-cluster"/>	  
+	  <trycatch>
+		  <try>
+			<antcall target="install-and-run-remote-cluster"/>	  
 
-		<!--	  <antcall target="executeAllTests">
-			<param name="execute.nodes" values="4"/>
-		  </antcall>
-		  
-		  <antcall target="remote-server-stop">
-			<param name="remote.host" value="${performance.node4.host}"/>
-			<param name="instance.id" value="${performance.instance.id}"/>
-		  </antcall>
-		
-		  <antcall target="remote-server-stop">
-			<param name="remote.host" value="${performance.node3.host}"/>
-			<param name="instance.id" value="${performance.instance.id}"/>
-		  </antcall>-->
+			<!--	  <antcall target="executeAllTests">
+				<param name="execute.nodes" values="4"/>
+			  </antcall>
+			  
+			  <antcall target="remote-server-stop">
+				<param name="remote.host" value="${performance.node4.host}"/>
+				<param name="instance.id" value="${performance.instance.id}"/>
+			  </antcall>
+			
+			  <antcall target="remote-server-stop">
+				<param name="remote.host" value="${performance.node3.host}"/>
+				<param name="instance.id" value="${performance.instance.id}"/>
+			  </antcall>-->
 
-		  <antcall target="executeAllTests">
-			<param name="execute.nodes" value="2"/>
-		  </antcall>
+			  <antcall target="executeAllTests">
+				<param name="execute.nodes" value="2"/>
+			  </antcall>
 
-		  <antcall target="remote-server-stop">
-			<param name="remote.host" value="${node2.remote.host}"/>
-			<param name="instance.id" value="${node2.instance.id}"/>
-		  </antcall>
+			  <antcall target="remote-server-stop">
+				<param name="remote.host" value="${node2.remote.host}"/>
+				<param name="instance.id" value="${node2.instance.id}"/>
+			  </antcall>
 
-		  <antcall target="executeAllTests">
-			<param name="execute.nodes" value="1"/>
-		  </antcall>
-	  </try>
-	  <finally>  
-		<!-- uninstall all cluster nodes -->
-		<antcall target="uninstall-remote-cluster"/>
-      </finally>
+			  <antcall target="executeAllTests">
+				<param name="execute.nodes" value="1"/>
+			  </antcall>
+		  </try>
+		  <finally>  
+			<!-- uninstall all cluster nodes -->
+			<antcall target="uninstall-remote-cluster"/>
+		  </finally>
+		</trycatch>
     </target>
 	
 	<!--
