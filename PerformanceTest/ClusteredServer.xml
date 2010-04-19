@@ -51,19 +51,19 @@
 		  <try>
 			<antcall target="install-and-run-remote-cluster"/>	  
 
-			<!--	  <antcall target="executeAllTests">
-				<param name="execute.nodes" values="4"/>
+			  <antcall target="executeAllTests">
+				<param name="execute.nodes" value="4"/>
 			  </antcall>
 			  
 			  <antcall target="remote-server-stop">
-				<param name="remote.host" value="${performance.node4.host}"/>
-				<param name="instance.id" value="${performance.instance.id}"/>
+				<param name="remote.host" value="${node4.remote.host}"/>
+				<param name="instance.id" value="${node4.instance.id}"/>
 			  </antcall>
 			
 			  <antcall target="remote-server-stop">
-				<param name="remote.host" value="${performance.node3.host}"/>
-				<param name="instance.id" value="${performance.instance.id}"/>
-			  </antcall>-->
+				<param name="remote.host" value="${node3.remote.host}"/>
+				<param name="instance.id" value="${node3.instance.id}"/>
+			  </antcall>
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="2"/>
@@ -93,14 +93,14 @@
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
-<!--			<param name="execute.1.loops" value="5000"/>
+			<param name="execute.1.loops" value="5000"/>
 			<param name="execute.5.loops" value="1000"/>
 			<param name="execute.10.loops" value="500"/>
 			<param name="execute.15.loops" value="330"/>
 			<param name="execute.20.loops" value="250"/>
 			<param name="execute.30.loops" value="160"/>
 			<param name="execute.50.loops" value="100"/>
-			<param name="execute.100.loops" value="50"/>				-->
+			<param name="execute.100.loops" value="50"/>				
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
@@ -111,14 +111,14 @@
 			<param name="execute.name" value="oneTask"/>
 			<param name="execute.page" value="${performance.onetask}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
-<!--			<param name="execute.1.loops" value="500"/>
+			<param name="execute.1.loops" value="500"/>
 			<param name="execute.5.loops" value="100"/>
 			<param name="execute.10.loops" value="50"/>
 			<param name="execute.15.loops" value="33"/>
 			<param name="execute.20.loops" value="25"/>
 			<param name="execute.30.loops" value="16"/>
 			<param name="execute.50.loops" value="10"/>
-			<param name="execute.100.loops" value="5"/>		-->		
+			<param name="execute.100.loops" value="5"/>		
 		</antcall>
 	</target>
 	
@@ -129,15 +129,15 @@
 		exeucte.page	
 	-->
 	<target name="executeTests">
-<!--		<property name="execute.1.loops" value="2000"/>
+		<property name="execute.1.loops" value="2000"/>
 	    <property name="execute.5.loops" value="400"/>
 	    <property name="execute.10.loops" value="200"/>
 	    <property name="execute.15.loops" value="132"/>
 	    <property name="execute.20.loops" value="100"/>
         <property name="execute.30.loops" value="66"/>
  	    <property name="execute.50.loops" value="40"/>
-		<property name="execute.100.loops" value="20"/>-->
-
+		<property name="execute.100.loops" value="20"/>
+<!--
 		<property name="execute.1.loops" value="100"/>
 	    <property name="execute.5.loops" value="50"/>
 	    <property name="execute.10.loops" value="10"/>
@@ -145,7 +145,7 @@
 	    <property name="execute.20.loops" value="5"/>
         <property name="execute.30.loops" value="3"/>
  	    <property name="execute.50.loops" value="2"/>
-		<property name="execute.100.loops" value="1"/>
+		<property name="execute.100.loops" value="1"/> -->
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
