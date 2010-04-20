@@ -15,10 +15,10 @@
 	
 	<property name="performance.server" value="zugtstsrv2w0332"/>
 	<property name="performance.port" value="80"/>
-	
-	<property name="performance.ivyscript" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeIvyScript.ivp"/>
-	<property name="performance.dbquery" value="ivy/pro/performancetest/performance/127755AEEB3C441C/executeSqlQuery.ivp"/>
-	<property name="performance.onetask" value="ivy/pro/performancetest/performance/127755AEEB3C441C/createOneTask.ivp"/>
+
+	<property name="performance.ivyscript" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
+	<property name="performance.dbquery" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
+	<property name="performance.onetask" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp"/>
 	
 	<!-- Define an environment variable pointing to JMETER folder or change this -->
 	<property environment="env"/>
