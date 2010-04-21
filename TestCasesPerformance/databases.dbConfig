@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <databaseconfigs>
-    <databaseconfig password="root" user="root" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://zugdbsrv1/Tmp_zugtstusr_ClusterPerformance_XpertIvySystemDatabase" name="AnyIvySystemDb"/>
+    <databaseconfig password="iF&amp;Gs1.k" user="sa" driver="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://zugdbsrv1/Tmp_zugtstusr_ClusterPerformance_XpertIvySystemDatabase" name="AnyIvySystemDb"/>
 </databaseconfigs>
