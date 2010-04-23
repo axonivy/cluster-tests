@@ -15,6 +15,7 @@
 	
 	<property name="performance.server" value="zugtstsrv2w0332"/>
 	<property name="performance.port" value="80"/>
+	<property name="execute.duration" value="10"/>
 
 	<property name="performance.ivyscript" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
 	<property name="performance.dbquery" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
@@ -53,6 +54,7 @@
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="4"/>
+				<param name="execute.duration" value="${execute.duration}"/>
 			  </antcall>
 			  
 			  <antcall target="remote-server-stop">
@@ -67,6 +69,7 @@
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="2"/>
+				<param name="execute.duration" value="${execute.duration}"/>
 			  </antcall>
 
 			  <antcall target="remote-server-stop">
@@ -76,6 +79,7 @@
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="1"/>
+				<param name="execute.duration" value="${execute.duration}"/>				
 			  </antcall>
 		  </try>
 		  <finally>  
@@ -93,16 +97,19 @@
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
+			<param name="execute.duration" value="${execute.duration}"/>
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
 			<param name="execute.page" value="${performance.dbquery}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
+			<param name="execute.duration" value="${execute.duration}"/>
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="oneTask"/>
 			<param name="execute.page" value="${performance.onetask}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
+			<param name="execute.duration" value="${execute.duration}"/>
 		</antcall>
 	</target>
 	
@@ -116,56 +123,56 @@
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="1"/>
 		</antcall>
 	
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="5"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="10"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="15"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="20"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="30"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="50"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.duration" value="60"/>
+			<param name="singleRequest.duration" value="${execute.duration}"/>
 			<param name="singleRequest.threads" value="100"/>
 		</antcall>
 	</target>
