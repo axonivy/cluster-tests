@@ -93,14 +93,6 @@
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
-			<param name="execute.1.loops" value="5000"/>
-			<param name="execute.5.loops" value="1000"/>
-			<param name="execute.10.loops" value="500"/>
-			<param name="execute.15.loops" value="330"/>
-			<param name="execute.20.loops" value="250"/>
-			<param name="execute.30.loops" value="160"/>
-			<param name="execute.50.loops" value="100"/>
-			<param name="execute.100.loops" value="50"/>				
 		</antcall>
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
@@ -111,95 +103,69 @@
 			<param name="execute.name" value="oneTask"/>
 			<param name="execute.page" value="${performance.onetask}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
-			<param name="execute.1.loops" value="500"/>
-			<param name="execute.5.loops" value="100"/>
-			<param name="execute.10.loops" value="50"/>
-			<param name="execute.15.loops" value="33"/>
-			<param name="execute.20.loops" value="25"/>
-			<param name="execute.30.loops" value="16"/>
-			<param name="execute.50.loops" value="10"/>
-			<param name="execute.100.loops" value="5"/>		
 		</antcall>
 	</target>
 	
 	<!--
-	Executes a test 1000 times with 1, 5, 10, 15, 20, 30, 50, 100 users
+	Executes a test for 1 minute with 1, 5, 10, 15, 20, 30, 50, 100 users
 	Required parameter:
 		execute.name
 		exeucte.page	
 	-->
 	<target name="executeTests">
-		<property name="execute.1.loops" value="2000"/>
-	    <property name="execute.5.loops" value="400"/>
-	    <property name="execute.10.loops" value="200"/>
-	    <property name="execute.15.loops" value="132"/>
-	    <property name="execute.20.loops" value="100"/>
-        <property name="execute.30.loops" value="66"/>
- 	    <property name="execute.50.loops" value="40"/>
-		<property name="execute.100.loops" value="20"/>
-<!--
-		<property name="execute.1.loops" value="100"/>
-	    <property name="execute.5.loops" value="50"/>
-	    <property name="execute.10.loops" value="10"/>
-	    <property name="execute.15.loops" value="7"/>
-	    <property name="execute.20.loops" value="5"/>
-        <property name="execute.30.loops" value="3"/>
- 	    <property name="execute.50.loops" value="2"/>
-		<property name="execute.100.loops" value="1"/> -->
-
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.1.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="1"/>
 		</antcall>
 	
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.5.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="5"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.10.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="10"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.15.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="15"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.20.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="20"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.30.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="30"/>
 		</antcall>
 
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.50.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="50"/>
 		</antcall>
 		
 		<antcall target="singleRequest">
 			<param name="singleRequest.name" value="${execute.name}"/>
 			<param name="singleRequest.page" value="${execute.page}"/>
-			<param name="singleRequest.loops" value="${execute.100.loops}"/>
+			<param name="singleRequest.duration" value="60"/>
 			<param name="singleRequest.threads" value="100"/>
 		</antcall>
 	</target>
@@ -215,13 +181,13 @@
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
-			resultlog="results/jtl/singleRequest_${singleRequest.name}_${singleRequest.loops}-loops_${singleRequest.threads}-users_${execute.nodes}-nodes.jtl">
+			resultlog="results/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.jtl">
 			
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
 			<property name="runner.port" value="${performance.port}}"/>
 			<property name="runner.page" value="${singleRequest.page}"/>
-			<property name="runner.loops" value="${singleRequest.loops}"/>
+			<property name="runner.duration" value="${singleRequest.duration}"/>
 			<property name="runner.threads" value="${singleRequest.threads}"/>
 
 		</jmeter>		
