@@ -57,7 +57,7 @@
 				<param name="execute.duration" value="${execute.duration}"/>
 			  </antcall>-->
 			  
-			  <antcall target="remote-server-stop">
+<!--			  <antcall target="remote-server-stop">
 				<param name="remote.host" value="${node4.remote.host}"/>
 				<param name="instance.id" value="${node4.instance.id}"/>
 			  </antcall>
@@ -65,7 +65,7 @@
 			  <antcall target="remote-server-stop">
 				<param name="remote.host" value="${node3.remote.host}"/>
 				<param name="instance.id" value="${node3.instance.id}"/>
-			  </antcall>
+			  </antcall>-->
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="2"/>
@@ -93,12 +93,12 @@
 		Executes the full test 
 	-->
 	<target name="executeAllTests">
-		<antcall target="executeTests">
+<!--		<antcall target="executeTests">
 			<param name="execute.name" value="ivyScript"/>
 			<param name="execute.page" value="${performance.ivyscript}"/>
 			<param name="execute.nodes" value="${execute.nodes}"/>
 			<param name="execute.duration" value="${execute.duration}"/>
-		</antcall>
+		</antcall>-->
 		<antcall target="executeTests">
 			<param name="execute.name" value="dbQuery"/>
 			<param name="execute.page" value="${performance.dbquery}"/>
