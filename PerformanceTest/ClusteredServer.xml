@@ -52,10 +52,10 @@
 		  <try>
 			<antcall target="install-and-run-remote-cluster"/>	  
 
-			  <antcall target="executeAllTests">
+<!--			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="4"/>
 				<param name="execute.duration" value="${execute.duration}"/>
-			  </antcall>
+			  </antcall>-->
 			  
 			  <antcall target="remote-server-stop">
 				<param name="remote.host" value="${node4.remote.host}"/>
@@ -77,10 +77,10 @@
 				<param name="instance.id" value="${node2.instance.id}"/>
 			  </antcall>
 
-			  <antcall target="executeAllTests">
+<!--			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="1"/>
 				<param name="execute.duration" value="${execute.duration}"/>				
-			  </antcall>
+			  </antcall>-->
 		  </try>
 		  <finally>  
 			<!-- uninstall all cluster nodes -->
