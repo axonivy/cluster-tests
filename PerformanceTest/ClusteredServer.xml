@@ -36,6 +36,14 @@
 	    name="jmeter"
 	    classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
 	    classpathref="ant.jmeter.classpath" />
+		
+	<target name="installAndStartCluster">
+		<antcall target="install-and-run-remote-cluster"/>	  
+	</target>
+
+	<target name="stopAndUninstallCluster">
+		<antcall target="uninstall-remote-cluster"/>
+	</target>
 
 	<target name="all" depends="executeAllTestsOnAllConfiguration, report"/>
 	
@@ -50,7 +58,7 @@
 	  
 	  <trycatch>
 		  <try>
-			<antcall target="install-and-run-remote-cluster"/>	  
+			  <antcall target="installAndStartCluster"/>	  
 
 			  <antcall target="executeAllTests">
 				<param name="execute.nodes" value="4"/>
@@ -84,7 +92,7 @@
 		  </try>
 		  <finally>  
 			<!-- uninstall all cluster nodes -->
-			<antcall target="uninstall-remote-cluster"/>
+			<antcall target="stopAndUninstallCluster"/>
 		  </finally>
 		</trycatch>
     </target>
