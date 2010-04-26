@@ -1,5 +1,5 @@
 [Ivy]
-[>Created: Fri Apr 09 17:47:31 CEST 2010]
+[>Created: Mon Apr 26 12:17:26 CEST 2010]
 127755AEEB3C441C 3.14 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
@@ -679,8 +679,8 @@ Pt0 f47 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 Pt0 f47 actionTable 'out=in;
 ' #txt
 Pt0 f47 actionCode 'String str = "start";
-for (int i = 0; i < 1000; i++) {
-	str + i.toString();
+for (int i = 0; i < 2000; i++) {
+	str = str + i.toString();
 }' #txt
 Pt0 f47 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f47 318 132 36 24 20 -2 #rect
