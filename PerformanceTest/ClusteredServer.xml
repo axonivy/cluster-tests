@@ -1,7 +1,12 @@
 <project default="all">
     <import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
-	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="../antlibs/ant-contrib-1.0b3.jar"/>
+	
+	<path id="classpath.antcontrib">
+	  <fileset dir="../antlibs" includes="**/*.jar"/>
+	</path>
+	
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
 
 	<!--
 	jmeter manual:
