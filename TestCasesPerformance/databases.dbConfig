@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <databaseconfigs>
-    <databaseconfig maxconnections="50" password="iF&amp;Gs1.k" user="sa" driver="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://zugtstsrv2w0332/Tmp_zugtstusr_ClusterPerformance_XpertIvySystemDatabase" name="AnyIvySystemDb"/>
+    <databaseconfig maxconnections="50" password="iF&amp;Gs1.k" user="sa" driver="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://zugtstsrv2w0332/Tmp_ClusterPerformance_XpertIvySystemDatabase" name="AnyIvySystemDb"/>
 </databaseconfigs>
