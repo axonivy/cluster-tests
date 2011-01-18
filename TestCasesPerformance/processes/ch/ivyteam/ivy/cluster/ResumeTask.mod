@@ -1,5 +1,5 @@
 [Ivy]
-[>Created: Tue Jan 18 09:35:56 CET 2011]
+[>Created: Tue Jan 18 12:05:34 CET 2011]
 12D851E10A821416 3.15 #module
 >Proto >Proto Collection #zClass
 Rk0 ResumeTask Big #zClass
@@ -97,7 +97,7 @@ Rk0 f1 actionCode 'import ch.ivyteam.ivy.request.IHttpRequest;
 import ch.ivyteam.ivy.request.RequestUriFactory;
 import ch.ivyteam.ivy.workflow.ITask;
 // login
-ivy.session.loginSessionUser("admin", "", ivy.task.getIdentifier());
+ivy.session.loginSessionUser("user", "user", ivy.task.getIdentifier());
 // get first task to start
 List<ITask> tasks = ivy.session.findSuspendedWorkTasks(0, 1);
 in.taskStartUri = RequestUriFactory.createServerUri(ivy.request as IHttpRequest).resolve(

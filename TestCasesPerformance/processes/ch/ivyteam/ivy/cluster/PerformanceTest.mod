@@ -1,6 +1,6 @@
 [Ivy]
-[>Created: Mon Apr 26 12:17:26 CEST 2010]
-127755AEEB3C441C 3.14 #module
+[>Created: Tue Jan 18 12:05:59 CET 2011]
+127755AEEB3C441C 3.15 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
 Pt0 B #cInfo
@@ -133,7 +133,7 @@ Pt0 f0 43 83 26 26 14 0 #rect
 Pt0 f0 @|StartRequestIcon #fIcon
 Pt0 f3 outTypes "ch.ivyteam.ivy.cluster.PerformanceTest" #txt
 Pt0 f3 outLinks "createTasks.ivp" #txt
-Pt0 f3 template "taskcreation.ivd" #txt
+Pt0 f3 template "taskcreation.ivc" #txt
 Pt0 f3 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f3 skipLink skip.ivp #txt
 Pt0 f3 sortLink sort.ivp #txt
@@ -253,7 +253,7 @@ Pt0 f10 38 188 36 24 20 -2 #rect
 Pt0 f10 @|StepIcon #fIcon
 Pt0 f13 outTypes "ch.ivyteam.ivy.cluster.PerformanceTest" #txt
 Pt0 f13 outLinks "LinkA.ivp" #txt
-Pt0 f13 template "endpage.ivd" #txt
+Pt0 f13 template "endpage.ivc" #txt
 Pt0 f13 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f13 skipLink skip.ivp #txt
 Pt0 f13 sortLink sort.ivp #txt
@@ -288,7 +288,7 @@ Pt0 f12 outCond '(in.startedTime + (1000*in.craete.runningSec)) > System.current
 Pt0 f12 56 526 56 548 #arcP
 Pt0 f15 outTypes "ch.ivyteam.ivy.cluster.PerformanceTest" #txt
 Pt0 f15 outLinks "LinkA.ivp" #txt
-Pt0 f15 template "finalpage.ivd" #txt
+Pt0 f15 template "finalpage.ivc" #txt
 Pt0 f15 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f15 skipLink skip.ivp #txt
 Pt0 f15 sortLink sort.ivp #txt
@@ -392,13 +392,13 @@ Pt0 f17 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 Pt0 f17 actionTable 'out=in;
 ' #txt
 Pt0 f17 actionCode '
-ivy.session.loginSessionUser("admin", "admin");' #txt
+ivy.session.loginSessionUser("user", "user");' #txt
 Pt0 f17 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f17 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
-        <name>login as admin</name>
-        <nameStyle>14
+        <name>login as user</name>
+        <nameStyle>13,7
 </nameStyle>
     </language>
 </elementInfo>
@@ -493,13 +493,13 @@ Pt0 f31 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 Pt0 f31 actionTable 'out=in;
 ' #txt
 Pt0 f31 actionCode '
-ivy.session.loginSessionUser("admin", "admin");' #txt
+ivy.session.loginSessionUser("user", "user");' #txt
 Pt0 f31 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f31 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
-        <name>login as admin</name>
-        <nameStyle>14
+        <name>login as user</name>
+        <nameStyle>13,7
 </nameStyle>
     </language>
 </elementInfo>
@@ -532,7 +532,7 @@ Pt0 f33 @|CallSubIcon #fIcon
 Pt0 f34 expr out #txt
 Pt0 f34 688 156 688 188 #arcP
 Pt0 f35 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
-Pt0 f35 template "simpleEndPage.ivd" #txt
+Pt0 f35 template "simpleEndPage.ivc" #txt
 Pt0 f35 675 251 26 26 14 0 #rect
 Pt0 f35 @|EndRequestIcon #fIcon
 Pt0 f36 expr out #txt
@@ -603,7 +603,7 @@ Pt0 f37 @C|.responsibility Everybody #txt
 Pt0 f37 499 75 26 26 14 0 #rect
 Pt0 f37 @|StartRequestIcon #fIcon
 Pt0 f40 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
-Pt0 f40 template "simpleEndPage.ivd" #txt
+Pt0 f40 template "simpleEndPage.ivc" #txt
 Pt0 f40 499 251 26 26 14 0 #rect
 Pt0 f40 @|EndRequestIcon #fIcon
 Pt0 f44 outLink executeIvyScript.ivp #txt
