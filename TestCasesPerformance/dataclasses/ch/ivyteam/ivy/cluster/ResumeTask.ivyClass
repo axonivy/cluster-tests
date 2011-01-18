@@ -1,0 +1,4 @@
+ResumeTask #class
+ch.ivyteam.ivy.cluster #namespace
+taskStartUri String #field
+taskStartUri PERSISTENT #fieldModifier
