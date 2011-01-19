@@ -4,7 +4,7 @@
 	<property name="dir.ivy.server.ant.tasks" value="..\..\builtUtil\IvyServerAntTasks"/>
 	<property name="dir.antlibs" value="c:\dev\EnvArchive\antlibs"/>
 
-    <import file="${dir.ivy.server.ant.tasks}\build\local\local_cluster_build.xml"/>
+    <import file="${dir.ivy.server.ant.tasks}\build_ivy\local\local_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
 	
 	<path id="classpath.antcontrib">
