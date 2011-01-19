@@ -1,5 +1,5 @@
 [Ivy]
-[>Created: Tue Jan 18 12:05:59 CET 2011]
+[>Created: Wed Jan 19 15:07:49 CET 2011]
 127755AEEB3C441C 3.15 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
@@ -719,13 +719,16 @@ Pt0 f39 @|StepIcon #fIcon
 Pt0 f43 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 ' #txt
 Pt0 f43 actionTable 'out=in;
+out.recordset=recordset;
 ' #txt
 Pt0 f43 dbSql '<?xml version=""1.0"" standalone=""no""?>
 <!DOCTYPE ANY_SQL SYSTEM  ""sqlStatements.dtd"">
-<ANY_SQL><Verbatim quote=''false''>SELECT TOP 100 * FROM IWA_CASE</Verbatim></ANY_SQL>' #txt
+<ANY_SQL><Verbatim quote=''false''>SELECT *
+FROM   INFORMATION_SCHEMA.SYSTEM_TABLES</Verbatim></ANY_SQL>' #txt
 Pt0 f43 dbUrl AnyIvySystemDb #txt
-Pt0 f43 cache '{/cache true /invalidation false /scope 1 /groupname "in.cacheGroup"/identifier "\"bubu\""/lifetime_entry "300"/lifetime_group "300"}' #txt
-Pt0 f43 dbWizard 'SELECT TOP 100 * FROM IWA_CASE' #txt
+Pt0 f43 cache '{/cache true /invalidation false /scope 1 /groupname "in.cacheGroup"/identifier "\"bubu\""/lifetime_entry "300"/lifetime_group "300"/invalidation_time_group ""/invalidation_time_entry ""}' #txt
+Pt0 f43 dbWizard 'SELECT *
+FROM   INFORMATION_SCHEMA.SYSTEM_TABLES' #txt
 Pt0 f43 lotSize 2147483647 #txt
 Pt0 f43 startIdx 0 #txt
 Pt0 f43 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
@@ -733,7 +736,7 @@ Pt0 f43 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
         <name>execute db query</name>
-        <nameStyle>16,9
+        <nameStyle>16,7,9
 </nameStyle>
     </language>
 </elementInfo>

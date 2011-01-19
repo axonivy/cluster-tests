@@ -11,7 +11,7 @@ package ch.ivyteam.ivy.cluster;
 public class PerformanceTest extends ch.ivyteam.ivy.scripting.objects.CompositeObject
 {
   /** SerialVersionUID */
-  private static final long serialVersionUID = 7268250931046610415L;
+  private static final long serialVersionUID = 2080488707927765360L;
 
   /**
    * True, if the process should repeated (after the delay)
@@ -166,6 +166,28 @@ public class PerformanceTest extends ch.ivyteam.ivy.scripting.objects.CompositeO
   public void setCacheGroup(java.lang.String _cacheGroup)
   {
     cacheGroup = _cacheGroup;
+  }
+
+  /**
+   */
+  private ch.ivyteam.ivy.scripting.objects.Recordset recordset;
+
+  /**
+   * Gets the field recordset.
+   * @return the value of the field recordset; may be null.
+   */
+  public ch.ivyteam.ivy.scripting.objects.Recordset getRecordset()
+  {
+    return recordset;
+  }
+
+  /**
+   * Sets the field recordset.
+   * @param _recordset the new value of the field recordset.
+   */
+  public void setRecordset(ch.ivyteam.ivy.scripting.objects.Recordset _recordset)
+  {
+    recordset = _recordset;
   }
 
 }
