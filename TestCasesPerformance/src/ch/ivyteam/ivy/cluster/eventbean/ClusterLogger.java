@@ -20,7 +20,7 @@ import ch.ivyteam.log.Logger;
 @SuppressWarnings("restriction")
 public class ClusterLogger
 {
-	
+
 	private final IProject fProject;
 
 	public ClusterLogger(IProject project) {
@@ -42,7 +42,7 @@ public class ClusterLogger
 			}
 		});
 	}
-	
+
 	/**
 	 * Calls the method {@link #clearEventBeanLog()} as system user. 
 	 * This method could only be called inside a process request.
@@ -58,7 +58,7 @@ public class ClusterLogger
 			}
 		});
 	}
-	
+
 	/**
 	 * Clears the event bean log
 	 */
@@ -70,7 +70,7 @@ public class ClusterLogger
 			outputFile.delete();
 		}
 	}
-	
+
 	/**
 	 * @return the content of the event bean log. If the file does not exist, an empty string is returned.
 	 * @throws IOException
@@ -98,7 +98,7 @@ public class ClusterLogger
 		String nodeName = getNodeName();
 		logString("Bean '"+ beanName +"' on node '"+ nodeName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'");
 	}
-	
+
 	/**
 	 * Creates a log entry with the stack trace of the given {@link Throwable}.
 	 * @param th
@@ -108,7 +108,7 @@ public class ClusterLogger
 		String stackTrace = ExceptionUtils.getStackTrace(th);
 		logString(stackTrace);
 	}
-	
+
 	private void logString(String message)
 	{
 		try
@@ -139,6 +139,6 @@ public class ClusterLogger
 
 	private File getOutputFile()
 	{
-		return fProject.getFolder("log").getFile("ClusterLogger_" + getNodeName() + ".log").getLocation().toFile();
+		return fProject.getFolder("webContent").getFolder("log").getFile("ClusterLogger.log").getLocation().toFile();
 	}
 }
