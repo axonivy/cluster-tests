@@ -1,6 +1,6 @@
 [Ivy]
-[>Created: Tue Mar 23 08:38:06 CET 2010]
-127755F12451D4E4 3.14 #module
+[>Created: Thu Jan 20 09:27:54 CET 2011]
+127755F12451D4E4 3.15 #module
 >Proto >Proto Collection #zClass
 Ce0 Create Big #zClass
 Ce0 B #cInfo
@@ -21,21 +21,14 @@ Ce0 @PushWFArc f8 '' #zField
 Ce0 @Alternative f10 '' #zField
 Ce0 @PushWFArc f2 '' #zField
 Ce0 @TkArc f3 '' #zField
-Ce0 @DBStep f12 '' #zField
 Ce0 @GridStep f17 '' #zField
 Ce0 @PushWFArc f16 '' #zField
 Ce0 @GridStep f20 '' #zField
 Ce0 @PushWFArc f18 '' #zField
-Ce0 @GridStep f13 '' #zField
-Ce0 @PushWFArc f22 '' #zField
-Ce0 @PushWFArc f23 '' #zField
 Ce0 @GridStep f6 '' #zField
 Ce0 @PushWFArc f9 '' #zField
 Ce0 @PushWFArc f11 '' #zField
-Ce0 @Alternative f14 '' #zField
-Ce0 @PushWFArc f15 '' #zField
 Ce0 @PushWFArc f4 '' #zField
-Ce0 @PushWFArc f19 '' #zField
 >Proto Ce0 Ce0 Create #zField
 Ce0 f0 inParamDecl '<ch.ivyteam.ivy.cluster.CreateData data> param;' #txt
 Ce0 f0 inParamTable 'out=param.data;
@@ -68,7 +61,7 @@ Ce0 f5 actionTable 'out=in1;
 Ce0 f5 outTypes "ch.ivyteam.ivy.cluster.CreateData" #txt
 Ce0 f5 outLinks "TaskA.ivp" #txt
 Ce0 f5 caseData '#
-#Tue Mar 23 08:38:04 CET 2010
+#Thu Jan 20 09:12:25 CET 2011
 businessCreator.user=
 businessMilestone.timestamp=
 businessObject.code=
@@ -95,7 +88,8 @@ type.code=
 type.name=
 ' #txt
 Ce0 f5 taskData '#
-#Tue Mar 23 08:38:04 CET 2010
+#Thu Jan 20 09:12:25 CET 2011
+TaskA.BIZMSTS=new DateTime()
 TaskA.EXPRI=2
 TaskA.EXROL=Everybody
 TaskA.EXTYPE=0
@@ -103,18 +97,20 @@ TaskA.NAM=System Task <%\=in1.counter%> of <%\=in1.countOfTasks%>
 TaskA.PRI=2
 TaskA.ROL=SELF1
 TaskA.TYPE=1
+TaskA.customFields.varchar.1="task custom value from " + new Date()
 ' #txt
 Ce0 f5 taskAction 'import ch.ivyteam.ivy.workflow.TaskDefinition;
 List<TaskDefinition> taskDefinitions;
 TaskDefinition taskDef;taskDef = new TaskDefinition();
-taskDef.setStartRequestPath("127755F12451D4E4/127755F12451D4E4-f5/TaskA.ivp");
-taskDef.setUserFriendlyStartRequestPath("TaskA.ivp");
+taskDef.setStartRequestPath("TaskA.ivp");
 taskDef.setName(engine.expandMacros("System Task <%=in1.counter%> of <%=in1.countOfTasks%>"));
+taskDef.setBusinessMilestoneTimestamp(new DateTime());
 taskDef.setAutoStartTask(true);
 taskDef.setActivator("SELF1");
 taskDef.setPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
 taskDef.setExpiryActivator("Everybody");
 taskDef.setExpiryPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
+taskDef.setCustomVarCharField1("task custom value from " + new Date());
 taskDefinitions.add(taskDef);
 ' #txt
 Ce0 f5 type ch.ivyteam.ivy.cluster.CreateData #txt
@@ -123,7 +119,7 @@ Ce0 f5 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
         <name>create self task</name>
-        <nameStyle>16,9
+        <nameStyle>16,7,9
 </nameStyle>
     </language>
 </elementInfo>
@@ -165,59 +161,31 @@ Ce0 f3 outCond 'in.counter < in.countOfTasks' #txt
 Ce0 f3 type ch.ivyteam.ivy.cluster.CreateData #txt
 Ce0 f3 var in1 #txt
 Ce0 f3 152 166 152 186 #arcP
-Ce0 f12 actionDecl 'ch.ivyteam.ivy.cluster.CreateData out;
-' #txt
-Ce0 f12 actionTable 'out=in;
-out.recordset=recordset;
-' #txt
-Ce0 f12 dbSql '<?xml version=""1.0"" standalone=""no""?>
-<!DOCTYPE ANY_SQL SYSTEM  ""sqlStatements.dtd"">
-<ANY_SQL><Verbatim quote=""false"">in.sqlQuery</Verbatim></ANY_SQL>' #txt
-Ce0 f12 dbUrl AnyIvySystemDb #txt
-Ce0 f12 cache '{/cache true /invalidation false /scope 1 /groupname "\"ch.ivyteam.ivy.cluster.performance\""/identifier "\"bubu\""/lifetime_entry "0"/lifetime_group "0"}' #txt
-Ce0 f12 dbWizard in.sqlQuery #txt
-Ce0 f12 lotSize 2147483647 #txt
-Ce0 f12 startIdx 0 #txt
-Ce0 f12 type ch.ivyteam.ivy.cluster.CreateData #txt
-Ce0 f12 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<elementInfo>
-    <language>
-        <name>execute db query</name>
-        <nameStyle>16,9
-</nameStyle>
-    </language>
-</elementInfo>
-' #txt
-Ce0 f12 278 348 36 24 20 -2 #rect
-Ce0 f12 @|DBStepIcon #fIcon
 Ce0 f17 actionDecl 'ch.ivyteam.ivy.cluster.CreateData out;
 ' #txt
 Ce0 f17 actionTable 'out=in;
 ' #txt
-Ce0 f17 actionCode '
-ivy.case.setBusinessMilestoneTimestamp(new Date());
-ivy.case.setCustomVarCharField1("case custom value from " + new Date());
+Ce0 f17 actionCode '//ivy.case.setBusinessMilestoneTimestamp(new Date());
+//ivy.case.setCustomVarCharField1("case custom value from " + new Date());
 
-ivy.task.setBusinessMilestoneTimestamp(new Date());
-ivy.task.setCustomVarCharField1("task custom value from " + new Date());
-
-' #txt
+//ivy.task.setBusinessMilestoneTimestamp(new Date());
+//ivy.task.setCustomVarCharField1("task custom value from " + new Date());' #txt
 Ce0 f17 type ch.ivyteam.ivy.cluster.CreateData #txt
 Ce0 f17 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
         <name>update task/case</name>
-        <nameStyle>16,9
+        <nameStyle>16,7,9
 </nameStyle>
     </language>
 </elementInfo>
 ' #txt
-Ce0 f17 134 396 36 24 20 -2 #rect
+Ce0 f17 134 332 36 24 20 -2 #rect
 Ce0 f17 @|StepIcon #fIcon
 Ce0 f16 expr out #txt
-Ce0 f16 152 420 166 152 #arcP
-Ce0 f16 1 152 448 #addKink
-Ce0 f16 2 448 448 #addKink
+Ce0 f16 152 356 166 152 #arcP
+Ce0 f16 1 152 384 #addKink
+Ce0 f16 2 448 384 #addKink
 Ce0 f16 3 448 152 #addKink
 Ce0 f16 2 0.7428531861109842 0 0 #arcLabel
 Ce0 f20 actionDecl 'ch.ivyteam.ivy.cluster.CreateData out;
@@ -241,32 +209,10 @@ Ce0 f20 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     </language>
 </elementInfo>
 ' #txt
-Ce0 f20 134 348 36 24 20 -2 #rect
+Ce0 f20 134 284 36 24 20 -2 #rect
 Ce0 f20 @|StepIcon #fIcon
 Ce0 f18 expr out #txt
-Ce0 f18 152 372 152 396 #arcP
-Ce0 f13 actionDecl 'ch.ivyteam.ivy.cluster.CreateData out;
-' #txt
-Ce0 f13 actionTable 'out=in;
-' #txt
-Ce0 f13 actionCode ivy.datacache.getApplicationCache().invalidate(); #txt
-Ce0 f13 type ch.ivyteam.ivy.cluster.CreateData #txt
-Ce0 f13 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<elementInfo>
-    <language>
-        <name>invalidate app cache</name>
-        <nameStyle>20,9
-</nameStyle>
-    </language>
-</elementInfo>
-' #txt
-Ce0 f13 278 292 36 24 20 -2 #rect
-Ce0 f13 @|StepIcon #fIcon
-Ce0 f22 expr out #txt
-Ce0 f22 296 316 296 348 #arcP
-Ce0 f23 expr out #txt
-Ce0 f23 278 360 170 360 #arcP
-Ce0 f23 0 0.5784351214094918 0 0 #arcLabel
+Ce0 f18 152 308 152 332 #arcP
 Ce0 f6 actionDecl 'ch.ivyteam.ivy.cluster.CreateData out;
 ' #txt
 Ce0 f6 actionTable 'out=in;
@@ -284,22 +230,8 @@ Ce0 f9 expr out #txt
 Ce0 f9 152 77 152 92 #arcP
 Ce0 f11 expr out #txt
 Ce0 f11 152 116 152 138 #arcP
-Ce0 f14 type ch.ivyteam.ivy.cluster.CreateData #txt
-Ce0 f14 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<elementInfo>
-    <language/>
-</elementInfo>
-' #txt
-Ce0 f14 138 290 28 28 14 0 #rect
-Ce0 f14 @|AlternativeIcon #fIcon
-Ce0 f15 expr out #txt
-Ce0 f15 152 260 152 290 #arcP
-Ce0 f15 0 0.685399111196062 0 0 #arcLabel
-Ce0 f4 expr in #txt
-Ce0 f4 outCond 'in.sqlQuery.trim().length() > 0' #txt
-Ce0 f4 166 304 278 304 #arcP
-Ce0 f19 expr in #txt
-Ce0 f19 152 318 152 348 #arcP
+Ce0 f4 expr out #txt
+Ce0 f4 152 260 152 284 #arcP
 >Proto Ce0 .type ch.ivyteam.ivy.cluster.CreateData #txt
 >Proto Ce0 .processKind CALLABLE_SUB #txt
 >Proto Ce0 0 0 32 24 18 0 #rect
@@ -314,17 +246,9 @@ Ce0 f17 mainOut f16 tail #connect
 Ce0 f16 head f10 in #connect
 Ce0 f20 mainOut f18 tail #connect
 Ce0 f18 head f17 mainIn #connect
-Ce0 f13 mainOut f22 tail #connect
-Ce0 f22 head f12 mainIn #connect
-Ce0 f12 mainOut f23 tail #connect
-Ce0 f23 head f20 mainIn #connect
 Ce0 f0 mainOut f9 tail #connect
 Ce0 f9 head f6 mainIn #connect
 Ce0 f6 mainOut f11 tail #connect
 Ce0 f11 head f10 in #connect
-Ce0 f7 mainOut f15 tail #connect
-Ce0 f15 head f14 in #connect
-Ce0 f14 out f4 tail #connect
-Ce0 f4 head f13 mainIn #connect
-Ce0 f14 out f19 tail #connect
-Ce0 f19 head f20 mainIn #connect
+Ce0 f7 mainOut f4 tail #connect
+Ce0 f4 head f20 mainIn #connect
