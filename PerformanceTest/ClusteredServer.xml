@@ -96,8 +96,8 @@
 			  </antcall>
 		  </try>
 		  <finally>  
-			<!-- uninstall all cluster nodes -->
-			<antcall target="stopAndUninstallCluster"/>
+			<!-- ensure all cluster nodes are stopped -->
+			<antcall target="stop-remote-cluster" />
 		  </finally>
 		</trycatch>
     </target>
