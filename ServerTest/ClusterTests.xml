@@ -7,6 +7,9 @@
     <import file="${dir.ivy.server.ant.tasks}\build_ivy\local\local_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
 	
+	<property name="node1.baseUri" value="http://localhost:${node1.http.port}"/>
+    <property name="node2.baseUri" value="http://localhost:${node2.http.port}"/>
+
 	<path id="classpath.antcontrib">
 	  <fileset dir="${dir.antlibs}" includes="**/*.jar"/>
 	</path>
@@ -14,54 +17,119 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
 	
 	<description>
-		Executes cluster akceptance tests
+		Executes cluster aceptance tests
 	</description>
-		
-	<target name="installAndStartCluster">
-		<antcall target="install-and-run-local-cluster"/>	 
-    <!--<antcall target="install-and-run-server-standalone"/> -->
-	</target>
 
+  <target name="installAndStartCluster">
+    <antcall target="install-and-run-local-cluster"/>   
+  </target>
+  	
 	<target name="stopAndUninstallCluster">
 		<antcall target="uninstall-local-cluster"/>
     <!--<antcall target="server-uninstall"/>-->
 	</target>
 
-	<target name="all" depends="executeTaskResume"/>
+  <target name="all" depends="executeTasks"/>
+
+  <target name="executeTasks" depends="clean">
+    <trycatch>
+      <try>
+        <!-- Install cluster with two nodes -->
+      	<antcall target="installAndStartCluster"/>
+      	
+      	<!-- Executes all JUnit tests (/src/**/Test*.java) -->
+      	<antcall target="executeJUnitTest">
+      		<param name="JavaClassNamePattern" value="Test*.java" />
+      	</antcall>
+      	
+      	<!-- Tests the event-bean tests (ant and junit) -->
+      	<antcall target="testEventBeans"/>
+      </try>
+      <finally>  
+        <!-- uninstall all cluster nodes -->
+        <antcall target="stopAndUninstallCluster"/>
+      </finally>
+    </trycatch>
+  </target>
+
+  <target name="clean">
+  </target>
 	
-	<target name="clean">
-	</target>
-	
-	<target name="test">
-	    <mkdir dir="UnitTests"/>
-		<junit printsummary="yes" fork="yes" timeout="1200000" maxmemory="512m" dir="${basedir}">
-			<classpath>
-    			<pathelement path="classes"/>
-    			<fileset dir="${basedir}">
-      				<include name="lib/*.jar"/>
-    			</fileset>
-            </classpath>
-			<jvmarg value="-ea" />
-			<batchtest todir="UnitTests">
-				<formatter type="xml" />
-				<fileset dir="src">
-					<include name="**/Test*.java" />
-				</fileset>
-			</batchtest>
-		</junit>
-	</target>
-	
-	<target name="executeTaskResume" depends="clean">
-	  
-	  <trycatch>
+	<target name="testEventBeans" description="Test start/stop behavior of 'start event bean' and the 'intermediate event bean'">
+		<trycatch>
 		  <try>
-			<antcall target="installAndStartCluster"/>	  
-     		<antcall target="test"/>
-		  </try>
-		  <finally>  
-			<!-- uninstall all cluster nodes -->
-			<antcall target="stopAndUninstallCluster"/>
-		  </finally>
-		</trycatch>
-    </target>
+        <!-- cleans the event bean log on each node and each bean (an error will be thrown, but the file is cleared) -->
+        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    		
+        <!-- Start and stop Cluster node in defined sequence -->
+      	<!-- ** node 1 must be still the master -->
+      	<antcall target="server-stop">
+           <param name="instance.id" value="${node2.instance.id}" />
+        </antcall>
+        <antcall target="server-start">
+           <param name="instance.id" value="${node2.instance.id}" />
+        </antcall>
+      	
+        <!-- ** node 2 must be the master -->
+        <antcall target="server-stop">
+           <param name="instance.id" value="${node1.instance.id}" />
+        </antcall>
+        <antcall target="server-start">
+           <param name="instance.id" value="${node1.instance.id}" />
+        </antcall>
+    
+        <!-- ** node 2 must STILL be the master -->
+        <antcall target="server-stop">
+           <param name="instance.id" value="${node1.instance.id}" />
+        </antcall>
+        <antcall target="server-start">
+           <param name="instance.id" value="${node1.instance.id}" />
+        </antcall>
+    
+        <!-- ** node 1 must be the master -->
+        <antcall target="server-stop">
+           <param name="instance.id" value="${node2.instance.id}" />
+        </antcall>
+        <antcall target="server-start">
+           <param name="instance.id" value="${node2.instance.id}" />
+        </antcall>
+	  	</try>
+      <finally>
+      	<!-- finally start JUnit-Test -->
+      	<antcall target="executeJUnitTest">
+  	      <param name="JavaClassNamePattern" value="AssertEventBeanLog.java" />
+  	    </antcall>
+      </finally>
+    </trycatch>
+	</target>
+
+  <target name="executeJUnitTest">
+      <mkdir dir="UnitTests"/>
+      <junit printsummary="yes" fork="yes" timeout="1200000" maxmemory="512m" dir="${basedir}">
+      <classpath>
+          <pathelement path="classes"/>
+          <fileset dir="${basedir}">
+              <include name="lib/*.jar"/>
+          </fileset>
+      </classpath>
+      <jvmarg value="-ea" />
+
+      <sysproperty key="node1.baseUri" value="${node1.baseUri}"/>
+      <sysproperty key="node2.baseUri" value="${node2.baseUri}"/>
+
+      <batchtest todir="UnitTests">
+        <formatter type="xml" />
+        <fileset dir="src">
+          <include name="**/${JavaClassNamePattern}" />
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
 </project>
