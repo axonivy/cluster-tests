@@ -1,8 +1,8 @@
 package ch.ivyteam.ivy.cluster.eventbean;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import ch.ivyteam.ivy.persistence.PersistencyException;
 import ch.ivyteam.ivy.process.intermediateevent.AbstractProcessIntermediateEventBean;
 import ch.ivyteam.ivy.process.intermediateevent.IProcessIntermediateEventBeanRuntime;
 import ch.ivyteam.ivy.project.IIvyProject;
@@ -15,7 +15,7 @@ import ch.ivyteam.ivy.service.ServiceException;
 @SuppressWarnings("restriction")
 public abstract class AbstractTestIntermediateEventBean extends AbstractProcessIntermediateEventBean {
 
-	private ClusterLogger fClusterLogger;
+	private IProject project;
 
 	public AbstractTestIntermediateEventBean(String name, String description, Class<?> resultObjectClass) {
 		super(name, description, resultObjectClass);
@@ -27,8 +27,8 @@ public abstract class AbstractTestIntermediateEventBean extends AbstractProcessI
 		super.initialize(eventRuntime, configuration);
 		try {
 			IIvyProject ivyProject = IvyProjectNavigationUtil.getIvyProject(eventRuntime.getIntermediateEventElement().getProcessModelVersion());
-			fClusterLogger = new ClusterLogger(ivyProject.getProject());
-		} catch (PersistencyException e) {
+			project = ivyProject.getProject();
+		} catch (Exception e) {
 			throw new IllegalStateException("PMV is not available");
 		}
 	}
@@ -49,6 +49,12 @@ public abstract class AbstractTestIntermediateEventBean extends AbstractProcessI
 	
 	private void printStateChange()
 	{
-		fClusterLogger.logBeanRunningStateChange(this.getClass().getSimpleName(), isRunning());
+		try {
+			ClusterLogger.logBeanRunningStateChange(project, this.getClass().getSimpleName(), isRunning());
+		} 
+		catch (Exception ex) 
+		{
+			throw new IllegalStateException("Test case / environment is not set up correctly.", ex);
+		}
 	}
 }

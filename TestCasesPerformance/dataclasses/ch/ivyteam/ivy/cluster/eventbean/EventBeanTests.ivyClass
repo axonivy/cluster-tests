@@ -1,4 +1,6 @@
 EventBeanTests #class
 ch.ivyteam.ivy.cluster.eventbean #namespace
+beanName String #field
+beanName PERSISTENT #fieldModifier
 output String #field
 output PERSISTENT #fieldModifier

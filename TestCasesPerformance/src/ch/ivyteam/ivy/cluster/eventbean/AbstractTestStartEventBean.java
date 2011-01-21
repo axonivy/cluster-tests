@@ -1,17 +1,17 @@
 package ch.ivyteam.ivy.cluster.eventbean;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import ch.ivyteam.ivy.process.eventstart.AbstractProcessStartEventBean;
 import ch.ivyteam.ivy.process.eventstart.IProcessStartEventBeanRuntime;
-import ch.ivyteam.ivy.project.IIvyProject;
 import ch.ivyteam.ivy.project.IvyProjectNavigationUtil;
 import ch.ivyteam.ivy.service.ServiceException;
 
 @SuppressWarnings("restriction")
 public abstract class AbstractTestStartEventBean  extends AbstractProcessStartEventBean  {
 
-	private ClusterLogger fClusterLogger;
+	private IProject project;
 
 	protected AbstractTestStartEventBean(String name, String description) {
 		super(name, description);
@@ -20,8 +20,7 @@ public abstract class AbstractTestStartEventBean  extends AbstractProcessStartEv
 	@Override
 	public void initialize(IProcessStartEventBeanRuntime eventRuntime, String configuration) {
 		super.initialize(eventRuntime, configuration);
-		IIvyProject ivyProject = IvyProjectNavigationUtil.getIvyProject(eventRuntime.getProcessModelVersion());
-		fClusterLogger = new ClusterLogger(ivyProject.getProject());
+		project = IvyProjectNavigationUtil.getIvyProject(eventRuntime.getProcessModelVersion()).getProject();
 	}
 	
 	@Override
@@ -41,6 +40,13 @@ public abstract class AbstractTestStartEventBean  extends AbstractProcessStartEv
 	
 	private void printStateChange()
 	{
-		fClusterLogger.logBeanRunningStateChange(this.getClass().getSimpleName(), isRunning());
+		try
+		{
+			ClusterLogger.logBeanRunningStateChange(project, this.getClass().getSimpleName(), isRunning());
+		}
+		catch (Exception ex)
+		{
+			throw new IllegalStateException("Test case / environment is not set up correctly.", ex);
+		}
 	}
 }

@@ -1,0 +1,6 @@
+<P>
+To execute this process, you have to define as parameter the name of the bean. e.g.
+</P>
+<P>
+..ivp?beanName=[BeanName]
+</P>

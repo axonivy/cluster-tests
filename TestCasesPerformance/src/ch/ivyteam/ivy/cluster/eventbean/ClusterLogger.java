@@ -1,6 +1,5 @@
 package ch.ivyteam.ivy.cluster.eventbean;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,23 +7,23 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.resources.IProject;
 
 import ch.ivyteam.ivy.environment.Ivy;
-import ch.ivyteam.ivy.persistence.PersistencyException;
 import ch.ivyteam.ivy.security.SecurityManagerFactory;
-import ch.ivyteam.ivy.server.ServerFactory;
-import ch.ivyteam.log.Logger;
 
-@SuppressWarnings("restriction")
 public class ClusterLogger
 {
-
-	private final IProject fProject;
-
-	public ClusterLogger(IProject project) {
-		fProject = project;
+	/**
+	 * Creates a log entry with the given parameter
+	 * @param beanName
+	 * @param started
+	 * @throws IOException 
+	 */
+	public static void logBeanRunningStateChange(IProject project, String beanName, boolean started) throws IOException
+	{
+		File logFile = getLogFile(project, beanName);
+		appendString(logFile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'");
 	}
 
 	/**
@@ -33,27 +32,31 @@ public class ClusterLogger
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getContentAsSystemUser() throws Exception
+	public static String getContentAsSystemUser(final String beanName) throws Exception
 	{
 		return SecurityManagerFactory.getSecurityManager().executeAsSystem(new Callable<String>() {
+			@SuppressWarnings("restriction")
 			@Override
 			public String call() throws Exception {
-				return new ClusterLogger(Ivy.request().getProject().getProject()).getContentAsString();
+				IProject project = Ivy.request().getProject().getProject(); 
+				return ClusterLogger.getContentAsString(project, beanName);
 			}
 		});
 	}
 
 	/**
-	 * Calls the method {@link #clearEventBeanLog()} as system user. 
+	 * Calls the method {@link #deleteEventBeanLog()} as system user. 
 	 * This method could only be called inside a process request.
 	 * @throws Exception
 	 */
-	public static void clearEventBeanLogAsSystemUser() throws Exception
+	public static void deleteEventBeanLogAsSystemUser(final String beanName) throws Exception
 	{
 		SecurityManagerFactory.getSecurityManager().executeAsSystem(new Callable<Void>() {
+			@SuppressWarnings("restriction")
 			@Override
 			public Void call() throws Exception {
-				new ClusterLogger(Ivy.request().getProject().getProject()).clearEventBeanLog();
+				IProject project = Ivy.request().getProject().getProject();
+				ClusterLogger.deleteEventBeanLog(project, beanName);
 				return null;
 			}
 		});
@@ -62,9 +65,9 @@ public class ClusterLogger
 	/**
 	 * Clears the event bean log
 	 */
-	public void clearEventBeanLog()
+	private static void deleteEventBeanLog(IProject project, String beanName)
 	{
-		File outputFile = getOutputFile();
+		File outputFile = getLogFile(project, beanName);
 		if (outputFile.exists())
 		{
 			outputFile.delete();
@@ -75,9 +78,9 @@ public class ClusterLogger
 	 * @return the content of the event bean log. If the file does not exist, an empty string is returned.
 	 * @throws IOException
 	 */
-	public String getContentAsString() throws IOException
+	private static String getContentAsString(IProject project, String beanName) throws IOException
 	{
-		File outputFile = getOutputFile();
+		File outputFile = getLogFile(project, beanName);
 		if (outputFile.exists())
 		{
 			return FileUtils.readFileToString(outputFile);
@@ -88,57 +91,18 @@ public class ClusterLogger
 		}
 	}
 
-	/**
-	 * Creates a log entry with the given parameter
-	 * @param beanName
-	 * @param started
-	 */
-	public void logBeanRunningStateChange(String beanName, boolean started)
+	private static void appendString(File logFile, String message) throws IOException
 	{
-		String nodeName = getNodeName();
-		logString("Bean '"+ beanName +"' on node '"+ nodeName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'");
+		FileWriter writer = new FileWriter(logFile, true);
+        try {
+        	writer.append(message + "\n");
+        } finally {
+            IOUtils.closeQuietly(writer);
+        }
 	}
 
-	/**
-	 * Creates a log entry with the stack trace of the given {@link Throwable}.
-	 * @param th
-	 */
-	public void logThrowable(Throwable th)
+	private static File getLogFile(IProject project, String beanName)
 	{
-		String stackTrace = ExceptionUtils.getStackTrace(th);
-		logString(stackTrace);
-	}
-
-	private void logString(String message)
-	{
-		try
-		{
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(getOutputFile(), true));
-	        try {
-	        	bufferedWriter.append(message + "\n");
-	        } finally {
-	            IOUtils.closeQuietly(bufferedWriter);
-	        }
-		}
-		catch (Exception e) 
-		{
-			Logger.getClassLogger(ClusterLogger.class).error("Error while writing cluster log entry in testcase", e);
-			throw new IllegalStateException("Error while writing cluster log entry", e);
-		}
-	}
-
-	private static String getNodeName() {
-		String nodeName;
-		try {
-			nodeName = ServerFactory.getServer().getClusterManager().getLocalClusterNode().getName();
-		} catch (PersistencyException e) {
-			nodeName = "ERROR_GET_CLUSTERNAME";
-		}
-		return nodeName;
-	}
-
-	private File getOutputFile()
-	{
-		return fProject.getFolder("webContent").getFolder("log").getFile("ClusterLogger.log").getLocation().toFile();
+		return project.getFolder("webContent").getFolder("log").getFile("statechange_"+ beanName +".log").getLocation().toFile();
 	}
 }
