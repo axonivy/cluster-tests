@@ -4,8 +4,9 @@
 	<property name="dir.ivy.server.ant.tasks" value="..\..\builtUtil\IvyServerAntTasks"/>
 	<property name="dir.antlibs" value="c:\dev\EnvArchive\antlibs"/>
 
-    <import file="${dir.ivy.server.ant.tasks}\build_ivy\local\local_cluster_build.xml"/>
 	<property file="ClusteredServer.properties" />
+
+  <import file="${dir.ivy.server.ant.tasks}\build_ivy\local\local_cluster_build.xml"/>
 	
 	<property name="node1.baseUri" value="http://localhost:${node1.http.port}"/>
     <property name="node2.baseUri" value="http://localhost:${node2.http.port}"/>
@@ -103,6 +104,9 @@
 	  	</try>
       <finally>
       	<!-- finally start JUnit-Test -->
+		<copy todir="classes">
+			<fileset dir="src" includes="**/*.log"/>
+		</copy>
       	<antcall target="executeJUnitTest">
   	      <param name="JavaClassNamePattern" value="AssertEventBeanLog.java" />
   	    </antcall>
