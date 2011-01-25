@@ -1,0 +1,9 @@
+<P>
+To start, stop or getting the state of a PMV, you have to add the process model name as http parameter.
+</P>
+<P>
+&nbsp;
+</P>
+<P>
+E.g.: ... <B><FONT size=4>.ivp?pm=[MyProcessModelName]</B></FONT>
+</P>
