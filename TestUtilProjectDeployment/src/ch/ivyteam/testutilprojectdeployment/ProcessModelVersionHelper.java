@@ -63,7 +63,7 @@ public final class ProcessModelVersionHelper {
 		});
 	}
 	
-	public static String getActivityState(final String projectName) throws Exception
+	public static String getActivityOperationState(final String projectName) throws Exception
 	{
 		final ISecurityManager securityManager = SecurityManagerFactory.getSecurityManager();
 		return securityManager.executeAsSystem(new Callable<String>() 
@@ -74,7 +74,7 @@ public final class ProcessModelVersionHelper {
 				try
 				{
 					IProcessModelVersion pmv = getPmv(projectName);
-					return "State: " + pmv.getActivityStateText();
+					return "State: " + pmv.getActivityOperationStateText();
 				}
 				catch (Exception ex) 
 				{

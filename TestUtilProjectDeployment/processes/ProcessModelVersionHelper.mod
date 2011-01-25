@@ -1,5 +1,5 @@
 [Ivy]
-[>Created: Tue Jan 25 11:23:09 CET 2011]
+[>Created: Tue Jan 25 16:42:53 CET 2011]
 12DBC4D60E7D574C 3.15 #module
 >Proto >Proto Collection #zClass
 pn0 ProcessModelVersionHelper Big #zClass
@@ -175,7 +175,7 @@ pn0 f4 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 pn0 f4 @C|.responsibility Everybody #txt
 pn0 f4 283 83 26 26 14 0 #rect
 pn0 f4 @|StartRequestIcon #fIcon
-pn0 f6 outLink getActivityState.ivp #txt
+pn0 f6 outLink getActivityOperationState.ivp #txt
 pn0 f6 type ch.ivyteam.testutilprojectdeployment.Data #txt
 pn0 f6 inParamDecl '<java.lang.String pm> param;' #txt
 pn0 f6 inParamTable 'out.string=param.pm;
@@ -185,10 +185,10 @@ pn0 f6 actionDecl 'ch.ivyteam.testutilprojectdeployment.Data out;
 pn0 f6 guid 12DBC4DF493ABC05 #txt
 pn0 f6 requestEnabled true #txt
 pn0 f6 triggerEnabled false #txt
-pn0 f6 callSignature getActivityState(String) #txt
+pn0 f6 callSignature getActivityOperationState(String) #txt
 pn0 f6 persist false #txt
 pn0 f6 taskData '#
-#Tue Jan 25 11:20:05 CET 2011
+#Tue Jan 25 16:42:45 CET 2011
 TaskTriggered.ROL=Everybody
 TaskTriggered.EXTYPE=0
 TaskTriggered.EXPRI=2
@@ -197,7 +197,7 @@ TaskTriggered.PRI=2
 TaskTriggered.EXROL=Everybody
 ' #txt
 pn0 f6 caseData '#
-#Tue Jan 25 11:20:05 CET 2011
+#Tue Jan 25 16:42:45 CET 2011
 businessCreator.user=
 businessMilestone.timestamp=
 businessObject.code=
@@ -233,7 +233,7 @@ engine.updateCurrentTask(taskUpdDef);
 pn0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
-        <name>getActivityState.ivp</name>
+        <name>getActivityOperationState.ivp</name>
     </language>
 </elementInfo>
 ' #txt
@@ -269,7 +269,7 @@ pn0 f13 actionDecl 'ch.ivyteam.testutilprojectdeployment.Data out;
 ' #txt
 pn0 f13 actionTable 'out=in;
 ' #txt
-pn0 f13 actionCode 'in.result = ch.ivyteam.testutilprojectdeployment.ProcessModelVersionHelper.getActivityState(in.string);' #txt
+pn0 f13 actionCode 'in.result = ch.ivyteam.testutilprojectdeployment.ProcessModelVersionHelper.getActivityOperationState(in.string);' #txt
 pn0 f13 type ch.ivyteam.testutilprojectdeployment.Data #txt
 pn0 f13 422 180 36 24 20 -2 #rect
 pn0 f13 @|StepIcon #fIcon
