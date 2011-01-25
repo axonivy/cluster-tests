@@ -72,6 +72,16 @@ public class AssertEventBeanLog extends Assert
   }
 
   /**
+   * @param beanName
+   * @param remoteBaseUri
+   * @return The URl to the log file of the given bean
+   */
+  public static String getRemoteLogUrl(String remoteBaseUri, String beanName)
+  {
+    return remoteBaseUri + "/ivy/page/System/TestCasesPerformance/log/statechange_"+ beanName +".log";
+  }
+
+  /**
    * @param beanName 
    * @throws IOException 
    * @throws URISyntaxException 
@@ -96,7 +106,7 @@ public class AssertEventBeanLog extends Assert
    */
   private void assertLog(String beanName, int nodeId, String remoteBaseUri) throws URISyntaxException, IOException, MalformedURLException
   {
-    String remoteUrl = remoteBaseUri + "/ivy/page/System/TestCasesPerformance/log/statechange_"+ beanName +".log";
+    String remoteUrl = getRemoteLogUrl(beanName, remoteBaseUri);
     String localFilePath = "Assert" + beanName +"-node"+ String.valueOf(nodeId) + ".log";
     URI expectedFileUrl = AssertEventBeanLog.class.getResource(localFilePath).toURI();
     String expected = FileUtils.readFileToString(new File(expectedFileUrl));
