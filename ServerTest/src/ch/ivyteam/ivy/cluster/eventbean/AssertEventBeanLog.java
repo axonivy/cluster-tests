@@ -106,7 +106,7 @@ public class AssertEventBeanLog extends Assert
    */
   private void assertLog(String beanName, int nodeId, String remoteBaseUri) throws URISyntaxException, IOException, MalformedURLException
   {
-    String remoteUrl = getRemoteLogUrl(beanName, remoteBaseUri);
+    String remoteUrl = getRemoteLogUrl(remoteBaseUri, beanName);
     String localFilePath = "Assert" + beanName +"-node"+ String.valueOf(nodeId) + ".log";
     URI expectedFileUrl = AssertEventBeanLog.class.getResource(localFilePath).toURI();
     String expected = FileUtils.readFileToString(new File(expectedFileUrl));
