@@ -21,22 +21,24 @@
 		Executes cluster aceptance tests
 	</description>
 
-  <target name="installAndStartCluster">
-    <antcall target="install-and-run-local-cluster"/>   
-  </target>
-  	
-	<target name="stopAndUninstallCluster">
-		<antcall target="uninstall-local-cluster"/>
-    <!--<antcall target="server-uninstall"/>-->
-	</target>
-
-  <target name="all" depends="executeTasks"/>
+	<target name="all" depends="executeTasks"/>
 
   <target name="executeTasks" depends="clean">
+  	
+    <!-- Be sure cluster is uninstalled -->
+    <trycatch>
+      <try>
+         <antcall target="uninstall-local-cluster"/>
+      </try>
+      <catch>
+      <echo>Uninstall cluster failed (can be ignored)</echo>
+      </catch>
+    </trycatch>
+  	
     <trycatch>
       <try>
         <!-- Install cluster with two nodes -->
-      	<antcall target="installAndStartCluster"/>
+      	<antcall target="install-and-run-local-cluster"/>
       	
       	<!-- Executes all JUnit tests (/src/**/Test*.java) -->
       	<antcall target="executeJUnitTest">
@@ -47,8 +49,8 @@
       	<antcall target="testEventBeans"/>
       </try>
       <finally>  
-        <!-- uninstall all cluster nodes -->
-        <antcall target="stopAndUninstallCluster"/>
+        <!-- stop cluster nodes (do not uninstall, so we have log etc till next run) -->
+        <antcall target="stop-local-cluster"/>
       </finally>
     </trycatch>
   </target>
