@@ -162,7 +162,11 @@
 		exeucte.page	
 	-->
 	<target name="executeTests">
-	
+		<!-- reset jkmanager -->
+		<tempfile property="reset.jkmanager.result.file" destdir="temp" suffix=".html" deleteonexit="true"/>
+		<get src="http://${performance.server}/jkmanager/?cmd=reset&amp;from=list&amp;w=XpertIvyServer" dest="${reset.jkmanager.result.file}" ignoreerrors="true"/>
+		<sleep seconds="5"/>
+		
 		<for parallel="false" list="${execute.thread.counts}" param="execute.threads" trim="true" delimiter=",/-">
 			<sequential>
 				<antcall target="singleRequest">
@@ -183,11 +187,6 @@
 		- singleRequest.threads
 	-->
 	<target name="singleRequest">
-	
-		<!-- reset jkmanager -->
-		<tempfile property="reset.jkmanager.result.file" destdir="temp" suffix=".html" deleteonexit="true"/>
-		<get src="http://${performance.server}/jkmanager/?cmd=reset&amp;from=list&amp;w=XpertIvyServer" dest="${reset.jkmanager.result.file}" ignoreerrors="true"/>
-		<sleep seconds="3"/>
 		
 		<!-- store jkmanager status -->
 		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
