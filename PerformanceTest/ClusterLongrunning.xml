@@ -179,7 +179,7 @@
       
       <property name="runner.name" value="${execute.name}"/>
       <property name="runner.server" value="${performance.server}"/>
-      <property name="runner.port" value="${performance.port}}"/>
+      <property name="runner.port" value="${performance.port}"/>
       <property name="runner.duration" value="${execute.duration}"/>
       <property name="runner.threads" value="${execute.threads}"/>
     </jmeter>
