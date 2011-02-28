@@ -1,4 +1,4 @@
-<project default="testMasterUpDownUnderStress">
+<project default="executeClusterUpDownUnderStress">
 
 	<description>
 		Executes two cluster test
@@ -10,246 +10,239 @@
     - Start node 1
     - Stop node 1
 	</description>
-	
 
 	<!-- Configure whre to download the server zip -->
 	<property name="src.job.name" value="Trunk_All" />
 	<property name="src.build.number" value="lastSuccessfulBuild" />
-	
+
 	<!-- Configure the thread/user counts of the tests -->
 	<property name="execute.thread.count" value="25" />
 	<!-- Configure the test cases to run -->
 	<property name="execute.performance.tests" value="onetask" />
-  
-  <property name="performance.port" value="8080"/>
 
-  
-	<property name="performance.test.testUrl" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp"/>
-	
+	<property name="performance.port" value="8080" />
+
+	<property name="performance.test.testUrl" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp" />
+
 	<!-- Define an environment variable pointing to JMETER folder or change this -->
-	<property environment="env"/>
+	<property environment="env" />
 	<!--property name="jmeter-home" location="${env.JMETER_DIR}"/-->
-	<property name="jmeter-home" location="lib/jmeter/"/>
-  
+	<property name="jmeter-home" location="lib/jmeter/" />
+
 	<property file="ClusterUpDownUnderStress.properties" />
-  <import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
-	
-  <property name="node1.rootUrl" value="${node1.remote.host}:8080"/>
-  <property name="node2.rootUrl" value="${node1.remote.host}:8080"/>
-  
+	<import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml" />
+
+	<property name="node1.rootUrl" value="${node1.remote.host}:8080" />
+	<property name="node2.rootUrl" value="${node1.remote.host}:8080" />
+
 	<path id="classpath.antcontrib">
-	  <fileset dir="../antlibs" includes="**/*.jar"/>
+		<fileset dir="../antlibs" includes="**/*.jar" />
 	</path>
-	
-	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib" />
 
 	<!--
 	jmeter manual:
 	http://jakarta.apache.org/jmeter/usermanual/component_reference.html
 	-->
-	
+
 	<!-- ant-jmeter.jar comes with jmeter, be sure this is the release you have -->
 	<path id="ant.jmeter.classpath">
-		<pathelement
-       location="${jmeter-home}/extras/ant-jmeter-1.0.9.jar" />
+		<pathelement location="${jmeter-home}/extras/ant-jmeter-1.0.9.jar" />
 	</path>
 
-	<taskdef 
-	    name="jmeter"
-	    classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
-	    classpathref="ant.jmeter.classpath" />
+	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpathref="ant.jmeter.classpath" />
 
 	<target name="clean">
-		<delete dir="results_UpDownUnderStress"/>
-		<delete file="jmeter.log"/>
-		<mkdir dir="results_UpDownUnderStress/jtl"/>
-		<mkdir dir="results_UpDownUnderStress/html"/>
-		<mkdir dir="results_UpDownUnderStress/logs"/>
+		<delete dir="results_UpDownUnderStress" />
+		<delete file="jmeter.log" />
+		<mkdir dir="results_UpDownUnderStress/jtl" />
+		<mkdir dir="results_UpDownUnderStress/html" />
+		<mkdir dir="results_UpDownUnderStress/logs" />
 	</target>
 
 	<target name="installAndStartCluster">
-		<antcall target="install-and-run-remote-cluster"/>	  
+		<antcall target="install-and-run-remote-cluster" />
 	</target>
 
-  <target name="executeClusterUpDownUnderStress" depends="clean">
-	  <!-- Be sure cluster is uninstalled -->
+	<target name="executeClusterUpDownUnderStress" depends="clean">
+		<!-- Be sure cluster is uninstalled -->
 		<trycatch>
-		  <try>
-		    <antcall target="uninstall-remote-cluster"/>
-		  </try>
-		  <catch>
-			  <echo>Uninstall cluster failed (can be ignored, this node was not installed before)</echo>
-		  </catch>
+			<try>
+				<antcall target="uninstall-remote-cluster" />
+			</try>
+			<catch>
+				<echo>Uninstall cluster failed (can be ignored, this node was not installed before)</echo>
+			</catch>
 		</trycatch>
-    
-	  <trycatch>
-		  <try>
-			  
-        <antcall target="installAndStartCluster"/>
-        <antcall target="stop-remote-cluster"/>
 
-        <antcall target="testSlaveUpDownUnderStress" />
-        <antcall target="testMasterUpDownUnderStress" />
+		<trycatch>
+			<try>
 
-		  </try>
-		  <finally>  
-			  <!-- ensure all cluster nodes are stopped -->
-			  <antcall target="stop-remote-cluster" />
-		  </finally>
+				<antcall target="installAndStartCluster" />
+				<antcall target="stop-remote-cluster" />
+
+				<antcall target="testSlaveUpDownUnderStress" />
+				<antcall target="testMasterUpDownUnderStress" />
+
+			</try>
+			<finally>
+				<!-- ensure all cluster nodes are stopped -->
+				<antcall target="stop-remote-cluster" />
+				<!-- remove server zips -->
+				<antcall target="delete-remote-zip" />
+			</finally>
 		</trycatch>
-  </target>
-  
+	</target>
+
 	<target name="testSlaveUpDownUnderStress">
-  
+
 		<antcall target="remote-server-start">
-      <param name="remote.host" value="${node1.remote.host}" />
-      <param name="instance.id" value="${node1.instance.id}" />
-    </antcall>
-    <sleep seconds="10"/>
-    <echo>* Main Process * Started node 1</echo>
+			<param name="remote.host" value="${node1.remote.host}" />
+			<param name="instance.id" value="${node1.instance.id}" />
+		</antcall>
+		<sleep seconds="10" />
+		<echo>* Main Process * Started node 1</echo>
 
 		<!-- store ivy cluster status -->
-		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_10-node1-started_?state-on-node1.html" ignoreerrors="true"/>
-    
+		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_10-node1-started_?state-on-node1.html" ignoreerrors="true" />
+
 		<parallel threadCount="2">
 			<sequential>
 				<echo>* Parallel 1 * Start executing requests</echo>
-        <antcall target="singleRequest">
-          <param name="execute.node" value="node1"/>
-          <param name="singleRequest.host" value="${node1.remote.host}"/>
-					<param name="singleRequest.name" value="testSlaveUpDownUnderStress-mustSuccess-node1"/>
-					<param name="singleRequest.page" value="${performance.test.testUrl}"/>
-					<param name="singleRequest.duration" value="240"/>
-					<param name="singleRequest.threads" value="${execute.thread.count}"/>
+				<antcall target="singleRequest">
+					<param name="execute.node" value="node1" />
+					<param name="singleRequest.host" value="${node1.remote.host}" />
+					<param name="singleRequest.name" value="testSlaveUpDownUnderStress-mustSuccess-node1" />
+					<param name="singleRequest.page" value="${performance.test.testUrl}" />
+					<param name="singleRequest.duration" value="240" />
+					<param name="singleRequest.threads" value="${execute.thread.count}" />
 				</antcall>
 				<echo>* Parallel 1 * Stopped executing requests</echo>
-        <!-- store ivy cluster status -->
-        <get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_90-end-stresstest__state-on-node1.html" ignoreerrors="true"/>
+				<!-- store ivy cluster status -->
+				<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_90-end-stresstest__state-on-node1.html" ignoreerrors="true" />
 
 			</sequential>
 			<sequential>
-        <echo>* Parallel 2 * Waiting 20 sec. to start node 2 </echo>
-        <sleep seconds="20"/>
-			
-        <echo>* Parallel 2 * Starting node 2</echo>
-        <antcall target="remote-server-start">
-          <param name="remote.host" value="${node2.remote.host}" />
-          <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
-        <sleep seconds="10"/>
-        
-        <!-- store ivy cluster status -->
-        <get src="http://${node2.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_20-node2-started__state-on-node2.html" ignoreerrors="true"/>
-        <!-- store ivy cluster status -->
-        <get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_20-node2-started__state-on-node1.html" ignoreerrors="true"/>
+				<echo>* Parallel 2 * Waiting 20 sec. to start node 2 </echo>
+				<sleep seconds="20" />
 
- 				<echo>* Parallel 2 * Start executing requests</echo>
-        <antcall target="singleRequest">
-          <param name="execute.node" value="node2"/>
-          <param name="singleRequest.host" value="${node2.remote.host}"/>
-					<param name="singleRequest.name" value="testSlaveUpDownUnderStress-mustSuccess-node2"/>
-					<param name="singleRequest.page" value="${performance.test.testUrl}"/>
-					<param name="singleRequest.duration" value="30"/>
-					<param name="singleRequest.threads" value="${execute.thread.count}"/>
+				<echo>* Parallel 2 * Starting node 2</echo>
+				<antcall target="remote-server-start">
+					<param name="remote.host" value="${node2.remote.host}" />
+					<param name="instance.id" value="${node2.instance.id}" />
+				</antcall>
+				<sleep seconds="10" />
+
+				<!-- store ivy cluster status -->
+				<get src="http://${node2.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_20-node2-started__state-on-node2.html" ignoreerrors="true" />
+				<!-- store ivy cluster status -->
+				<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_20-node2-started__state-on-node1.html" ignoreerrors="true" />
+
+				<echo>* Parallel 2 * Start executing requests</echo>
+				<antcall target="singleRequest">
+					<param name="execute.node" value="node2" />
+					<param name="singleRequest.host" value="${node2.remote.host}" />
+					<param name="singleRequest.name" value="testSlaveUpDownUnderStress-mustSuccess-node2" />
+					<param name="singleRequest.page" value="${performance.test.testUrl}" />
+					<param name="singleRequest.duration" value="30" />
+					<param name="singleRequest.threads" value="${execute.thread.count}" />
 				</antcall>
 				<echo>* Parallel 2 * Stopped executing requests</echo>
-        <sleep seconds="10"/>
-        <echo>* Parallel 2 * Stop node 2</echo>
-        <antcall target="remote-server-stop">
-          <param name="remote.host" value="${node2.remote.host}" />
-          <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
+				<sleep seconds="10" />
+				<echo>* Parallel 2 * Stop node 2</echo>
+				<antcall target="remote-server-stop">
+					<param name="remote.host" value="${node2.remote.host}" />
+					<param name="instance.id" value="${node2.instance.id}" />
+				</antcall>
 
-        <!-- store ivy cluster status -->
-        <get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_30-node2-stopped__state-on-node1.html" ignoreerrors="true"/>
+				<!-- store ivy cluster status -->
+				<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_30-node2-stopped__state-on-node1.html" ignoreerrors="true" />
 			</sequential>
 		</parallel>
-		
-    <!-- store ivy cluster status -->
-    <get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_80-before-stop-node1__state-on-node1.html" ignoreerrors="true"/>
-    
-    <echo>* Main Process * Stop node1</echo>
-    <antcall target="remote-server-stop">
-      <param name="remote.host" value="${node1.remote.host}" />
-      <param name="instance.id" value="${node1.instance.id}" />
-    </antcall>
-		
+
+		<!-- store ivy cluster status -->
+		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_80-before-stop-node1__state-on-node1.html" ignoreerrors="true" />
+
+		<echo>* Main Process * Stop node1</echo>
+		<antcall target="remote-server-stop">
+			<param name="remote.host" value="${node1.remote.host}" />
+			<param name="instance.id" value="${node1.instance.id}" />
+		</antcall>
+
 	</target>
 
-  <target name="testMasterUpDownUnderStress">
+	<target name="testMasterUpDownUnderStress">
 
-    <antcall target="stop-remote-cluster"/>
+		<antcall target="stop-remote-cluster" />
 
-    <parallel threadCount="2">
+		<parallel threadCount="2">
 			<sequential>
-        <echo>* Parallel 1 * Started executing requests (must be the FIRST LOG-MESSAGE of this target)</echo>
-        <antcall target="singleRequest">
-          <param name="execute.node" value="node1"/>
-          <param name="singleRequest.host" value="${node1.remote.host}"/>
-					<param name="singleRequest.name" value="testMasterUpDownUnderStress-With-Errors-NoError-Errors"/>
-					<param name="singleRequest.page" value="${performance.test.testUrl}"/>
-					<param name="singleRequest.duration" value="240"/>
-					<param name="singleRequest.threads" value="${execute.thread.count}"/>
+				<echo>* Parallel 1 * Started executing requests (must be the FIRST LOG-MESSAGE of this target)</echo>
+				<antcall target="singleRequest">
+					<param name="execute.node" value="node1" />
+					<param name="singleRequest.host" value="${node1.remote.host}" />
+					<param name="singleRequest.name" value="testMasterUpDownUnderStress-With-Errors-NoError-Errors" />
+					<param name="singleRequest.page" value="${performance.test.testUrl}" />
+					<param name="singleRequest.duration" value="240" />
+					<param name="singleRequest.threads" value="${execute.thread.count}" />
 				</antcall>
 				<echo>* Parallel 1 * Stopped executing requests (must be the LAST LOG-MESSAGE of this target)</echo>
 			</sequential>
 			<sequential>
 
-        <echo>* Parallel 2 * Waiting 10 sec. to start master node </echo>
-        <sleep seconds="10"/>
+				<echo>* Parallel 2 * Waiting 10 sec. to start master node </echo>
+				<sleep seconds="10" />
 
-        <echo>* Parallel 2 * Starting master node</echo>
-        <antcall target="remote-server-start">
-          <param name="remote.host" value="${node1.remote.host}" />
-          <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
-        <sleep seconds="10"/>
-        
-        <echo>* Parallel 2 * Started executing requests</echo>
-        <antcall target="singleRequest">
-          <param name="execute.node" value="node1"/>
-          <param name="singleRequest.host" value="${node1.remote.host}"/>
-					<param name="singleRequest.name" value="testMasterUpDownUnderStress-mustSuccess"/>
-					<param name="singleRequest.page" value="${performance.test.testUrl}"/>
-					<param name="singleRequest.duration" value="30"/>
-					<param name="singleRequest.threads" value="${execute.thread.count}"/>
+				<echo>* Parallel 2 * Starting master node</echo>
+				<antcall target="remote-server-start">
+					<param name="remote.host" value="${node1.remote.host}" />
+					<param name="instance.id" value="${node1.instance.id}" />
+				</antcall>
+				<sleep seconds="10" />
+
+				<echo>* Parallel 2 * Started executing requests</echo>
+				<antcall target="singleRequest">
+					<param name="execute.node" value="node1" />
+					<param name="singleRequest.host" value="${node1.remote.host}" />
+					<param name="singleRequest.name" value="testMasterUpDownUnderStress-mustSuccess" />
+					<param name="singleRequest.page" value="${performance.test.testUrl}" />
+					<param name="singleRequest.duration" value="30" />
+					<param name="singleRequest.threads" value="${execute.thread.count}" />
 				</antcall>
 				<echo>* Parallel 2 * Stopped executing requests</echo>
-        <sleep seconds="10"/>
-        
-        <echo>* Parallel 2 * Stop master node</echo>
-        <antcall target="remote-server-stop">
-          <param name="remote.host" value="${node1.remote.host}" />
-          <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
-        <echo>* Parallel 2 * Stopped master node</echo>
+				<sleep seconds="10" />
+
+				<echo>* Parallel 2 * Stop master node</echo>
+				<antcall target="remote-server-stop">
+					<param name="remote.host" value="${node1.remote.host}" />
+					<param name="instance.id" value="${node1.instance.id}" />
+				</antcall>
+				<echo>* Parallel 2 * Stopped master node</echo>
 
 			</sequential>
 		</parallel>
 
-  </target>
+	</target>
 
 	<target name="singleRequest">
-		
-		<!-- store ivy cluster status -->
-		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/${singleRequest.name}_50-cluster-status_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes_before.html" ignoreerrors="true"/>
 
-		<jmeter 
-			jmeterhome="${jmeter-home}" 
-			testplan="jmetertest/singleRequest.jmx"
-			resultlog="results_UpDownUnderStress/jtl/${singleRequest.name}_singleRequest_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes.jtl">
-			
-			<property name="runner.name" value="${singleRequest.name}"/>
-			<property name="runner.server" value="${singleRequest.host}"/>
-			<property name="runner.port" value="${performance.port}"/>
-			<property name="runner.page" value="${singleRequest.page}"/>
-			<property name="runner.duration" value="${singleRequest.duration}"/>
-			<property name="runner.threads" value="${singleRequest.threads}"/>
+		<!-- store ivy cluster status -->
+		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/${singleRequest.name}_50-cluster-status_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes_before.html" ignoreerrors="true" />
+
+		<jmeter jmeterhome="${jmeter-home}" testplan="jmetertest/singleRequest.jmx" resultlog="results_UpDownUnderStress/jtl/${singleRequest.name}_singleRequest_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes.jtl">
+
+			<property name="runner.name" value="${singleRequest.name}" />
+			<property name="runner.server" value="${singleRequest.host}" />
+			<property name="runner.port" value="${performance.port}" />
+			<property name="runner.page" value="${singleRequest.page}" />
+			<property name="runner.duration" value="${singleRequest.duration}" />
+			<property name="runner.threads" value="${singleRequest.threads}" />
 		</jmeter>
 
 		<!-- store ivy cluster status -->
-		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/${singleRequest.name}_50-cluster-status_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes_after.html" ignoreerrors="true"/>
-		
+		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/${singleRequest.name}_50-cluster-status_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.node}-nodes_after.html" ignoreerrors="true" />
+
 	</target>
 
 </project>
