@@ -90,7 +90,7 @@
 				<!-- ensure all cluster nodes are stopped -->
 				<antcall target="stop-remote-cluster" />
 				<!-- remove server zips -->
-				<antcall target="delete-remote-zip" />
+				<antcall target="delete-remote-cluster-zip" />
 			</finally>
 		</trycatch>
 	</target>
