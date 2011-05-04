@@ -131,12 +131,12 @@
         </antcall>
       </sequential>
     </for>
-    
+    <echo>Running Test Cases</echo>
 		<parallel>
 			<antcall target="startRdTestCase"/>
 			<antcall target="multiRequest"/>
     </parallel>
-		
+    <echo>Test Cases Finished</echo>
     <for parallel="true" list="${execute.node.names}" param="node.name">
       <sequential>
         <antcall target="remote-server-stop">
@@ -168,9 +168,9 @@
   <target name="multiRequest">
     
     <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
     <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
   
     <jmeter 
       jmeterhome="${jmeter-home}" 
@@ -185,18 +185,18 @@
     </jmeter>
 
     <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
     <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 
   </target>
 
   <target name="startRdTestCase">
 
     <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
     <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 
     <echo> startRdTestCase: Starting Rich Dialog Test Case ${execute.name}, duration: ${execute.duration}, threads ${execute.threads} </echo>
     <for parallel="true" begin="0" end="${execute.threads}" param="index" threadCount="${execute.threads}">
@@ -217,9 +217,9 @@
     </for>
   
     <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
     <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
     
   </target>
 
@@ -227,12 +227,9 @@
 
     <set-install-properties instance.id="${instance.id}" />
 
-    <timedJUnit printsummary="yes" fork="yes" timeout="120000" maxmemory="256m" showoutput="true" 
+    <timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" 
         executeSecond="${execute.duration}"
         outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
-        <!--
-        outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user"
-        -->
       <jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
       <jvmarg value="-ea" />
       <classpath>
