@@ -28,9 +28,6 @@
 	<description>
 		Executes performance tests
 	</description>
-	
-	<property name="performance.server" value="zugtstsrv2w0332"/>
-	<property name="performance.port" value="80"/>
 
 	<property name="performance.test.ivyscript" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
 	<property name="performance.test.dbquery" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
