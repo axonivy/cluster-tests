@@ -1,264 +1,246 @@
 <project default="all">
 
-  <description>
+	<description>
     Executes a long running test
   </description>
 
-  <path id="classpath.antcontrib">
-    <fileset dir="../antlibs" includes="**/*.jar"/>
-  </path>
-  <taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
-  <taskdef name="timedJUnit" classname="ch.ivyteam.ant.tasks.TimedJUnitTask" classpathref="classpath.antcontrib" />
+	<path id="classpath.antcontrib">
+		<fileset dir="../antlibs" includes="**/*.jar"/>
+	</path>
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
+	<taskdef name="timedJUnit" classname="ch.ivyteam.ant.tasks.TimedJUnitTask" classpathref="classpath.antcontrib" />
 
 	<!-- Execution parameters, also configured from the hudson job -->
-  <property name="src.job.name" value="Trunk_All" />
-  <property name="src.build.number" value="lastSuccessfulBuild" />
+	<property name="src.job.name" value="Trunk_All" />
+	<property name="src.build.number" value="lastSuccessfulBuild" />
 	<property name="execute.threads" value="16" />
-  <property name="execute.duration" value="10800"/>
+	<property name="execute.duration" value="10800"/>
 
 	<!-- defines the used nodes (they have to be configured in ClusterLongrunning.properties) -->
 	<property name="execute.nodes" value="2"/>
 	<property name="execute.node.names" value="node1,node2"/>
 	<property name="execute.name" value="ClusterTest_LongRunning"/>
-  
-  <!-- performance test urls -->
-  <property name="performance.test.rdload.appUrl" value="http://${performance.server}:${performance.port}/ivy/pro/System" />
-	
-  <!-- local server (used for rd-test client) -->
-  <import file="../IvyServerAntTasks/build_ivy/local/local_targets.xml" />
-  <property file="${user.home}/ant_env.properties" />
-  
-  <property name="url.localhost.licence" value="./../../installation_template/configuration/local_xpert_ivy_server.lic" />
-  <property name="test.classes.dir" location="./testcases"/>
 
-  <!-- remote claster -->
-  <property file="ClusterLongrunning.properties" />
-  <import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
+	<!-- performance test urls -->
+	<property name="performance.test.rdload.appUrl" value="http://${performance.server}:${performance.port}/ivy/pro/System" />
 
-  <!--
+	<!-- local server (used for rd-test client) -->
+	<import file="../IvyServerAntTasks/build_ivy/local/local_targets.xml" />
+	<property file="${user.home}/ant_env.properties" />
+
+	<property name="url.localhost.licence" value="./../../installation_template/configuration/local_xpert_ivy_server.lic" />
+	<property name="test.classes.dir" location="./testcases"/>
+
+	<!-- remote claster -->
+	<property file="ClusterLongrunning.properties" />
+	<import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
+
+	<!--
   jmeter manual:
   http://jakarta.apache.org/jmeter/usermanual/component_reference.html
   -->
-  
-  <!-- Define an environment variable pointing to JMETER folder or change this -->
-  <property environment="env"/>
-  <!--property name="jmeter-home" location="${env.JMETER_DIR}"/-->
-  <property name="jmeter-home" location="lib/jmeter/"/>
 
-  <!-- ant-jmeter.jar comes with jmeter, be sure this is the release you have -->
-  <path id="ant.jmeter.classpath">
-    <pathelement
+	<!-- Define an environment variable pointing to JMETER folder or change this -->
+	<property environment="env"/>
+	<!--property name="jmeter-home" location="${env.JMETER_DIR}"/-->
+	<property name="jmeter-home" location="lib/jmeter/"/>
+
+	<!-- ant-jmeter.jar comes with jmeter, be sure this is the release you have -->
+	<path id="ant.jmeter.classpath">
+		<pathelement
        location="${jmeter-home}/extras/ant-jmeter-1.0.9.jar" />
-  </path>
+	</path>
 
-  <taskdef 
+	<taskdef 
       name="jmeter"
       classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
       classpathref="ant.jmeter.classpath" />
 
-  <target name="all" depends="executeAllTests"/>
+	<target name="all" depends="executeAllTests"/>
 
-  <target name="clean">
-    <parallel>
-      <!-- Be sure local server is uninstalled -->
-      <trycatch>
-        <try>
-            <antcall target="server-uninstall"/>
-        </try>
-        <catch>
-          <echo>Uninstall local server failed (can be ignored, was not installed before)</echo>
-        </catch>
-      </trycatch>
-      <!-- Be sure remote cluster is uninstalled -->
-      <trycatch>
-        <try>
-            <antcall target="uninstall-remote-cluster"/>
-        </try>
-        <catch>
-          <echo>Uninstall remote cluster failed (can be ignored, was not installed before)</echo>
-        </catch>
-      </trycatch>
-    </parallel>
-    
-    <delete dir="./test_jars"/>
-    <delete dir="./test_3rd_party_jars"/>
-    <delete dir="${test.classes.dir}"/>
-    <delete dir="results"/>
-    <delete file="jmeter.log"/>
-    <mkdir dir="results/jtl"/>
-    <mkdir dir="results/html"/>
-    <mkdir dir="results/logs"/>
-    <mkdir dir="results/junit"/>
-  </target>
+	<target name="clean">
+		<parallel>
+			<!-- Be sure local server is uninstalled -->
+			<trycatch>
+				<try>
+					<antcall target="server-uninstall"/>
+				</try>
+				<catch>
+					<echo>Uninstall local server failed (can be ignored, was not installed before)</echo>
+				</catch>
+			</trycatch>
+			<!-- Be sure remote cluster is uninstalled -->
+			<trycatch>
+				<try>
+					<antcall target="uninstall-remote-cluster"/>
+				</try>
+				<catch>
+					<echo>Uninstall remote cluster failed (can be ignored, was not installed before)</echo>
+				</catch>
+			</trycatch>
+		</parallel>
 
-  <target name="executeAllTests" depends="clean">
-    <trycatch>
-      <try>
+		<delete dir="./test_jars"/>
+		<delete dir="./test_3rd_party_jars"/>
+		<delete dir="${test.classes.dir}"/>
+		<delete dir="results"/>
+		<delete file="jmeter.log"/>
+		<mkdir dir="results/jtl"/>
+		<mkdir dir="results/html"/>
+		<mkdir dir="results/logs"/>
+		<mkdir dir="results/junit"/>
+	</target>
+
+	<target name="executeAllTests" depends="clean">
+		<trycatch>
+			<try>
 
 				<parallel>
-          <sequential>
-            <antcall target="setupRdTestCase"/>
-          </sequential>
-          <sequential>
-            <antcall target="install-and-run-remote-cluster"/>
-            <antcall target="stop-remote-cluster" />
-          </sequential>
-        </parallel>
+					<sequential>
+						<antcall target="setupRdTestCase"/>
+					</sequential>
+					<sequential>
+						<antcall target="install-and-run-remote-cluster"/>
+						<antcall target="stop-remote-cluster" />
+					</sequential>
+				</parallel>
 
-        <antcall target="startClusterExecuteTestsAndStopCluster"/>
+				<antcall target="startClusterExecuteTestsAndStopCluster"/>
 
-      </try>
-      <finally>  
-        <!-- ensure all cluster nodes are stopped -->
-        <antcall target="stop-remote-cluster" />
-      </finally>
-    </trycatch>
-  </target>
-  
-  <!--
+			</try>
+			<finally>
+				<!-- ensure all cluster nodes are stopped -->
+				<antcall target="stop-remote-cluster" />
+			</finally>
+		</trycatch>
+	</target>
+
+	<!--
     starts remote cluster, executes all tasks and stops remote clusters
   -->
-  <target name="startClusterExecuteTestsAndStopCluster">
-    <for parallel="false" list="${execute.node.names}" param="node.name">
-      <sequential>
-        <antcall target="remote-server-start">
-          <param name="remote.host" value="${@{node.name}.remote.host}" />
-          <param name="instance.id" value="${@{node.name}.instance.id}" />
-        </antcall>
-      </sequential>
-    </for>
-    <echo>Running Test Cases</echo>
+	<target name="startClusterExecuteTestsAndStopCluster">
+		<for parallel="false" list="${execute.node.names}" param="node.name">
+			<sequential>
+				<antcall target="remote-server-start">
+					<param name="remote.host" value="${@{node.name}.remote.host}" />
+					<param name="instance.id" value="${@{node.name}.instance.id}" />
+				</antcall>
+			</sequential>
+		</for>
+		<echo>Running Test Cases</echo>
 		<parallel>
 			<antcall target="startRdTestCase"/>
 			<antcall target="multiRequest"/>
-    </parallel>
-    <echo>Test Cases Finished</echo>
-    <for parallel="true" list="${execute.node.names}" param="node.name">
-      <sequential>
-        <antcall target="remote-server-stop">
-          <param name="remote.host" value="${@{node.name}.remote.host}"/>
-          <param name="instance.id" value="${@{node.name}.instance.id}"/>
-        </antcall>
-      </sequential>
-    </for>
-  </target>
-  
-  <!-- 
+		</parallel>
+		<echo>Test Cases Finished</echo>
+		<for parallel="true" list="${execute.node.names}" param="node.name">
+			<sequential>
+				<antcall target="remote-server-stop">
+					<param name="remote.host" value="${@{node.name}.remote.host}"/>
+					<param name="instance.id" value="${@{node.name}.instance.id}"/>
+				</antcall>
+			</sequential>
+		</for>
+	</target>
+
+	<!-- 
     Setup the environment to execute rd-testcases
   -->
-  <target name="setupRdTestCase">
-    <antcall target="download-unzip" />
-    <antcall target="server-install" />
-    
-    <pathconvert property="rd.components.jar.file">
-      <fileset dir="./test_jars" >
-          <include name="RichDialogComponents_*.jar"/>
-      </fileset>
-    </pathconvert>
-    <unjar src="${rd.components.jar.file}" dest="./testcases" />
-  </target>
+	<target name="setupRdTestCase">
+		<antcall target="download-unzip" />
+		<antcall target="server-install" />
+
+		<pathconvert property="rd.components.jar.file">
+			<fileset dir="./test_jars" >
+				<include name="RichDialogComponents_*.jar"/>
+			</fileset>
+		</pathconvert>
+		<unjar src="${rd.components.jar.file}" dest="./testcases" />
+	</target>
 
 	<!--
 	  Starts JMeter which performs parallel calls for each test case (ivyscript, dbquery, new task)
 	-->
-  <target name="multiRequest">
-    
-    <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
-    <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
-  
-    <jmeter 
+	<target name="multiRequest">
+
+		<!-- store jkmanager status -->
+		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<!-- store ivy cluster status -->
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+
+		<jmeter 
       jmeterhome="${jmeter-home}" 
       testplan="jmetertest/multiRequest.jmx"
       resultlog="results/jtl/execute_${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes.jtl">
-      
-      <property name="runner.name" value="${execute.name}"/>
-      <property name="runner.server" value="${performance.server}"/>
-      <property name="runner.port" value="${performance.port}"/>
-      <property name="runner.duration" value="${execute.duration}"/>
-      <property name="runner.threads" value="${execute.threads}"/>
-    </jmeter>
 
-    <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
-    <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+			<property name="runner.name" value="${execute.name}"/>
+			<property name="runner.server" value="${performance.server}"/>
+			<property name="runner.port" value="${performance.port}"/>
+			<property name="runner.duration" value="${execute.duration}"/>
+			<property name="runner.threads" value="${execute.threads}"/>
+		</jmeter>
 
-  </target>
+		<!-- store jkmanager status -->
+		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<!-- store ivy cluster status -->
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-multiRequest_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 
-  <target name="startRdTestCase">
+	</target>
 
-    <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
-    <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+	<target name="startRdTestCase">
 
-    <echo> startRdTestCase: Starting Rich Dialog Test Case ${execute.name}, duration: ${execute.duration}, threads ${execute.threads} </echo>
-    <for parallel="true" begin="0" end="${execute.threads}" param="index" threadCount="${execute.threads}">
-      <sequential>
-        <if>
-          <not><equals arg1="@{index}" arg2="${execute.threads}" /></not>
-          <!-- Otherwise the test is executed one time too much -->
-          <then>
-            <echo> - startRdTestCase: Started thread @{index} of ${execute.threads} </echo>
-            <parallel>
-            <antcall target="run-rd-test-case">
-              <param name="thread.index" value="@{index}"/>
-            </antcall>
-            </parallel>
-          </then>
-        </if>
-      </sequential>
-    </for>
-  
-    <!-- store jkmanager status -->
-    <get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
-    <!-- store ivy cluster status -->
-    <get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
-    
-  </target>
+		<!-- store jkmanager status -->
+		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<!-- store ivy cluster status -->
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 
-  <target name="run-rd-test-case">
+		<echo> startRdTestCase: Starting Rich Dialog Test Case ${execute.name}, duration: ${execute.duration}, threads ${execute.threads} </echo>
+		<for parallel="true" begin="0" end="${execute.threads}" param="index" threadCount="${execute.threads}">
+			<sequential>
+				<if>
+					<not>
+						<equals arg1="@{index}" arg2="${execute.threads}" />
+					</not>
+					<!-- Otherwise the test is executed one time too much -->
+					<then>
+						<echo> - startRdTestCase: Started thread @{index} of ${execute.threads} </echo>
+						<parallel>
+							<antcall target="run-rd-test-case">
+								<param name="thread.index" value="@{index}"/>
+							</antcall>
+						</parallel>
+					</then>
+				</if>
+			</sequential>
+		</for>
 
-    <set-install-properties instance.id="${instance.id}" />
+		<!-- store jkmanager status -->
+		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<!-- store ivy cluster status -->
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 
-    <timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" 
-        executeSecond="${execute.duration}"
-        outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
-      <jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
-      <jvmarg value="-ea" />
-      <classpath>
-        <fileset dir="./test_jars">
-          <include name="*.jar" />
-          <!-- We remove all designer jar's, otherwise the classspath is TOO LONG, 
-               which will result in JUnit-Exception like 'Process fork failed' -->
-          <exclude name="*Designer*" />
-        </fileset>
-				<pathelement path="./test_3rd_party_jars/JMock/*"/>
-				<fileset dir="./test_3rd_party_jars">
-					<include name="**/jemmy.jar" />
-					<include name="**/*junit4*/junit.jar" />
+	</target>
+
+	<target name="run-rd-test-case">
+
+		<set-install-properties instance.id="${instance.id}" />
+		<property name="junit.classpath" value="test_jars/*${path.separator}test_3rd_party_jars/*${path.separator}test_3rd_party_jars/JMock/*${path.separator}${install.dir}lib/shared/*${path.separator}${java.home}/lib/*${path.separator}${java.home}/lib/ext/*"/>
+
+		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
+			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
+			<jvmarg value="-ea" />
+			<jvmarg line="-classpath ${junit.classpath}"/>
+			<batchtest todir="./results/junit/">
+				<fileset dir="${test.classes.dir}">
+					<include name="**/RdTestCaseRTableSorting*.class"/>
+					<exclude name="**/*$*.class"/>
 				</fileset>
-				<fileset dir="${install.dir}">
-					<include name="lib/shared/*.jar" />
-					<exclude name="lib/shared/ant.jar" />
-					<exclude name="lib/shared/*junit*.jar" />
-				</fileset>
-				<pathelement path="${java.home}/lib/*"/>
-				<pathelement path="${java.home}/lib/ext/*"/>
-			</classpath>
-      <batchtest todir="./results/junit/">
-        <fileset dir="${test.classes.dir}">
-          <include name="**/RdTestCaseRTableSorting*.class"/>
-          <exclude name="**/*$*.class"/>
-        </fileset>
-        <formatter type="xml"/>
-      </batchtest>
-    </timedJUnit>
-  </target>
-  
-  <target name="download-unzip">
+				<formatter type="xml"/>
+			</batchtest>
+		</timedJUnit>
+	</target>
+
+	<target name="download-unzip">
 		<delete file="ivy-jars-with-test-classes.zip"/>
 		<get dest="ivy-jars-with-test-classes.zip" src="${hudson.job.root}/artifact/ivy/output/test/jars/*zip*/jars.zip"/>
 		<delete dir="./test_jars"/>
@@ -269,10 +251,11 @@
 			<mapper type="flatten"/>
 		</unzip>
 
-    <delete file="3rd-party-test-jars.zip"/>
-    <get dest="3rd-party-test-jars.zip" src="${hudson.job.root}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
-    <delete dir="./test_3rd_party_jars"/>
-    <unzip dest="./test_3rd_party_jars" src="3rd-party-test-jars.zip"></unzip>
-  </target>
+		<delete file="3rd-party-test-jars.zip"/>
+		<get dest="3rd-party-test-jars.zip" src="${hudson.job.root}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
+		<delete dir="./test_3rd_party_jars"/>
+		<unzip dest="./test_3rd_party_jars" src="3rd-party-test-jars.zip">
+		</unzip>
+	</target>
 
 </project>
