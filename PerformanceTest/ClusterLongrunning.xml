@@ -235,21 +235,19 @@
                which will result in JUnit-Exception like 'Process fork failed' -->
           <exclude name="*Designer*" />
         </fileset>
-        <fileset dir="./test_3rd_party_jars">
-          <include name="JMock/*.jar" />
-          <include name="**/jemmy.jar" />
-          <include name="**/*junit4*/junit.jar" />
-        </fileset>
-        <fileset dir="${install.dir}">
-          <include name="lib/shared/*.jar" />
-          <exclude name="lib/shared/ant.jar" />
-          <exclude name="lib/shared/*junit*.jar" />
-        </fileset>
-        <fileset dir="${java.home}/lib/">
-          <include name="*.jar" />
-          <include name="ext/*.jar" />
-        </fileset>
-      </classpath>
+				<pathelement path="./test_3rd_party_jars/JMock/*"/>
+				<fileset dir="./test_3rd_party_jars">
+					<include name="**/jemmy.jar" />
+					<include name="**/*junit4*/junit.jar" />
+				</fileset>
+				<fileset dir="${install.dir}">
+					<include name="lib/shared/*.jar" />
+					<exclude name="lib/shared/ant.jar" />
+					<exclude name="lib/shared/*junit*.jar" />
+				</fileset>
+				<pathelement path="${java.home}/lib/*"/>
+				<pathelement path="${java.home}/lib/ext/*"/>
+			</classpath>
       <batchtest todir="./results/junit/">
         <fileset dir="${test.classes.dir}">
           <include name="**/RdTestCaseRTableSorting*.class"/>
@@ -261,10 +259,15 @@
   </target>
   
   <target name="download-unzip">
-    <delete file="ivy-jars-with-test-classes.zip"/>
-    <get dest="ivy-jars-with-test-classes.zip" src="${hudson.job.root}/artifact/ivy/output/test/ivy-jars-with-test-classes.zip"/>
-    <delete dir="./test_jars"/>
-    <unzip dest="./test_jars" src="ivy-jars-with-test-classes.zip"></unzip>
+		<delete file="ivy-jars-with-test-classes.zip"/>
+		<get dest="ivy-jars-with-test-classes.zip" src="${hudson.job.root}/artifact/ivy/output/test/jars/*zip*/jars.zip"/>
+		<delete dir="./test_jars"/>
+		<unzip dest="./test_jars" src="ivy-jars-with-test-classes.zip">
+			<patternset>
+				<include name="jars/*"/>
+			</patternset>
+			<mapper type="flatten"/>
+		</unzip>
 
     <delete file="3rd-party-test-jars.zip"/>
     <get dest="3rd-party-test-jars.zip" src="${hudson.job.root}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
