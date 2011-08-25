@@ -229,7 +229,8 @@
 		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
 			<jvmarg value="-ea" />
-			<jvmarg line="-classpath ${junit.classpath}"/>
+			<jvmarg value="-classpath"/>
+			<jvmarg value="${junit.classpath}"/>
 			<batchtest todir="./results/junit/">
 				<fileset dir="${test.classes.dir}">
 					<include name="**/RdTestCaseRTableSorting*.class"/>
