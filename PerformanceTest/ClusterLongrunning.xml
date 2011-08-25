@@ -224,15 +224,15 @@
 	<target name="run-rd-test-case">
 
 		<set-install-properties instance.id="${instance.id}" />
-		<property name="junit.classpath" value="${basedir}/test_jars/*${path.separator}${basedir}/test_3rd_party_jars/*${path.separator}${basedir}/test_3rd_party_jars/JMock/*${path.separator}${install.dir}/lib/shared/*${path.separator}${java.home}/lib/*${path.separator}${java.home}/lib/ext/*"/>
-		
+		<property name="junit.classpath" value="${basedir}/test_jars/*;${basedir}/test_3rd_party_jars/*;${install.dir}/lib/shared/*;${java.home}/lib/*;${java.home}/lib/ext/*"/>
+
 		<echo>junit.classpath: ${junit.classpath}</echo>
-		
+
 		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
 			<jvmarg value="-ea" />
 			<jvmarg value="-classpath"/>
-			<jvmarg value="${junit.classpath}"/>
+			<jvmarg path="${junit.classpath}"/>
 			<batchtest todir="./results/junit/">
 				<fileset dir="${test.classes.dir}">
 					<include name="**/RdTestCaseRTableSorting*.class"/>
@@ -248,6 +248,9 @@
 		<get dest="ivy-jars-with-test-classes.zip" src="${hudson.job.root}/artifact/ivy/output/test/jars/*zip*/jars.zip"/>
 		<delete dir="./test_jars"/>
 		<unzip dest="./test_jars" src="ivy-jars-with-test-classes.zip">
+			<patternset>
+				<include name="*.jar" />
+			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
 
@@ -255,6 +258,9 @@
 		<get dest="3rd-party-test-jars.zip" src="${hudson.job.root}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
 		<delete dir="./test_3rd_party_jars"/>
 		<unzip dest="./test_3rd_party_jars" src="3rd-party-test-jars.zip">
+			<patternset>
+				<include name="*.jar" />
+			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
 	</target>
