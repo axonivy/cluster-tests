@@ -224,7 +224,9 @@
 	<target name="run-rd-test-case">
 
 		<set-install-properties instance.id="${instance.id}" />
-		<property name="junit.classpath" value="test_jars/*${path.separator}test_3rd_party_jars/*${path.separator}test_3rd_party_jars/JMock/*${path.separator}${install.dir}lib/shared/*${path.separator}${java.home}/lib/*${path.separator}${java.home}/lib/ext/*"/>
+		<property name="junit.classpath" value="${basedir}test_jars/*${path.separator}${basedir}test_3rd_party_jars/*${path.separator}test_3rd_party_jars/JMock/*${path.separator}${install.dir}lib/shared/*${path.separator}${java.home}/lib/*${path.separator}${java.home}/lib/ext/*"/>
+		
+		<echo>junit.classpath: ${junit.classpath}</echo>
 
 		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
