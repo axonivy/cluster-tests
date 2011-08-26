@@ -224,15 +224,23 @@
 	<target name="run-rd-test-case">
 
 		<set-install-properties instance.id="${instance.id}" />
-		<property name="junit.classpath" value="${basedir}/test_jars/*;${basedir}/test_3rd_party_jars/*;${install.dir}/lib/shared/*;${java.home}/lib/*;${java.home}/lib/ext/*"/>
-
-		<echo>junit.classpath: ${junit.classpath}</echo>
 
 		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
 			<jvmarg value="-ea" />
-			<jvmarg value="-classpath"/>
-			<jvmarg path="${junit.classpath}"/>
+			<classpath>
+				<pathelement location="./test_jars/*" />
+				<pathelement location="./test_3rd_party_jars/*" />
+				<fileset dir="${install.dir}">
+					<include name="lib/shared/*.jar" />
+					<exclude name="lib/shared/ant.jar" />
+					<exclude name="lib/shared/*junit*.jar" />
+				</fileset>
+				<fileset dir="${java.home}/lib/">
+					<include name="*.jar" />
+					<include name="ext/*.jar" />
+				</fileset>
+			</classpath>
 			<batchtest todir="./results/junit/">
 				<fileset dir="${test.classes.dir}">
 					<include name="**/RdTestCaseRTableSorting*.class"/>
