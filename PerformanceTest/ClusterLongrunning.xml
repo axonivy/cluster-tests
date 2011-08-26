@@ -257,7 +257,7 @@
 		<delete dir="./test_jars"/>
 		<unzip dest="./test_jars" src="ivy-jars-with-test-classes.zip">
 			<patternset>
-				<include name="*.jar" />
+				<include name="**/*.jar" />
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
@@ -267,7 +267,7 @@
 		<delete dir="./test_3rd_party_jars"/>
 		<unzip dest="./test_3rd_party_jars" src="3rd-party-test-jars.zip">
 			<patternset>
-				<include name="*.jar" />
+				<include name="**/*.jar" />
 			</patternset>
 			<mapper type="flatten"/>
 		</unzip>
