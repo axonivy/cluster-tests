@@ -21,8 +21,6 @@
 	<property name="execute.node.names" value="node1,node2"/>
 	<property name="execute.name" value="ClusterTest_LongRunning"/>
 
-	<!-- performance test urls -->
-	<property name="performance.test.rdload.appUrl" value="http://${performance.server}:${performance.port}/ivy/pro/System" />
 
 	<!-- local server (used for rd-test client) -->
 	<import file="../IvyServerAntTasks/build_ivy/local/local_targets.xml" />
@@ -34,6 +32,9 @@
 	<!-- remote claster -->
 	<property file="ClusterLongrunning.properties" />
 	<import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
+	
+	<!-- performance test urls -->
+	<property name="performance.test.rdload.appUrl" value="http://${performance.server}:${performance.port}/ivy/pro/System" />
 
 	<!--
   jmeter manual:
