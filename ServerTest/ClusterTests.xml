@@ -34,7 +34,6 @@
       <echo>Uninstall cluster failed (can be ignored)</echo>
       </catch>
     </trycatch>
-  	
     <trycatch>
       <try>
         <!-- Install cluster with two nodes -->
@@ -49,7 +48,7 @@
       	<antcall target="testEventBeans"/>
       </try>
       <finally>  
-        <!-- stop cluster nodes (do not uninstall, so we have log etc till next run) -->
+        <!-- stop cluster nodes (do not uninstall, maybe we need the log-result in case of an error) -->
         <antcall target="stop-local-cluster"/>
       </finally>
     </trycatch>
@@ -59,61 +58,70 @@
   </target>
 	
 	<target name="testEventBeans" description="Test start/stop behavior of 'start event bean' and the 'intermediate event bean'">
-		<trycatch>
-		  <try>
-        <!-- cleans the event bean log on each node and each bean (an error will be thrown, but the file is cleared) -->
-        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-        <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
-    		
-        <!-- Start and stop Cluster node in defined sequence -->
-      	<!-- ** node 1 must be still the master -->
-      	<antcall target="server-stop">
-           <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
-        <antcall target="server-start">
-           <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
-      	
-        <!-- ** node 2 must be the master -->
-        <antcall target="server-stop">
-           <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
-        <antcall target="server-start">
-           <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
+
+    <!-- cleans the event bean log on each node and each bean (an error will be thrown, but the file is cleared) -->
+    <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=ClusterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterIntermediateEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
+    <get src="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp?beanName=MasterStartEventBean" dest="${java.io.tmpdir}/clear1" ignoreerrors="true"/>
     
-        <!-- ** node 2 must STILL be the master -->
-        <antcall target="server-stop">
-           <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
-        <antcall target="server-start">
-           <param name="instance.id" value="${node1.instance.id}" />
-        </antcall>
+    <!-- Start and stop Cluster node in defined sequence -->
+    <!-- ** node 1 must be still the master -->
+    <antcall target="server-stop">
+       <param name="instance.id" value="${node2.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
     
-        <!-- ** node 1 must be the master -->
-        <antcall target="server-stop">
-           <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
-        <antcall target="server-start">
-           <param name="instance.id" value="${node2.instance.id}" />
-        </antcall>
-	  	</try>
-      <finally>
-      	<!-- finally start JUnit-Test -->
-		<copy todir="classes">
-			<fileset dir="src" includes="**/*.log"/>
-		</copy>
-      	<antcall target="executeJUnitTest">
-  	      <param name="JavaClassNamePattern" value="AssertEventBeanLog.java" />
-  	    </antcall>
-      </finally>
-    </trycatch>
+    <antcall target="server-start">
+       <param name="instance.id" value="${node2.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+    
+    <!-- ** node 2 must be the master -->
+    <antcall target="server-stop">
+       <param name="instance.id" value="${node1.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+    
+    <antcall target="server-start">
+       <param name="instance.id" value="${node1.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+
+    <!-- ** node 2 must STILL be the master -->
+    <antcall target="server-stop">
+       <param name="instance.id" value="${node1.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+    
+    <antcall target="server-start">
+       <param name="instance.id" value="${node1.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+
+    <!-- ** node 1 must be the master -->
+    <antcall target="server-stop">
+       <param name="instance.id" value="${node2.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+    
+    <antcall target="server-start">
+       <param name="instance.id" value="${node2.instance.id}" />
+    </antcall>
+    <sleep seconds="3" />
+    
+    <!-- assert start and stop of event beans -->
+    <copy todir="classes">
+      <fileset dir="src" includes="**/*.log"/>
+    </copy>
+    <antcall target="executeJUnitTest">
+      <param name="JavaClassNamePattern" value="AssertEventBeanLog.java" />
+    </antcall>
+
 	</target>
 
   <target name="executeJUnitTest">
