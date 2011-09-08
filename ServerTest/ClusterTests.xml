@@ -74,45 +74,33 @@
     <antcall target="server-stop">
        <param name="instance.id" value="${node2.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
-    
     <antcall target="server-start">
        <param name="instance.id" value="${node2.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
     
     <!-- ** node 2 must be the master -->
     <antcall target="server-stop">
        <param name="instance.id" value="${node1.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
-    
     <antcall target="server-start">
        <param name="instance.id" value="${node1.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
 
     <!-- ** node 2 must STILL be the master -->
     <antcall target="server-stop">
        <param name="instance.id" value="${node1.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
-    
     <antcall target="server-start">
        <param name="instance.id" value="${node1.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
 
     <!-- ** node 1 must be the master -->
     <antcall target="server-stop">
        <param name="instance.id" value="${node2.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
-    
     <antcall target="server-start">
        <param name="instance.id" value="${node2.instance.id}" />
     </antcall>
-    <sleep seconds="3" />
     
     <!-- assert start and stop of event beans -->
     <copy todir="classes">
