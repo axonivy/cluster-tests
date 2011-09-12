@@ -210,10 +210,12 @@
 								<param name="thread.index" value="@{index}"/>
 							</antcall>
 						</parallel>
+						<echo> - startRdTestCase: Ended thread @{index}</echo>
 					</then>
 				</if>
 			</sequential>
 		</for>
+		<echo> startRdTestCase: Stopped Rich Dialog Test Case ${execute.name}, duration: ${execute.duration}, threads ${execute.threads} </echo>
 
 		<!-- store jkmanager status -->
 		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${execute.name}-startRdTestCase_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
@@ -226,6 +228,7 @@
 
 		<set-install-properties instance.id="${instance.id}" />
 
+		<echo> - timedJUnit: Started thread ${thread.index}</echo>
 		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
 			<jvmarg value="-ea" />
@@ -250,6 +253,7 @@
 				<formatter type="xml"/>
 			</batchtest>
 		</timedJUnit>
+		<echo> - timedJUnit: Stoped thread ${thread.index}</echo>
 	</target>
 
 	<target name="download-unzip">
