@@ -229,7 +229,7 @@
 		<set-install-properties instance.id="${instance.id}" />
 
 		<echo> - timedJUnit: Started thread ${thread.index}</echo>
-		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
+		<timedJUnit printsummary="yes" fork="yes" maxmemory="512m" timeout="600000" showoutput="true" executeSecond="${execute.duration}" outfilePrefix="junitresult-${execute.name}_${execute.duration}-duration_${execute.threads}-users_${execute.nodes}-nodes_${thread.index}-user_">
 			<jvmarg value="-Dch.ivyteam.ivy.testcasesrichdialog.server.applicationUrl=${performance.test.rdload.appUrl}" />
 			<jvmarg value="-ea" />
 			<classpath>
