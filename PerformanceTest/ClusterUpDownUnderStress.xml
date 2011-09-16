@@ -106,7 +106,7 @@
 		<echo>* Main Process * Started node 1</echo>
 
 		<!-- store ivy cluster status -->
-		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_10-node1-started_?state-on-node1.html" ignoreerrors="true" />
+		<get src="http://${node1.rootUrl}/ivy/info/index.jsp?pageId=cluster_panel" dest="results_UpDownUnderStress/logs/testSlaveUpDownUnderStress_10-node1-started__state-on-node1.html" ignoreerrors="true" />
 
 		<parallel threadCount="2">
 			<sequential>
