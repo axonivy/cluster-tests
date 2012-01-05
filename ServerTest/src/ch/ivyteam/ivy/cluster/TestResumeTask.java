@@ -51,15 +51,15 @@ public class TestResumeTask extends Assert
     private int fState = STATE_WAIT_FOR_TASK_URL;
 
     /** The host to request */
-    private String fHost;       
+    private String fHostBaseUri;       
         
     /**
      * Constructor
-     * @param host the host where the http client should request to
+     * @param hostBaseUri the host where the http client should request to
      */
-    public HttpClientThread(String host)
+    public HttpClientThread(String hostBaseUri)
     {
-      fHost = host;
+      fHostBaseUri = hostBaseUri;
     }
 
     /**
@@ -73,7 +73,7 @@ public class TestResumeTask extends Assert
 
       try
       {
-        HttpGet httpget = new HttpGet("http://"+fHost+"/ivy/pro/"+APPLICATION_NAME+"/TestCasesPerformance/12D851E10A821416/start.ivp");
+        HttpGet httpget = new HttpGet(fHostBaseUri+"/ivy/pro/"+APPLICATION_NAME+"/TestCasesPerformance/12D851E10A821416/start.ivp");
         
         while (fState >= STATE_WAIT_FOR_TASK_URL)
         {          
@@ -203,9 +203,9 @@ public class TestResumeTask extends Assert
   }
 
   /** The host and port where the first cluster node is running */
-  private static final String CLUSTER_NODE_1 = "localhost:18080";
+  private static final String CLUSTER_NODE_1_BASE_URI = System.getProperty("node1.baseUri", "http://localhost:18080");
   /** The host and port where the second cluster node is running */
-  private static final String CLUSTER_NODE_2 = "localhost:18081";
+  private static final String CLUSTER_NODE_2_BASE_URI = System.getProperty("node1.baseUri", "http://localhost:18080");
   /** The application name where the test process is deployed to */
   private static final String APPLICATION_NAME = "System"; // designer
   
@@ -224,15 +224,15 @@ public class TestResumeTask extends Assert
     HttpClient client = new DefaultHttpClient();
     try
     {
-      client.execute(new HttpGet("http://"+CLUSTER_NODE_1+"/ivy/pro/"+APPLICATION_NAME+"/TestCasesPerformance/12D851E10A821416/start2.ivp"), new BasicResponseHandler());
+      client.execute(new HttpGet(CLUSTER_NODE_1_BASE_URI+"/ivy/pro/"+APPLICATION_NAME+"/TestCasesPerformance/12D851E10A821416/start2.ivp"), new BasicResponseHandler());
     }
     finally
     {
       client.getConnectionManager().shutdown();
     }
     
-    thread1 = new HttpClientThread(CLUSTER_NODE_1);
-    thread2 = new HttpClientThread(CLUSTER_NODE_2);
+    thread1 = new HttpClientThread(CLUSTER_NODE_1_BASE_URI);
+    thread2 = new HttpClientThread(CLUSTER_NODE_2_BASE_URI);
     
     thread1.start();
     thread2.start();
@@ -245,8 +245,8 @@ public class TestResumeTask extends Assert
         thread2.go();
         
         assertEquals("Both task start uri must be for the same task", 
-                thread1.getTaskStartUri().substring(("http://"+CLUSTER_NODE_1).length()), 
-                thread2.getTaskStartUri().substring(("http://"+CLUSTER_NODE_2).length()));
+                thread1.getTaskStartUri().substring((CLUSTER_NODE_1_BASE_URI).length()), 
+                thread2.getTaskStartUri().substring((CLUSTER_NODE_2_BASE_URI).length()));
         
         thread1.go();
         thread2.go();
