@@ -10,7 +10,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
 	<taskdef name="timedJUnit" classname="ch.ivyteam.ant.tasks.TimedJUnitTask" classpathref="classpath.antcontrib" />
 
-	<!-- Execution parameters, also configured from the hudson job -->
+	<!-- Execution parameters, overridden by the jenkins job -->
 	<property name="src.job.name" value="Trunk_All" />
 	<property name="src.build.number" value="lastSuccessfulBuild" />
 	<property name="execute.threads" value="16" />
@@ -258,7 +258,7 @@
 
 	<target name="download-unzip">
 		<delete file="ivy-jars-with-test-classes.zip"/>
-		<get dest="ivy-jars-with-test-classes.zip" src="${hudson.job.root}/artifact/ivy/output/test/jars/*zip*/jars.zip"/>
+		<get dest="ivy-jars-with-test-classes.zip" src="${src.job.url}/artifact/ivy/output/test/jars/*zip*/jars.zip"/>
 		<delete dir="./test_jars"/>
 		<unzip dest="./test_jars" src="ivy-jars-with-test-classes.zip">
 			<patternset>
@@ -268,7 +268,7 @@
 		</unzip>
 
 		<delete file="3rd-party-test-jars.zip"/>
-		<get dest="3rd-party-test-jars.zip" src="${hudson.job.root}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
+		<get dest="3rd-party-test-jars.zip" src="${src.job.url}/artifact/ivy/output/test/3rd-party-test-jars.zip"/>
 		<delete dir="./test_3rd_party_jars"/>
 		<unzip dest="./test_3rd_party_jars" src="3rd-party-test-jars.zip">
 			<patternset>
