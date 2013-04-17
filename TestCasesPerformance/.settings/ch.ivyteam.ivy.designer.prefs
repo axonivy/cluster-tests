@@ -1,6 +1,5 @@
-#Fri Jan 14 16:20:23 CET 2011
 ch.ivyteam.ivy.designer.preferences.DataClassPreferencePage\:DEFAULT_DATA_CLASS=performancetest.Data
 ch.ivyteam.ivy.designer.preferences.DataClassPreferencePage\:DEFAULT_NAMESPACE=performancetest
+ch.ivyteam.ivy.project.preferences\:PROJECT_VERSION=50000
 ch.ivyteam.ivy.project.preferences\:SYNC_TEST_USERS=true
-ch.ivyteam.ivy.project.preferences\:PROJECT_VERSION=41917
 eclipse.preferences.version=1
