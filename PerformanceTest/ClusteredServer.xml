@@ -2,21 +2,21 @@
 	<!-- Configure whre to download the server zip -->
 	<property name="src.job.name" value="Trunk_All" />
 	<property name="src.build.number" value="lastSuccessfulBuild" />
-	
+
 	<!-- Configure the thread/user counts of the tests (use "-" as delimiter) -->
 	<property name="execute.thread.counts" value="1-4-8-16-32-64-128" />
 	<!-- Configure the duration of one test (in seconds) -->
 	<property name="execute.duration" value="30"/>
 	<!-- Configure the test cases to run (use "-" as delimiter) -->
 	<property name="execute.performance.tests" value="ivyscript-dbquery-onetask" />
-	
+
 	<property file="ClusteredServer.properties" />
 	<import file="..\IvyServerAntTasks\build_ivy\remote\remote_cluster_build.xml"/>
-	
+
 	<path id="classpath.antcontrib">
-	  <fileset dir="../antlibs" includes="**/*.jar"/>
+		<fileset dir="../antlibs" includes="**/*.jar"/>
 	</path>
-	
+
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="classpath.antcontrib"/>
 
 	<!--
@@ -24,7 +24,7 @@
 	http://jakarta.apache.org/jmeter/usermanual/component_reference.html
 	
 	-->
-	
+
 	<description>
 		Executes performance tests
 	</description>
@@ -32,7 +32,7 @@
 	<property name="performance.test.ivyscript" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
 	<property name="performance.test.dbquery" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
 	<property name="performance.test.onetask" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp"/>
-	
+
 	<!-- Define an environment variable pointing to JMETER folder or change this -->
 	<property environment="env"/>
 	<!--property name="jmeter-home" location="${env.JMETER_DIR}"/-->
@@ -48,17 +48,17 @@
 	    name="jmeter"
 	    classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask"
 	    classpathref="ant.jmeter.classpath" />
-		
+
 	<target name="installAndStartCluster">
-		<antcall target="install-and-run-remote-cluster"/>	  
+		<antcall target="install-and-run-remote-cluster"/>
 	</target>
 
 	<target name="stopAndUninstallCluster">
 		<antcall target="uninstall-remote-cluster"/>
 	</target>
 
-	<target name="all" depends="executeAllTestsOnAllConfiguration"/>
-	
+	<target name="all" depends="executeAllTestsOnAllConfiguration, zipResults"/>
+
 	<target name="clean">
 		<delete dir="results"/>
 		<delete file="jmeter.log"/>
@@ -66,48 +66,48 @@
 		<mkdir dir="results/html"/>
 		<mkdir dir="results/logs"/>
 	</target>
-	
+
 	<target name="executeAllTestsOnAllConfiguration" depends="clean">
-	  	<!-- Be sure cluster is uninstalled -->
+		<!-- Be sure cluster is uninstalled -->
 		<trycatch>
-		  <try>
-		      <antcall target="uninstall-remote-cluster"/>
-		  </try>
-		  <catch>
-			<echo>Uninstall cluster failed (can be ignored)</echo>
-		  </catch>
+			<try>
+				<antcall target="uninstall-remote-cluster"/>
+			</try>
+			<catch>
+				<echo>Uninstall cluster failed (can be ignored)</echo>
+			</catch>
 		</trycatch>
-		
-	  <trycatch>
-		  <try>
-			  <antcall target="installAndStartCluster"/>
-			  <antcall target="stop-remote-cluster" />
 
-			  <antcall target="startClusterExecuteTestsAndStopCluster">
-				<param name="execute.nodes" value="4"/>
-				<param name="execute.node.names" value="node1,node2,node3,node4"/>
-				<param name="execute.duration" value="${execute.duration}"/>
-			  </antcall>
+		<trycatch>
+			<try>
+				<antcall target="installAndStartCluster"/>
+				<antcall target="stop-remote-cluster" />
 
-			  <antcall target="startClusterExecuteTestsAndStopCluster">
-				<param name="execute.nodes" value="2"/>
-				<param name="execute.node.names" value="node1,node2"/>
-				<param name="execute.duration" value="${execute.duration}"/>
-			  </antcall>
+				<antcall target="startClusterExecuteTestsAndStopCluster">
+					<param name="execute.nodes" value="4"/>
+					<param name="execute.node.names" value="node1,node2,node3,node4"/>
+					<param name="execute.duration" value="${execute.duration}"/>
+				</antcall>
 
-			  <antcall target="startClusterExecuteTestsAndStopCluster">
-				<param name="execute.nodes" value="1"/>
-				<param name="execute.node.names" value="node1"/>
-				<param name="execute.duration" value="${execute.duration}"/>				
-			  </antcall>
-		  </try>
-		  <finally>  
-			<!-- ensure all cluster nodes are stopped -->
-			<antcall target="stop-remote-cluster" />
-		  </finally>
+				<antcall target="startClusterExecuteTestsAndStopCluster">
+					<param name="execute.nodes" value="2"/>
+					<param name="execute.node.names" value="node1,node2"/>
+					<param name="execute.duration" value="${execute.duration}"/>
+				</antcall>
+
+				<antcall target="startClusterExecuteTestsAndStopCluster">
+					<param name="execute.nodes" value="1"/>
+					<param name="execute.node.names" value="node1"/>
+					<param name="execute.duration" value="${execute.duration}"/>
+				</antcall>
+			</try>
+			<finally>
+				<!-- ensure all cluster nodes are stopped -->
+				<antcall target="stop-remote-cluster" />
+			</finally>
 		</trycatch>
-    </target>
-	
+	</target>
+
 	<target name="startClusterExecuteTestsAndStopCluster">
 		<for parallel="false" list="${execute.node.names}" param="node.name">
 			<sequential>
@@ -117,12 +117,12 @@
 				</antcall>
 			</sequential>
 		</for>
-		
-		 <antcall target="executeAllTests">
+
+		<antcall target="executeAllTests">
 			<param name="execute.nodes" value="${execute.nodes}"/>
-			<param name="execute.duration" value="${execute.duration}"/>				
-		 </antcall>
-		  
+			<param name="execute.duration" value="${execute.duration}"/>
+		</antcall>
+
 		<for parallel="true" list="${execute.node.names}" param="node.name">
 			<sequential>
 				<antcall target="remote-server-stop">
@@ -131,9 +131,9 @@
 				</antcall>
 			</sequential>
 		</for>
-		
+
 	</target>
-	
+
 	<!--
 		Executes the full test 
 	-->
@@ -149,7 +149,7 @@
 			</sequential>
 		</for>
 	</target>
-	
+
 	<!--
 	Executes a test for ${execute.duration} seconds with ${execute.thread.counts} (e.g. 1,5,10,20,30,50,100) users/threads
 	Required parameter:
@@ -163,7 +163,7 @@
 		<tempfile property="reset.jkmanager.result.file" destdir="temp" suffix=".html" deleteonexit="true"/>
 		<get src="http://${performance.server}/jkmanager/?cmd=reset&amp;from=list&amp;w=XpertIvyServer" dest="${reset.jkmanager.result.file}" ignoreerrors="true"/>
 		<sleep seconds="5"/>
-		
+
 		<for parallel="false" list="${execute.thread.counts}" param="execute.threads" trim="true" delimiter=",/-">
 			<sequential>
 				<antcall target="singleRequest">
@@ -175,7 +175,7 @@
 			</sequential>
 		</for>
 	</target>
-	
+
 	<!-- 
 		Required parameter:
 		- singleRequest.name
@@ -184,17 +184,17 @@
 		- singleRequest.threads
 	-->
 	<target name="singleRequest">
-		
+
 		<!-- store jkmanager status -->
 		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
 		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
-	
+
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="results/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.jtl">
-			
+
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
 			<property name="runner.port" value="${performance.port}}"/>
@@ -202,12 +202,16 @@
 			<property name="runner.duration" value="${singleRequest.duration}"/>
 			<property name="runner.threads" value="${singleRequest.threads}"/>
 		</jmeter>
-		
+
 		<!-- store jkmanager status -->
 		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
 		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
-		
+
+	</target>
+
+	<target name="zipResults">
+		<zip destfile="results.zip" basedir="results/" />
 	</target>
 
 </project>
