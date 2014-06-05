@@ -57,7 +57,7 @@
 		<antcall target="uninstall-remote-cluster"/>
 	</target>
 
-	<target name="all" depends="executeAllTestsOnAllConfiguration, report"/>
+	<target name="all" depends="executeAllTestsOnAllConfiguration"/>
 	
 	<target name="clean">
 		<delete dir="results"/>
@@ -208,14 +208,6 @@
 		<!-- store ivy cluster status -->
 		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 		
-	</target>
-
-	<target name="report">
-		<xslt
-       basedir="results/jtl"
-       destdir="results/html"
-       includes="*.jtl"
-       style="${jmeter-home}/extras/jmeter-results-detail-report_21.xsl"/>
 	</target>
 
 </project>
