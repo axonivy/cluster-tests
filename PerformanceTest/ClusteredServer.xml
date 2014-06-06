@@ -211,7 +211,7 @@
 	</target>
 
 	<target name="zipResults">
-		<zip destfile="results.zip" basedir="results/" />
+		<zip destfile="results/results.zip" basedir="results/" />
 	</target>
 
 </project>
