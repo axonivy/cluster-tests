@@ -195,7 +195,7 @@
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="${dir.cluster.results}/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes-v2.jtl"
-			jmeterlog-file="{dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log">
+			jmeterlogfile="{dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log">
 			
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
