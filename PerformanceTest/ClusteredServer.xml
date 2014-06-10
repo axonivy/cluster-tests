@@ -191,12 +191,13 @@
 		<!-- store ivy cluster status -->
 		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 
+		<property name="absolute.jmeter.logfile.path" location="${dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log"/>
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="${dir.cluster.results}/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes-v2.jtl" >
 			
-			<jmeterarg value="-j ${dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log"/>
+			<jmeterarg value="-j ${absolute.jmeter.logfile.path}"/>
 			
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
