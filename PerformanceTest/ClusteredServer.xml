@@ -60,11 +60,12 @@
 	<target name="all" depends="executeAllTestsOnAllConfiguration, zipResults"/>
 
 	<target name="clean">
-		<delete dir="results"/>
+		<delete dir="${dir.cluster.results}"/>
+		<delete dir="${dir.cluster.results.raw}"/>
 		<delete file="jmeter.log"/>
-		<mkdir dir="results/jtl"/>
-		<mkdir dir="results/html"/>
-		<mkdir dir="results/logs"/>
+		<mkdir dir="${dir.cluster.results}/jtl"/>
+		<mkdir dir="${dir.cluster.results}/summary"/>
+		<mkdir dir="${dir.cluster.results.raw}/logs"/>
 	</target>
 
 	<target name="executeAllTestsOnAllConfiguration" depends="clean">
@@ -186,15 +187,16 @@
 	<target name="singleRequest">
 
 		<!-- store jkmanager status -->
-		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
-		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
 
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
-			resultlog="results/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.jtl">
-
+			resultlog="${dir.cluster.results}/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.jtl"
+			jmeterlog-file="{dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log">
+			
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
 			<property name="runner.port" value="${performance.port}}"/>
@@ -204,14 +206,15 @@
 		</jmeter>
 
 		<!-- store jkmanager status -->
-		<get src="http://${performance.server}/jkmanager/" dest="results/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
-		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="results/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
 
 	</target>
 
 	<target name="zipResults">
-		<zip destfile="results/results.zip" basedir="results/" />
+		<zip destfile="${dir.cluster.results}/rawResults.zip" basedir="${dir.cluster.results.raw}/" />
+		<delete dir="${dir.cluster.results.raw}"/>
 	</target>
 
 </project>
