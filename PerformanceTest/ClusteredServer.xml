@@ -197,7 +197,7 @@
 			testplan="jmetertest/singleRequest.jmx"
 			resultlog="${dir.cluster.results}/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes-v2.jtl" >
 			
-			<jmeterarg value="-j ${absolute.jmeter.logfile.path}"/>
+			<jmeterarg value="-j${absolute.jmeter.logfile.path}"/>
 			
 			<property name="runner.name" value="${singleRequest.name}"/>
 			<property name="runner.server" value="${performance.server}"/>
