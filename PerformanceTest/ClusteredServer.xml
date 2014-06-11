@@ -86,7 +86,7 @@
 
 				<antcall target="startClusterExecuteTestsAndStopCluster">
 					<param name="execute.nodes" value="4"/>
-					<param name="execute.node.names" value="node1,node2,node3,node4"/>
+					<param name="execute.node.names" value="node3,node4,node2,node1"/>
 					<param name="execute.duration" value="${execute.duration}"/>
 				</antcall>
 
