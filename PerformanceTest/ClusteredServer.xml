@@ -186,16 +186,18 @@
 	-->
 	<target name="singleRequest">
 
+		<property name="common.log.filename" location="${singleRequest.name}_${singleRequest.threads}-users_${execute.nodes}" />
+		
 		<!-- store jkmanager status -->
-		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${common.log.filename}-nodes_before.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
-		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_before.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${common.log.filename}-nodes_before.html" ignoreerrors="true"/>
 
-		<property name="absolute.jmeter.logfile.path" location="${dir.cluster.results}/summary/jmeter_singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes.log"/>
+		<property name="absolute.jmeter.logfile.path" location="${dir.cluster.results}/summary/jmeter_singleRequest_${common.log.filename}-nodes.log"/>
 		<jmeter 
 			jmeterhome="${jmeter-home}" 
 			testplan="jmetertest/singleRequest.jmx"
-			resultlog="${dir.cluster.results}/jtl/singleRequest_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes-v2.jtl" >
+			resultlog="${dir.cluster.results}/jtl/singleRequest_${common.log.filename}-nodes-v2.jtl" >
 			
 			<jmeterarg value="-j${absolute.jmeter.logfile.path}"/>
 			
@@ -208,9 +210,9 @@
 		</jmeter>
 
 		<!-- store jkmanager status -->
-		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${common.log.filename}-nodes_after.html" ignoreerrors="true"/>
 		<!-- store ivy cluster status -->
-		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${singleRequest.name}_${singleRequest.duration}-duration_${singleRequest.threads}-users_${execute.nodes}-nodes_after.html" ignoreerrors="true"/>
+		<get src="http://${performance.server}/ivy/info/index.jsp?pageId=cluster_panel" dest="${dir.cluster.results.raw}/logs/cluster_status_${common.log.filename}-nodes_after.html" ignoreerrors="true"/>
 
 	</target>
 
