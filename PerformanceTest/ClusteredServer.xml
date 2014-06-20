@@ -186,7 +186,7 @@
 	-->
 	<target name="singleRequest">
 
-		<property name="common.log.filename" location="${singleRequest.name}_${singleRequest.threads}-users_${execute.nodes}" />
+		<property name="common.log.filename" value="${singleRequest.name}_${singleRequest.threads}-users_${execute.nodes}" />
 		
 		<!-- store jkmanager status -->
 		<get src="http://${performance.server}/jkmanager/" dest="${dir.cluster.results.raw}/logs/jkmanager_status_${common.log.filename}-nodes_before.html" ignoreerrors="true"/>
