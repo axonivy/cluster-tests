@@ -261,7 +261,7 @@ public class TestResumeTask extends Assert
         }
         else
         {
-          assertEquals("Status code should be", HttpStatus.SC_NOT_FOUND, code1);
+          assertEquals("Status code should be", HttpStatus.SC_CONFLICT, code1);
           assertEquals("Status code should be", HttpStatus.SC_OK, code2);
         }
       }
