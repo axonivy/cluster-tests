@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.core.resources.IProject;
 
 import ch.ivyteam.ivy.environment.Ivy;
@@ -24,7 +25,10 @@ public class ClusterLogger
 	public static void logBeanRunningStateChange(IProject project, String beanName, boolean started) throws IOException
 	{
 		File logFile = getLogFile(project, beanName);
-		appendString(logFile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'" + "on " + InetAddress.getLocalHost().getHostName());
+		appendString(logFile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'");
+		File detailLogfile = getDetailLogFile(project, beanName);
+		appendString(detailLogfile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'"  + " on " + InetAddress.getLocalHost().getHostName() + "\n" + ExceptionUtils.getStackTrace(new Exception()) + "\n------------");
+		
 	}
 
 	/**
@@ -73,6 +77,11 @@ public class ClusterLogger
 		{
 			outputFile.delete();
 		}
+		File detailOutputFile = getDetailLogFile(project, beanName);
+		if (detailOutputFile.exists())
+		{
+			detailOutputFile.delete();
+		}
 	}
 
 	/**
@@ -105,5 +114,10 @@ public class ClusterLogger
 	private static File getLogFile(IProject project, String beanName)
 	{
 		return project.getFolder("webContent").getFolder("log").getFile("statechange_"+ beanName +".log").getLocation().toFile();
+	}
+	
+	private static File getDetailLogFile(IProject project, String beanName)
+	{
+		return project.getFolder("webContent").getFolder("log").getFile("statechange_"+ beanName +"_detail.log").getLocation().toFile();
 	}
 }
