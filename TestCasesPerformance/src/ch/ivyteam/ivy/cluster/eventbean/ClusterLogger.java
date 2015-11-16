@@ -3,6 +3,7 @@ package ch.ivyteam.ivy.cluster.eventbean;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
@@ -23,7 +24,7 @@ public class ClusterLogger
 	public static void logBeanRunningStateChange(IProject project, String beanName, boolean started) throws IOException
 	{
 		File logFile = getLogFile(project, beanName);
-		appendString(logFile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'");
+		appendString(logFile, "Bean '"+ beanName +"' is '"+ (started ? "STARTING" : "STOPPING") +"'" + "on " + InetAddress.getLocalHost().getHostName());
 	}
 
 	/**
