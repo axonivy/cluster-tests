@@ -83,10 +83,6 @@
   </target>
   
   <target name="clearEventBeanLogs">
-  	<echo>sleeping first</echo>
-  	<sleep seconds="60"/>
-  	<echo>starting now</echo>
-  	
     <!-- cleans the event bean log on each node and each bean (an error will be thrown, but the file is cleared) -->
 	<property name="node1.clearLogUri" value="${node1.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp"/>
 	<property name="node2.clearLogUri" value="${node2.baseUri}/ivy/pro/System/TestCasesPerformance/12D992D7A5DD33E0/clearEventBeanLog.ivp"/>
@@ -101,10 +97,6 @@
   </target>
   
   <target name="stop-start-server-node1">
-  	<echo>sleeping first</echo>
-  	<sleep seconds="60"/>
-  	<echo>starting now</echo>
-  	
     <antcall target="remote-server-stop">
        <param name="remote.host" value="${node1.remote.host}" />
        <param name="instance.id" value="${node1.instance.id}" />
@@ -116,10 +108,6 @@
   </target>
 
   <target name="stop-start-server-node2">
-  	<echo>sleeping first</echo>
-  	<sleep seconds="60"/>
-  	<echo>starting now</echo>
-  	
     <antcall target="remote-server-stop">
        <param name="remote.host" value="${node2.remote.host}" />
        <param name="instance.id" value="${node2.instance.id}" />
@@ -131,10 +119,6 @@
   </target>
   
   <target name="executeJUnitTest">
-  	  <echo>sleeping first</echo>
-  	  <sleep seconds="60"/>
-  	  <echo>starting now</echo>
-  	
       <mkdir dir="UnitTests"/>
       <junit printsummary="yes" fork="yes" timeout="1200000" maxmemory="512m" dir="${basedir}">
       <classpath>
