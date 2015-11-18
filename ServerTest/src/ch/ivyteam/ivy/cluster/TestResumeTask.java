@@ -187,17 +187,23 @@ public class TestResumeTask extends Assert
     /**
      * Go to the next step
      */
-    public synchronized void go()
+    public synchronized void goWaitForResumeResponse()
     {
       if (fState == STATE_TASK_URL_RECEIVED)
       {
         fState = STATE_WAIT_FOR_TASK_RESUME_RESPONSE;
       }
-      else if (fState == STATE_TASK_RESUME_RESPONSE_RECEIVED)
+        
+      notifyAll();
+    }
+
+    public synchronized void goWaitForTaskUrl()
+    {
+      if (fState == STATE_TASK_RESUME_RESPONSE_RECEIVED)
       {
         fState = STATE_WAIT_FOR_TASK_URL;
       }
-        
+      
       notifyAll();
     }
   }
@@ -241,28 +247,28 @@ public class TestResumeTask extends Assert
     {
       for (int count=0; count < 500; count++)
       {
-        thread1.go();
-        thread2.go();
+        thread1.goWaitForResumeResponse();
+        thread2.goWaitForResumeResponse();
         
         assertEquals("Both task start uri must be for the same task", 
                 thread1.getTaskStartUri().substring((CLUSTER_NODE_1_BASE_URI).length()), 
                 thread2.getTaskStartUri().substring((CLUSTER_NODE_2_BASE_URI).length()));
         
-        thread1.go();
-        thread2.go();
+        thread1.goWaitForTaskUrl();
+        thread2.goWaitForTaskUrl();
 
         int code1 = thread1.getStatusCode();
         int code2 = thread2.getStatusCode();
         
         if (code1 == HttpStatus.SC_OK)
         {
-          assertEquals("Status code should be", HttpStatus.SC_OK, code1);
-          assertEquals("Status code should be", HttpStatus.SC_CONFLICT, code2);
+          assertEquals("Status code1 (after " + count + " executions) should be", HttpStatus.SC_OK, code1);
+          assertEquals("Status code2 (after " + count + " executions) should be", HttpStatus.SC_CONFLICT, code2);
         }
         else
         {
-          assertEquals("Status code should be", HttpStatus.SC_CONFLICT, code1);
-          assertEquals("Status code should be", HttpStatus.SC_OK, code2);
+          assertEquals("Status code1 (after " + count + " executions) should be", HttpStatus.SC_CONFLICT, code1);
+          assertEquals("Status code2 (after " + count + " executions) should be", HttpStatus.SC_OK, code2);
         }
       }
     }
