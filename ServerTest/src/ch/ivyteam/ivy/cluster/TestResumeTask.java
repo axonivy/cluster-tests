@@ -187,23 +187,17 @@ public class TestResumeTask extends Assert
     /**
      * Go to the next step
      */
-    public synchronized void goWaitForResumeResponse()
+    public synchronized void go()
     {
       if (fState == STATE_TASK_URL_RECEIVED)
       {
         fState = STATE_WAIT_FOR_TASK_RESUME_RESPONSE;
       }
-        
-      notifyAll();
-    }
-
-    public synchronized void goWaitForTaskUrl()
-    {
-      if (fState == STATE_TASK_RESUME_RESPONSE_RECEIVED)
+      else if (fState == STATE_TASK_RESUME_RESPONSE_RECEIVED)
       {
         fState = STATE_WAIT_FOR_TASK_URL;
       }
-      
+        
       notifyAll();
     }
   }
@@ -247,15 +241,15 @@ public class TestResumeTask extends Assert
     {
       for (int count=0; count < 500; count++)
       {
-        thread1.goWaitForResumeResponse();
-        thread2.goWaitForResumeResponse();
+        thread1.go();
+        thread2.go();
         
         assertEquals("Both task start uri must be for the same task", 
                 thread1.getTaskStartUri().substring((CLUSTER_NODE_1_BASE_URI).length()), 
                 thread2.getTaskStartUri().substring((CLUSTER_NODE_2_BASE_URI).length()));
         
-        thread1.goWaitForTaskUrl();
-        thread2.goWaitForTaskUrl();
+        thread1.go();
+        thread2.go();
 
         int code1 = thread1.getStatusCode();
         int code2 = thread2.getStatusCode();
