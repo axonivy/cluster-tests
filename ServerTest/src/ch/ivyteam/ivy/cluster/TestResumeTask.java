@@ -260,11 +260,11 @@ public class TestResumeTask extends Assert
         if (code1 == HttpStatus.SC_OK)
         {
           assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_OK, code1);
-          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_CONFLICT, code2);
+          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_NOT_FOUND, code2);
         }
         else
         {
-          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_CONFLICT, code1);
+          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_NOT_FOUND, code1);
           assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_OK, code2);
         }
       }
