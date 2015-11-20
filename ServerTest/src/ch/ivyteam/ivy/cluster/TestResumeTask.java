@@ -244,9 +244,12 @@ public class TestResumeTask extends Assert
         thread1.go();
         thread2.go();
         
+        String taskStartUri1 = thread1.getTaskStartUri();
+        String taskStartUri2 = thread2.getTaskStartUri();
+        
         assertEquals("Both task start uri must be for the same task", 
-                thread1.getTaskStartUri().substring((CLUSTER_NODE_1_BASE_URI).length()), 
-                thread2.getTaskStartUri().substring((CLUSTER_NODE_2_BASE_URI).length()));
+                taskStartUri1.substring((CLUSTER_NODE_1_BASE_URI).length()), 
+                taskStartUri2.substring((CLUSTER_NODE_2_BASE_URI).length()));
         
         thread1.go();
         thread2.go();
@@ -256,13 +259,13 @@ public class TestResumeTask extends Assert
         
         if (code1 == HttpStatus.SC_OK)
         {
-          assertEquals("Status code1 (after " + count + " executions) should be", HttpStatus.SC_OK, code1);
-          assertEquals("Status code2 (after " + count + " executions) should be", HttpStatus.SC_CONFLICT, code2);
+          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_OK, code1);
+          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_CONFLICT, code2);
         }
         else
         {
-          assertEquals("Status code1 (after " + count + " executions) should be", HttpStatus.SC_CONFLICT, code1);
-          assertEquals("Status code2 (after " + count + " executions) should be", HttpStatus.SC_OK, code2);
+          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_CONFLICT, code1);
+          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_OK, code2);
         }
       }
     }
