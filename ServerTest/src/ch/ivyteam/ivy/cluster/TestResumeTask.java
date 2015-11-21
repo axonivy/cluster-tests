@@ -1,5 +1,6 @@
 package ch.ivyteam.ivy.cluster;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -37,6 +38,8 @@ public class TestResumeTask extends Assert
 
     /**  */
     private static final int STATE_ERROR_OR_DONE = -1;
+    
+    private final String BASIC_AUTH_HEADER = "Basic " + Base64.encodeBase64String("user:user".getBytes());
 
     /** The http response code after trying to resume a task */
     private int fResponseCode;
@@ -68,17 +71,20 @@ public class TestResumeTask extends Assert
     @Override
     public void run()
     {
-      HttpClient client;
+     
+      DefaultHttpClient client;
       client = new DefaultHttpClient();
 
       try
       {
         HttpGet httpget = new HttpGet(fHostBaseUri+"/ivy/pro/"+APPLICATION_NAME+"/TestCasesPerformance/12D851E10A821416/start.ivp");
+        addAuthHeader(httpget);
         
         while (fState >= STATE_WAIT_FOR_TASK_URL)
         {          
           setTaskStartUri(client.execute(httpget, new BasicResponseHandler()));
           HttpGet startTask = new HttpGet(fTaskStartUri);
+          addAuthHeader(startTask);
           HttpResponse response = client.execute(startTask);
           setResponseCode(response.getStatusLine().getStatusCode());
           startTask.abort();
@@ -97,6 +103,11 @@ public class TestResumeTask extends Assert
       {
         client.getConnectionManager().shutdown();
       }
+    }
+
+    private void addAuthHeader(HttpGet httpget)
+    {
+      httpget.setHeader("Authorization", BASIC_AUTH_HEADER);
     }
 
     /**
@@ -260,11 +271,11 @@ public class TestResumeTask extends Assert
         if (code1 == HttpStatus.SC_OK)
         {
           assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_OK, code1);
-          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_NOT_FOUND, code2);
+          assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_CONFLICT, code2);
         }
         else
         {
-          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_NOT_FOUND, code1);
+          assertEquals("Status code1 (after " + count + " executions) for " + taskStartUri1, HttpStatus.SC_CONFLICT, code1);
           assertEquals("Status code2 (after " + count + " executions) for " + taskStartUri2, HttpStatus.SC_OK, code2);
         }
       }
