@@ -29,9 +29,9 @@
 		Executes performance tests
 	</description>
 
-	<property name="performance.test.ivyscript" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
-	<property name="performance.test.dbquery" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
-	<property name="performance.test.onetask" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp"/>
+	<property name="performance.test.ivyscript" value="ivy/pro/Portal/TestCasesPerformance/127755AEEB3C441C/executeIvyScript.ivp"/>
+	<property name="performance.test.dbquery" value="ivy/pro/Portal/TestCasesPerformance/127755AEEB3C441C/executeSqlQuery.ivp"/>
+	<property name="performance.test.onetask" value="ivy/pro/Portal/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp"/>
 
 	<!-- Define an environment variable pointing to JMETER folder or change this -->
 	<property environment="env"/>

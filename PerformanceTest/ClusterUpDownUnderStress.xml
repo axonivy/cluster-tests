@@ -22,7 +22,7 @@
 
 	<property name="performance.port" value="8080" />
 
-	<property name="performance.test.testUrl" value="ivy/pro/System/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp" />
+	<property name="performance.test.testUrl" value="ivy/pro/Portal/TestCasesPerformance/127755AEEB3C441C/createOneTask.ivp" />
 
 	<!-- Define an environment variable pointing to JMETER folder or change this -->
 	<property environment="env" />
