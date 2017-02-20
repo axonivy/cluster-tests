@@ -3,8 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.ivyteam.ivy.project.test</groupId>
-  <artifactId>projectDeplaymentTestTasks</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <artifactId>TestUtilProjectDeployment</artifactId>
+  <version>6.5.1-SNAPSHOT</version>
   <packaging>iar</packaging>
 
   <parent>
