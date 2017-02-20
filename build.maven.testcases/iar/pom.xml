@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ch.ivyteam.ivy.project</groupId>
+	<artifactId>build.maven.testcases.iar</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>ch.ivyteam.ivy.project</groupId>
+		<artifactId>build.maven.testcases</artifactId>
+		<version>6.5.1-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<properties>
+		<src.job.name>Trunk_All</src.job.name>
+		<project.build.plugin.version>6.4.1-SNAPSHOT</project.build.plugin.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.axonivy.ivy.ci</groupId>
+				<artifactId>project-build-plugin</artifactId>
+				<version>${project.build.plugin.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.axonivy.ivy.ci</groupId>
+					<artifactId>project-build-plugin</artifactId>
+					<version>[6.4.1,)</version>
+					<extensions>true</extensions>
+					<configuration>
+						<ivyVersion>[6.5.1,]</ivyVersion>
+						<engineDirectory>${engine.directory}</engineDirectory>
+						<engineListPageUrl>http://zugprobldmas/job/${src.job.name}/lastSuccessfulBuild/artifact/ivy/workspace/Server/target/</engineListPageUrl>
+						<skipDeploy>${maven.test.skip}</skipDeploy>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

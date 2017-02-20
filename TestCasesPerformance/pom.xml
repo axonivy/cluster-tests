@@ -4,8 +4,16 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>testCasesPerformance</groupId>
   <artifactId>testCasesPerformance</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>6.5.1-SNAPSHOT</version>
   <packaging>iar</packaging>
+
+  <parent>
+    <groupId>ch.ivyteam.ivy.project</groupId>
+    <artifactId>build.maven.testcases.iar</artifactId>
+    <version>6.5.1-SNAPSHOT</version>
+    <relativePath>../build.maven.testcases/iar</relativePath>
+  </parent>
+
   <build>
     <plugins>
       <plugin>
