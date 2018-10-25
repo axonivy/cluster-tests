@@ -4,7 +4,7 @@
 	<property name="dir.antlibs" value="c:\dev\EnvArchive\antlibs"/>
 	
 	<target name="compile">
-		<javac destdir="classes" includeAntRuntime="no" debug="true" target="1.7" source="1.7" srcdir="src">
+		<javac destdir="classes" includeAntRuntime="no" debug="true" target="1.8" source="1.8" srcdir="src">
 			<compilerarg value="-Xlint:-path"/>
 			<classpath>
 				<fileset dir="lib" includes="*.jar"/>
