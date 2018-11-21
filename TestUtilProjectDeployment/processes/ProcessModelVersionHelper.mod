@@ -1,6 +1,5 @@
 [Ivy]
-[>Created: Tue Jan 25 16:42:53 CET 2011]
-12DBC4D60E7D574C 3.15 #module
+12DBC4D60E7D574C 3.23 #module
 >Proto >Proto Collection #zClass
 pn0 ProcessModelVersionHelper Big #zClass
 pn0 B #cInfo
@@ -86,12 +85,6 @@ type.code=
 type.name=
 ' #txt
 pn0 f0 showInStartList 1 #txt
-pn0 f0 taskAndCaseSetupAction 'import ch.ivyteam.ivy.workflow.TaskUpdateDefinition;
-ch.ivyteam.ivy.workflow.TaskUpdateDefinition taskUpdDef = new ch.ivyteam.ivy.workflow.TaskUpdateDefinition();taskUpdDef.setPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-taskUpdDef.setExpiryActivator("Everybody");
-taskUpdDef.setExpiryPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-engine.updateCurrentTask(taskUpdDef);
-' #txt
 pn0 f0 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -159,12 +152,6 @@ type.code=
 type.name=
 ' #txt
 pn0 f4 showInStartList 1 #txt
-pn0 f4 taskAndCaseSetupAction 'import ch.ivyteam.ivy.workflow.TaskUpdateDefinition;
-ch.ivyteam.ivy.workflow.TaskUpdateDefinition taskUpdDef = new ch.ivyteam.ivy.workflow.TaskUpdateDefinition();taskUpdDef.setPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-taskUpdDef.setExpiryActivator("Everybody");
-taskUpdDef.setExpiryPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-engine.updateCurrentTask(taskUpdDef);
-' #txt
 pn0 f4 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -224,12 +211,6 @@ type.code=
 type.name=
 ' #txt
 pn0 f6 showInStartList 1 #txt
-pn0 f6 taskAndCaseSetupAction 'import ch.ivyteam.ivy.workflow.TaskUpdateDefinition;
-ch.ivyteam.ivy.workflow.TaskUpdateDefinition taskUpdDef = new ch.ivyteam.ivy.workflow.TaskUpdateDefinition();taskUpdDef.setPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-taskUpdDef.setExpiryActivator("Everybody");
-taskUpdDef.setExpiryPriority(ch.ivyteam.ivy.workflow.WorkflowPriority.valueOf(2));
-engine.updateCurrentTask(taskUpdDef);
-' #txt
 pn0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -276,7 +257,7 @@ pn0 f13 @|StepIcon #fIcon
 pn0 f8 expr out #txt
 pn0 f8 440 204 440 227 #arcP
 pn0 f15 type ch.ivyteam.testutilprojectdeployment.Data #txt
-pn0 f15 template "InfoPage.ivc" #txt
+pn0 f15 template "/ProcessPages/ProcessModelVersionHelper/InfoPage.ivc" #txt
 pn0 f15 283 275 26 26 14 0 #rect
 pn0 f15 @|EndRequestIcon #fIcon
 pn0 f16 type ch.ivyteam.testutilprojectdeployment.Data #txt
