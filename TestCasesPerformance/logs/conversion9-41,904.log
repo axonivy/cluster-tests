@@ -1,8 +1,0 @@
-# Conversion log for project 'PerformanceTest' from version 9 to 41,904
-# Created on 19.03.2010 16:36:01
-19.03.2010 16:36:01 : New Task  : Converting configurations:
-19.03.2010 16:36:01 : Info      : Adding smart table default configuration ...
-19.03.2010 16:36:01 : Info      : Clearing configuration classes cache...
-19.03.2010 16:36:02 : Info      : Converted configurations successfully.
-19.03.2010 16:36:02 : New Task  : Update project version to actual version 41904.
-19.03.2010 16:36:02 : New Task  : Finished conversion of project PerformanceTest.
