@@ -2,26 +2,16 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ch.ivyteam.ivy.project.test</groupId>
-  <artifactId>TestCasesPerformance</artifactId>
-  <version>6.5.1-SNAPSHOT</version>
-  <packaging>iar</packaging>
-
   <parent>
-    <groupId>ch.ivyteam.ivy.project</groupId>
-    <artifactId>build.maven.testcases.iar</artifactId>
-    <version>6.5.1-SNAPSHOT</version>
+    <groupId>ch.ivyteam.ivy.test.cluster</groupId>
+    <artifactId>build-config-iar</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <relativePath>../build-maven/config/iar</relativePath>
   </parent>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.axonivy.ivy.ci</groupId>
-        <artifactId>project-build-plugin</artifactId>
-        <version>6.5.0</version>
-        <extensions>true</extensions>
-      </plugin>
-    </plugins>
-  </build>
+  <groupId>ch.ivyteam.ivy.test.cluster</groupId>
+  <artifactId>ivy-test-cluster-poject</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>iar</packaging>
+
 </project>
