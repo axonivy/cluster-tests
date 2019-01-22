@@ -11,7 +11,7 @@
     <groupId>ch.ivyteam.ivy.project</groupId>
     <artifactId>build.maven.testcases.iar</artifactId>
     <version>6.5.1-SNAPSHOT</version>
-    <relativePath>../build.maven.testcases/iar</relativePath>
+    <relativePath>../build-maven/config/iar</relativePath>
   </parent>
 
   <build>
