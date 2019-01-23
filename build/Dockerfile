@@ -1,8 +1,6 @@
 FROM maven:3.5.2-jdk-8
 
-RUN addgroup --gid 1000 build && adduser --uid 1000 --gid 1000 --disabled-password --gecos "" build
-
-# Install docker-ce
+# Install docker-ce and docker-compose
 RUN apt-get update && \
   apt-get -y install apt-transport-https \
      ca-certificates \
@@ -15,5 +13,6 @@ RUN apt-get update && \
    $(lsb_release -cs) \
    stable" && \
   apt-get update && \
-  apt-get -y install docker-ce && \
-  usermod -aG docker $USER build
+  apt-get -y install docker-ce-cli docker-compose
+
+RUN addgroup --gid 1000 build && adduser --uid 1000 --gid 1000 --disabled-password --gecos "" build

@@ -2,7 +2,7 @@ pipeline {
   agent {
     dockerfile {
       dir 'build'
-      args '-v /var/run/docker.sock:/var/run/docker.sock'
+      args '-v /var/run/docker.sock:/var/run/docker.sock --group-add docker'
     }
   }
   
@@ -33,6 +33,8 @@ pipeline {
       steps {
         script {
           sh 'docker ps'
+          sh 'docker --version'
+          sh 'docker-compose --version'
         }
       }
     }
