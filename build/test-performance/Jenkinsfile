@@ -1,0 +1,58 @@
+pipeline {
+  agent {
+    dockerfile {
+      dir 'build'
+      args '-v /var/run/docker.sock:/var/run/docker.sock --group-add docker'
+    }
+  }
+
+  triggers {
+    pollSCM '@hourly'
+    cron '@midnight'
+  }
+
+  parameters {
+    string(name: 'engineSource', defaultValue: 'http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/', description: 'Engine page url')
+  }
+
+  stages {
+    stage('build') {
+      steps {
+        script {
+          maven cmd: "clean verify -Dengine.page.url=${params.engineSource} -f build-maven/module/ivy-projects/pom.xml"
+        }
+      }
+      post {
+        always {
+          archiveArtifacts '**/target/*.iar'
+        }
+      }
+    }
+
+    stage('test-performance') {
+      steps {
+        script {
+          def cluster = load 'build/cluster.groovy'
+          cluster.start()
+          sh "docker cp ivy-test-cluster-poject/target/TestCasesPerformance-1.0.0-SNAPSHOT.iar ivy1_1:/usr/lib/axonivy-engine/deploy/test/TestCasesPerformance-1.0.0-SNAPSHOT.iar"
+          cluster.waitUntiClusterIsUp()
+          cluster.logApacheStatus('after-start')
+
+          cluster.logPage(9080, '/ivy', 'after-start-ivy')
+          cluster.logPage(9080, '/ivy/info/index.jsp?pageId=cluster_panel', 'after-start-ivy-cluster')
+        }
+      }
+      post {
+        always {
+          script {
+            def cluster = load 'build/cluster.groovy'
+            cluster.down()
+            cluster.collectDockerLogs()
+            archiveArtifacts 'logs/**'
+          }
+        }
+      }
+    }
+
+  }
+}
