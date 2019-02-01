@@ -3,15 +3,15 @@ def pullEngineImage() {
 }
 
 def start() {
-  sh "docker-compose -f docker-compose/docker-compose.yml up -d"
+  sh "docker-compose -f build/docker-compose/docker-compose.yml up -d"
 }
 
 def stop() {
-  sh "docker-compose -f docker-compose/docker-compose.yml stop"
+  sh "docker-compose -f build/docker-compose/docker-compose.yml stop"
 }
 
 def down() {
-  sh "docker-compose -f docker-compose/docker-compose.yml down"
+  sh "docker-compose -f build/docker-compose/docker-compose.yml down"
 }
 
 def waitUntiClusterIsUp() {
@@ -48,7 +48,7 @@ def collectDockerLogs() {
 }
 
 def collectDockerLog(def name) {
-  sh "docker-compose -f docker-compose/docker-compose.yml logs $name >> logs/docker-$name.log"
+  sh "docker-compose -f build/docker-compose/docker-compose.yml logs $name >> logs/docker-$name.log"
 }
 
 return this
