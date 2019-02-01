@@ -25,13 +25,13 @@ def waitUntiClusterIsUp() {
 def waitUntilPortIsUp(def port) {
   timeout(1) {
     waitUntil {
-      def r = sh script: "wget -q http://localhost:$port/ivy -O /dev/null", returnStatus: true
+      def r = sh script: "wget -q http://localhost:$port/ivy/info/index.jsp -O /dev/null", returnStatus: true
       return (r == 0);
     }
   }
 }
 
-def logApacheStatus(def name) {
+def logApacheStatus() {
   logPage(9080, '/server-status', "$name-server-status");
   logPage(9080, '/balancer-manager', "$name-balancer-manager");
 }
