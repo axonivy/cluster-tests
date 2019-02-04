@@ -119,13 +119,14 @@ public class ClusterLogger
 	}
 
 	private static File getFile(String path) {
+		ch.ivyteam.ivy.scripting.objects.File ivyFile = null;
 		try {
-			ch.ivyteam.ivy.scripting.objects.File ivyFile = new ch.ivyteam.ivy.scripting.objects.File(path , false);
-			ivyFile.getParentFile().mkdir();
+			ivyFile = new ch.ivyteam.ivy.scripting.objects.File(path , false);
 			ivyFile.createNewFile();
 			return ivyFile.getJavaFile();
 		} catch (IOException ex) {
-			throw new RuntimeException("Could not evaluate log file", ex);
+			String file = ivyFile != null ? ivyFile.getJavaFile().getPath() : path;
+			throw new RuntimeException("Could not get log file '" + file + "'", ex);
 		}
 	}
 }
