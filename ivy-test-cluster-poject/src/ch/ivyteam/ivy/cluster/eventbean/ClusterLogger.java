@@ -121,6 +121,8 @@ public class ClusterLogger
 	private static File getFile(String path) {
 		try {
 			ch.ivyteam.ivy.scripting.objects.File ivyFile = new ch.ivyteam.ivy.scripting.objects.File(path , false);
+			ivyFile.getParentFile().mkdir();
+			ivyFile.createNewFile();
 			return ivyFile.getJavaFile();
 		} catch (IOException ex) {
 			throw new RuntimeException("Could not evaluate log file", ex);
