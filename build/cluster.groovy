@@ -25,7 +25,7 @@ def waitUntiClusterIsUp() {
 def waitUntilPortIsUp(def port) {
   timeout(1) {
     waitUntil {
-      def r = sh script: "wget -q http://localhost:${port}/ivy/info/index.jsp -O /dev/null", returnStatus: true
+      def r = sh script: "wget -q http://${env.NODE_NAME}:${port}/ivy/info/index.jsp -O /dev/null", returnStatus: true
       return (r == 0);
     }
   }
@@ -47,7 +47,7 @@ def logClusterStatus(def name) {
 
 def logPage(def port, def uri, def name) {
   sh 'mkdir -p logs/pages'
-  sh "wget -q http://localhost:${port}${uri} -O logs/pages/${name}-${port}.html"
+  sh "wget -q http://${env.NODE_NAME}:${port}${uri} -O logs/pages/${name}-${port}.html"
 }
 
 def collectDockerLogs() {
