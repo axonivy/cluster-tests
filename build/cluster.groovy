@@ -15,29 +15,29 @@ def down() {
 }
 
 def waitUntiClusterIsUp() {
-  waitUntilPortIsUp(9080);
-  waitUntilPortIsUp(9081);
-  waitUntilPortIsUp(9082);
-  waitUntilPortIsUp(9083);
-  waitUntilPortIsUp(9084);
+  waitUntilPortIsUp(9080)
+  waitUntilPortIsUp(9081)
+  waitUntilPortIsUp(9082)
+  waitUntilPortIsUp(9083)
+  waitUntilPortIsUp(9084)
 }
 
 def waitUntilPortIsUp(def port) {
   timeout(1) {
     waitUntil {
-      def r = sh script: "wget -q http://localhost:$port/ivy/info/index.jsp -O /dev/null", returnStatus: true
+      def r = sh script: "wget -q http://localhost:${port}/ivy/info/index.jsp -O /dev/null", returnStatus: true
       return (r == 0);
     }
   }
 }
 
-def logApacheStatus() {
-  logPage(9080, '/server-status', "$name-server-status");
-  logPage(9080, '/balancer-manager', "$name-balancer-manager");
+def logApacheStatus(def name) {
+  logPage(9080, '/server-status', "${name}-server-status")
+  logPage(9080, '/balancer-manager', "${name}-balancer-manager")
 }
 
 def logPage(def port, def uri, def name) {
-  sh "wget -q http://localhost:$port$uri -O logs/pages/$name-$port.html"
+  sh "wget -q http://localhost:${port}${uri} -O logs/pages/${name}-${port}.html"
 }
 
 def collectDockerLogs() {
@@ -48,7 +48,7 @@ def collectDockerLogs() {
 }
 
 def collectDockerLog(def name) {
-  sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml logs $name >> logs/docker-$name.log"
+  sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml logs ${name} >> logs/docker-${name}.log"
 }
 
 return this
