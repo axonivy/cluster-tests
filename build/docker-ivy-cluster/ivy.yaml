@@ -7,3 +7,5 @@ SystemDb:
 Administrators:
   admin:
     Password: admin
+Data:
+  FilesDirectory: files 
