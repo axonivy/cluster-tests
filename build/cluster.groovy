@@ -37,6 +37,7 @@ def logApacheStatus(def name) {
 }
 
 def logPage(def port, def uri, def name) {
+  sh 'mkdir -p logs/pages'
   sh "wget -q http://localhost:${port}${uri} -O logs/pages/${name}-${port}.html"
 }
 
@@ -48,6 +49,7 @@ def collectDockerLogs() {
 }
 
 def collectDockerLog(def name) {
+  sh 'mkdir -p logs/'
   sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml logs ${name} >> logs/docker-${name}.log"
 }
 
