@@ -59,7 +59,7 @@ def collectDockerLogs() {
 
 def collectDockerLog(def name) {
   sh 'mkdir -p logs/'
-  sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml logs ${name} >> logs/docker-${name}.log"
+  sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml logs ${name} > logs/docker-${name}.log"
 }
 
 return this

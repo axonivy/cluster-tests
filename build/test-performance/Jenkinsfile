@@ -39,18 +39,22 @@ pipeline {
           cluster.logApacheStatus('after-start')
 
           cluster.logPage(9080, '/ivy', 'after-start-ivy')
-          cluster.logClusterStaqtus('after-start-ivy-cluster')
+          cluster.logClusterStatus('after-start-ivy-cluster')
         }
       }
       post {
         always {
           script {
-            def cluster = load 'build/cluster.groovy'
-            cluster.logStatus('before-stop')
-            cluster.stop()
-            cluster.collectDockerLogs()
-            cluster.down()
-            archiveArtifacts 'logs/**'
+            try {
+              def cluster = load 'build/cluster.groovy'
+              cluster.logStatus('before-stop')
+              cluster.stop()
+            }
+            finally {
+              cluster.collectDockerLogs()
+              cluster.down()
+              archiveArtifacts 'logs/**'
+            }
           }
         }
       }
