@@ -33,12 +33,17 @@ def waitUntilPortIsUp(def port) {
 
 def logStatus(def name) {
   logApacheStatus(name)
+  logIvyInfoPage(name)
   logClusterStatus(name)
 }
 
 def logApacheStatus(def name) {
   logPage(9080, '/server-status', "${name}-server-status")
   logPage(9080, '/balancer-manager', "${name}-balancer-manager")
+}
+
+def logIvyInfoPage(def name) {
+  logPage(9080, '/ivy/info/index.jsp', "${name}-ivy-index")
 }
 
 def logClusterStatus(def name) {

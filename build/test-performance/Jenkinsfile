@@ -36,10 +36,9 @@ pipeline {
           cluster.start()
           sh "docker cp ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar docker-ivy-cluster_ivy1_1:/usr/lib/axonivy-engine/deploy/test.iar"
           cluster.waitUntiClusterIsUp()
-          cluster.logApacheStatus('after-start')
-
-          cluster.logPage(9080, '/ivy', 'after-start-ivy')
-          cluster.logClusterStatus('after-start-ivy-cluster')
+          cluster.logStatus('after-start')
+                  
+          maven cmd: "clean verify -f test-cluster-performance/pom.xml"
         }
       }
       post {
@@ -53,7 +52,7 @@ pipeline {
             finally {
               cluster.collectDockerLogs()
               cluster.down()
-              archiveArtifacts 'logs/**'
+              archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
             }
           }
         }
