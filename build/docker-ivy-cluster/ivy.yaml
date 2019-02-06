@@ -8,4 +8,4 @@ Administrators:
   admin:
     Password: admin
 Data:
-  FilesDirectory: files 
+  FilesDirectory: files

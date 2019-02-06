@@ -12,7 +12,7 @@
 
 	<properties>
 		<engine.page.url>http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/</engine.page.url>
-		<engine.directory>../.ivyEngine</engine.directory>
+		<engine.directory>../.ivy-engine</engine.directory>
 	</properties>
 
 	<build>

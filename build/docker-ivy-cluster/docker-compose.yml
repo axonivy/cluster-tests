@@ -22,6 +22,7 @@ services:
      - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/zugtstivycln1_XLSEE-15E9-5582-558D.lic:/etc/axonivy-engine/license.lic"
+     - ./../../build-maven/module/ivy-projects/target/deploy/:/var/lib/axonivy-engine/deploy/
 
   ivy2:
     image: "axonivy/axonivy-engine:dev"

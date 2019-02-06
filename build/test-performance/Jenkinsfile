@@ -45,8 +45,8 @@ pipeline {
       post {
         always {
           script {
-            def cluster = load 'build/cluster.groovy'
             try {
+              def cluster = load 'build/cluster.groovy'
               cluster.logStatus('before-stop')
               cluster.stop()
             }
