@@ -38,14 +38,14 @@ pipeline {
           cluster.waitUntiClusterIsUp()
           cluster.logStatus('after-start')
                   
-          maven cmd: "clean verify -f test-cluster-performance/pom.xml"
+          maven cmd: "clean verify -f test-cluster-performance/pom.xml -Djmeter.server=${env.NODE_NAME}"
         }
       }
       post {
         always {
           script {
+            def cluster = load 'build/cluster.groovy'
             try {
-              def cluster = load 'build/cluster.groovy'
               cluster.logStatus('before-stop')
               cluster.stop()
             }
@@ -53,6 +53,7 @@ pipeline {
               cluster.collectDockerLogs()
               cluster.down()
               archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
+              perfReport compareBuildPrevious: true, excludeResponseTime: true, ignoreFailedBuilds: true, modeOfThreshold: true, modeThroughput: true, persistConstraintLog: true, relativeFailedThresholdPositive: 5.0, relativeUnstableThresholdPositive: 0.0, sourceDataFiles: '*/target/jmeter/results/*.csv'
             }
           }
         }
