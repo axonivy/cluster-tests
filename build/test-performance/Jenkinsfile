@@ -34,7 +34,6 @@ pipeline {
         script {
           def cluster = load 'build/cluster.groovy'
           cluster.start()
-          sh "docker cp ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar docker-ivy-cluster_ivy1_1:/usr/lib/axonivy-engine/deploy/test.iar"
           cluster.waitUntiClusterIsUp()
           cluster.logStatus('after-start')
                   
