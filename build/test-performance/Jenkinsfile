@@ -1,0 +1,63 @@
+pipeline {
+  agent {
+    dockerfile {
+      dir 'build'
+      args '-v /var/run/docker.sock:/var/run/docker.sock --group-add docker'
+    }
+  }
+
+  triggers {
+    pollSCM '@hourly'
+    cron '@midnight'
+  }
+
+  parameters {
+    string(name: 'engineSource', defaultValue: 'http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/', description: 'Engine page url')
+  }
+
+  stages {
+    stage('build') {
+      steps {
+        script {
+          maven cmd: "clean verify -Dengine.page.url=${params.engineSource} -f build-maven/module/ivy-projects/pom.xml"
+        }
+      }
+      post {
+        always {
+          archiveArtifacts '**/target/*.iar'
+        }
+      }
+    }
+
+    stage('test-performance') {
+      steps {
+        script {
+          def cluster = load 'build/cluster.groovy'
+          cluster.start()
+          cluster.waitUntiClusterIsUp()
+          cluster.logStatus('after-start')
+                  
+          maven cmd: "clean verify -f test-cluster-performance/pom.xml -Djmeter.server=${env.NODE_NAME}"
+        }
+      }
+      post {
+        always {
+          script {
+            def cluster = load 'build/cluster.groovy'
+            try {
+              cluster.logStatus('before-stop')
+              cluster.stop()
+            }
+            finally {
+              cluster.collectDockerLogs()
+              cluster.down()
+              archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
+              perfReport compareBuildPrevious: true, excludeResponseTime: true, ignoreFailedBuilds: true, modeOfThreshold: true, modeThroughput: true, persistConstraintLog: true, relativeFailedThresholdPositive: 5.0, relativeUnstableThresholdPositive: 0.0, sourceDataFiles: '*/target/jmeter/results/*.csv'
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

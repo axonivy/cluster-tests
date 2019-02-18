@@ -1,0 +1,58 @@
+version: '3.3'
+services:
+  db:
+    image: "mariadb"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+
+  apache:
+    image: "bitnami/apache"
+    user: root
+    ports:
+     - "9080:8080"
+    volumes:
+     - "./apache-conf/apache-host.conf:/bitnami/apache/conf/vhosts/apache-host.conf:ro"
+
+  ivy1:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln1
+    ports:
+     - "9081:8080"
+    volumes:
+     - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/zugtstivycln1_XLSEE-15E9-5582-558D.lic:/etc/axonivy-engine/license.lic"
+     - ./../../build-maven/module/ivy-projects/target/deploy/:/var/lib/axonivy-engine/deploy/
+
+  ivy2:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln2
+    ports:
+     - "9082:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/zugtstivycln2_XLSEE-15E9-558D-082J.lic:/etc/axonivy-engine/license.lic"
+     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"
+
+  ivy3:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln3
+    ports:
+     - "9083:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/zugtstivycln3_XLSEE-15E9-5590-F88O.lic:/etc/axonivy-engine/license.lic"
+     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"
+
+  ivy4:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln4
+    ports:
+     - "9084:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/zugtstivycln4_XLSEE-15E9-5593-5FFF.lic:/etc/axonivy-engine/license.lic"
+     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"

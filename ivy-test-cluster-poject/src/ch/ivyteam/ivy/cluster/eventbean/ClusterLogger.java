@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.core.resources.IProject;
 
@@ -93,7 +93,7 @@ public class ClusterLogger
 		File outputFile = getLogFile(project, beanName);
 		if (outputFile.exists())
 		{
-			return FileUtils.readFileToString(outputFile);
+			return FileUtils.readFileToString(outputFile, StandardCharsets.UTF_8);
 		}
 		else
 		{
@@ -103,21 +103,30 @@ public class ClusterLogger
 
 	private static void appendString(File logFile, String message) throws IOException
 	{
-		FileWriter writer = new FileWriter(logFile, true);
-        try {
+        try(FileWriter writer = new FileWriter(logFile, true)) {
         	writer.append(message + "\n");
-        } finally {
-            IOUtils.closeQuietly(writer);
         }
 	}
 
 	private static File getLogFile(IProject project, String beanName)
 	{
-		return project.getFolder("webContent").getFolder("log").getFile("statechange_"+ beanName +".log").getLocation().toFile();
+		return getFile("log/statechange_"+ beanName +".log");
 	}
 	
 	private static File getDetailLogFile(IProject project, String beanName)
 	{
-		return project.getFolder("webContent").getFolder("log").getFile("statechange_"+ beanName +"_detail.log").getLocation().toFile();
+		return getFile("log/statechange_"+ beanName +"_detail.log");
+	}
+
+	private static File getFile(String path) {
+		ch.ivyteam.ivy.scripting.objects.File ivyFile = null;
+		try {
+			ivyFile = new ch.ivyteam.ivy.scripting.objects.File(path , false);
+			ivyFile.createNewFile();
+			return ivyFile.getJavaFile();
+		} catch (IOException ex) {
+			String file = ivyFile != null ? ivyFile.getJavaFile().getPath() : path;
+			throw new RuntimeException("Could not get log file '" + file + "'", ex);
+		}
 	}
 }

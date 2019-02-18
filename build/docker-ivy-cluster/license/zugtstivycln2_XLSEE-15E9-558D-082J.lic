@@ -1,0 +1,23 @@
+[Begin Licence]
+#Licence for AxonIvy Axon.ivy Engine (Enterprise Edition)
+#Mon Sep 18 16:16:19 CEST 2017
+host.name=zugtstivycln2
+server.elements.limit=0
+server.cluster.local.node.id=0
+product.type=Server
+licencee.organisation=AXON IVY AG
+licence.type=Enterprise Edition
+server.cluster.name=zugtstivycl
+licence.valid.from=2017-09-18
+licence.keyversion=axonivy/7000
+licence.valid.until=2027-09-18
+product.name=Axon.ivy Engine
+licencee.individual=All
+server.ria=true
+licence.number=XLSEE-15E9-558D-082J
+server.users.limit=0
+server.sessions.limit=0
+[End Licence]
+[Begin Signature]
+MCwCFD1RJUYjBb9JyOCdKeFbjGcSdvq4AhR5KUDSiJZXmOMRJ9d4n3LMxg3nkQ==
+[End Signature]
