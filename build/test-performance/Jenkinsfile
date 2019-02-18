@@ -32,9 +32,6 @@ pipeline {
     stage('test-performance') {
       steps {
         script {
-          // Fix Non HTTP response code: java.net.NoRouteToHostException/Non HTTP response message: Cannot assign requested address (Address not available)
-          sh 'sysctl -w net.ipv4.tcp_tw_reuse=1'
-
           def cluster = load 'build/cluster.groovy'
           cluster.start()
           cluster.waitUntiClusterIsUp()
