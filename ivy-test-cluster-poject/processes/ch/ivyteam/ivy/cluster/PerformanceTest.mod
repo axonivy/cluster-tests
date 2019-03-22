@@ -1,5 +1,5 @@
 [Ivy]
-127755AEEB3C441C 3.23 #module
+127755AEEB3C441C 3.26 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
 Pt0 B #cInfo
@@ -73,44 +73,13 @@ Pt0 f0 triggerEnabled false #txt
 Pt0 f0 callSignature systemTasks() #txt
 Pt0 f0 persist false #txt
 Pt0 f0 startName 'Creates Tasks' #txt
-Pt0 f0 taskData '#
-#Fri Mar 19 16:45:54 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-.DESC=
+Pt0 f0 taskData '.NAM=Creates System Tasks
 TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
-.NAM=Creates System Tasks
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f0 caseData '#
-#Fri Mar 19 16:45:54 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f0 showInStartList 1 #txt
 Pt0 f0 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -428,42 +397,12 @@ Pt0 f30 requestEnabled true #txt
 Pt0 f30 triggerEnabled false #txt
 Pt0 f30 callSignature createOneTask() #txt
 Pt0 f30 persist false #txt
-Pt0 f30 taskData '#
-#Tue Mar 23 08:21:43 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f30 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f30 caseData '#
-#Tue Mar 23 08:21:43 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f30 showInStartList 1 #txt
 Pt0 f30 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -528,42 +467,12 @@ Pt0 f37 requestEnabled true #txt
 Pt0 f37 triggerEnabled false #txt
 Pt0 f37 callSignature executeSqlQuery() #txt
 Pt0 f37 persist false #txt
-Pt0 f37 taskData '#
-#Tue Mar 23 11:47:29 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f37 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f37 caseData '#
-#Tue Mar 23 11:47:29 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f37 showInStartList 1 #txt
 Pt0 f37 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -587,42 +496,12 @@ Pt0 f44 requestEnabled true #txt
 Pt0 f44 triggerEnabled false #txt
 Pt0 f44 callSignature executeIvyScript() #txt
 Pt0 f44 persist false #txt
-Pt0 f44 taskData '#
-#Fri Apr 09 17:47:30 CEST 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f44 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f44 caseData '#
-#Fri Apr 09 17:47:30 CEST 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f44 showInStartList 1 #txt
 Pt0 f44 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -684,6 +563,22 @@ Pt0 f43 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 Pt0 f43 actionTable 'out=in;
 out.recordset=recordset;
 ' #txt
+Pt0 f43 actionCode 'import org.apache.commons.lang3.StringUtils;
+
+List<String> names;
+List<String> types;
+List<String> remarks;
+
+for (Record record : recordset.getRecords())
+{
+	names.add(record.getField("TABLE_NAME").toString());
+	types.add(record.getField("TABLE_TYPE").toString());
+	remarks.add(record.getField("REMARKS").toString());
+}
+
+String allNames = StringUtils.join(names);
+String allTypes = StringUtils.join(types);
+String allRemarks = StringUtils.join(remarks);' #txt
 Pt0 f43 dbSql '<?xml version=""1.0"" standalone=""no""?>
 <!DOCTYPE ANY_SQL SYSTEM  ""sqlStatements.dtd"">
 <ANY_SQL><Verbatim quote=''false''>SELECT *
