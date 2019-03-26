@@ -59,14 +59,19 @@ pipeline {
               cluster.collectDockerLogs()
               cluster.down()
               archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
-              perfReport compareBuildPrevious: true,
-                excludeResponseTime: true,
+              perfReport errorUnstableThreshold: 1,
+
+                // compare with previous build
+                compareBuildPrevious: true,
                 ignoreFailedBuilds: true,
-                modeOfThreshold: true,
+                relativeUnstableThresholdPositive: 10.0,
+                configType: 'MRT',
+                
+                // display diagram,
+                excludeResponseTime: true,  // Exclude response time of errored samples
                 modeThroughput: true,
+                
                 persistConstraintLog: true,
-                relativeFailedThresholdPositive: 5.0,
-                relativeUnstableThresholdPositive: 0.0,
                 sourceDataFiles: '*/target/jmeter/results/*.csv'
             }
           }
