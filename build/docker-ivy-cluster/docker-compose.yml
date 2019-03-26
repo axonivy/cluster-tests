@@ -23,6 +23,7 @@ services:
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/zugtstivycln1_XLSEE-15E9-5582-558D.lic:/etc/axonivy-engine/license.lic"
      - ./../../build-maven/module/ivy-projects/target/deploy/:/var/lib/axonivy-engine/deploy/
+     - ./applications:/var/lib/axonivy-engine-7x/applications
 
   ivy2:
     image: "axonivy/axonivy-engine:dev"
@@ -33,7 +34,7 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/zugtstivycln2_XLSEE-15E9-558D-082J.lic:/etc/axonivy-engine/license.lic"
-     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"
+     - ./applications:/var/lib/axonivy-engine-7x/applications
 
   ivy3:
     image: "axonivy/axonivy-engine:dev"
@@ -44,7 +45,7 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/zugtstivycln3_XLSEE-15E9-5590-F88O.lic:/etc/axonivy-engine/license.lic"
-     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"
+     - ./applications:/var/lib/axonivy-engine-7x/applications
 
   ivy4:
     image: "axonivy/axonivy-engine:dev"
@@ -55,4 +56,4 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/zugtstivycln4_XLSEE-15E9-5593-5FFF.lic:/etc/axonivy-engine/license.lic"
-     - "./../../ivy-test-cluster-poject/target/ivy-test-cluster-poject-1.0.0-SNAPSHOT.iar:/var/lib/axonivy-engine/applications/test/ivy-test-cluster-poject/1.zip"
+     - ./applications:/var/lib/axonivy-engine-7x/applications
