@@ -17,6 +17,11 @@ pipeline {
       description: 'Engine page url')
   }
 
+  options {
+    buildDiscarder logRotator(artifactNumToKeepStr: '20', numToKeepStr: '100')
+    disableConcurrentBuilds()
+  }
+
   stages {
     stage('build') {
       steps {
