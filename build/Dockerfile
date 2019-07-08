@@ -1,4 +1,4 @@
-FROM maven:3.5.2-jdk-8
+FROM maven:3.6.1-jdk-11
 
 # Install docker-ce and docker-compose
 RUN apt-get update && \
