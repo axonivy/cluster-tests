@@ -11,7 +11,7 @@ services:
     ports:
      - "9080:8080"
     volumes:
-     - "./apache-conf/apache-host.conf:/bitnami/apache/conf/vhosts/apache-host.conf:ro"
+     - "./apache-conf/apache-host.conf:/opt/bitnami/apache/conf/vhosts/apache-host.conf:ro"
 
   ivy1:
     image: "axonivy/axonivy-engine:dev"
