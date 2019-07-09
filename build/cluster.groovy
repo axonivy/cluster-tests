@@ -15,11 +15,11 @@ def down() {
 }
 
 def waitUntiClusterIsUp() {
-  waitUntilPortIsUp(9080)
   waitUntilPortIsUp(9081)
   waitUntilPortIsUp(9082)
   waitUntilPortIsUp(9083)
   waitUntilPortIsUp(9084)
+  waitUntilPortIsUp(9080)
 }
 
 def waitUntilPortIsUp(def port) {
@@ -56,6 +56,8 @@ def logPage(def port, def uri, def name) {
 }
 
 def collectDockerLogs() {
+  collectDockerLog('db')
+  collectDockerLog('apache')
   collectDockerLog('ivy1')
   collectDockerLog('ivy2')
   collectDockerLog('ivy3')
