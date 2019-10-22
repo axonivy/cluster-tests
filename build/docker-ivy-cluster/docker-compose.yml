@@ -1,11 +1,11 @@
-version: '3.3'
+version: '3.5'
 services:
   db:
     image: "mariadb"
     environment:
       MYSQL_ROOT_PASSWORD: 1234
 
-  apache:
+  loadbalancer:
     image: "bitnami/apache"
     user: root
     ports:
@@ -21,7 +21,7 @@ services:
     volumes:
      - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./license/zugtstivycln1_XLSEE-15E9-5582-558D.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2020_10_21_ivy1.lic:/etc/axonivy-engine/license.lic"
      - ./../../build-maven/module/ivy-projects/target/deploy/:/var/lib/axonivy-engine/deploy/
      - ./applications:/var/lib/axonivy-engine-7x/applications
 
@@ -33,7 +33,7 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./license/zugtstivycln2_XLSEE-15E9-558D-082J.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2020_10_21_ivy2.lic:/etc/axonivy-engine/license.lic"
      - ./applications:/var/lib/axonivy-engine-7x/applications
 
   ivy3:
@@ -44,7 +44,7 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./license/zugtstivycln3_XLSEE-15E9-5590-F88O.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2020_10_21_ivy3.lic:/etc/axonivy-engine/license.lic"
      - ./applications:/var/lib/axonivy-engine-7x/applications
 
   ivy4:
@@ -55,5 +55,10 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./license/zugtstivycln4_XLSEE-15E9-5593-5FFF.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2020_10_21_ivy4.lic:/etc/axonivy-engine/license.lic"
      - ./applications:/var/lib/axonivy-engine-7x/applications
+
+networks:
+  default:
+    external:
+      name: ivycluster

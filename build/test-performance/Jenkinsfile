@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-    dockerfile {
-      dir 'build'
-      args '-v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1'
-    }
-  }
+  agent none
 
   triggers {
     pollSCM '@hourly'
@@ -12,9 +7,11 @@ pipeline {
   }
 
   parameters {
-    string(name: 'engineSource',
-      defaultValue: 'http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/',
-      description: 'Engine page url')
+    string(
+      name: 'engineSource',
+      description: 'Engine page url',
+      defaultValue: 'http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/'
+    )
   }
 
   options {
@@ -24,11 +21,21 @@ pipeline {
 
   stages {
     stage('build') {
-      steps {
-        script {
-          maven cmd: "clean verify -Dengine.page.url=${params.engineSource} -f build-maven/module/ivy-projects/pom.xml"
+      agent {
+        dockerfile {
+          dir 'build'
         }
       }
+
+      steps {
+        script {
+          dir ('build-maven/module/ivy-projects') {
+            maven cmd: "clean verify -Dengine.page.url=${params.engineSource}"            
+          }
+          stash name: 'test-project', includes: '**/target/*.iar'
+        }
+      }
+
       post {
         always {
           archiveArtifacts '**/target/*.iar'
@@ -37,47 +44,62 @@ pipeline {
     }
 
     stage('test-performance') {
+      agent {
+        label 'cluster'
+      }
+
       steps {
         script {
-          def cluster = load 'build/cluster.groovy'
-          cluster.start()
-          cluster.waitUntiClusterIsUp()
-          cluster.logStatus('after-start')
-                  
-          maven cmd: "clean verify -f test-cluster-performance/pom.xml -Djmeter.server=${env.NODE_NAME}"
-        }
-      }
-      post {
-        always {
-          script {
+
+          unstash 'test-project'
+
+          try {
+            sh 'docker network create ivycluster'
+          } catch (Exception ex) {
+            // it may already exist 
+          }
+
+          docker.build('maven-build', '-f build/Dockerfile .')
+                .inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container -> 
+
             def cluster = load 'build/cluster.groovy'
             try {
-              cluster.logStatus('before-stop')
-              cluster.stop()
-            }
-            finally {
-              cluster.collectDockerLogs()
-              cluster.down()
-              archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
-              perfReport errorUnstableThreshold: 1,
-                modeOfThreshold: true,
-                // compare with previous build
-                compareBuildPrevious: true,
-                ignoreFailedBuilds: true,
-                relativeUnstableThresholdPositive: 10,
-                configType: 'PRT',
-                
-                // display diagram,
-                excludeResponseTime: true,  // Exclude response time of errored samples
-                modeThroughput: true,
-                
-                persistConstraintLog: true,
-                sourceDataFiles: '*/target/jmeter/results/*.csv'
+              cluster.start()
+              cluster.waitUntilClusterIsUp()
+              cluster.logStatus('after-start')
+              dir ('test-cluster-performance') {
+                maven cmd: "clean verify -Djmeter.server=loadbalancer -Djmeter.port=8080"
+              }
+            } finally {              
+              try {
+                cluster.logStatus('before-stop')
+                cluster.stop()
+              }
+              finally {
+                cluster.collectDockerLogs()
+                cluster.down()
+                archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
+                perfReport errorUnstableThreshold: 1,
+                  modeOfThreshold: true,
+                  // compare with previous build
+                  compareBuildPrevious: true,
+                  ignoreFailedBuilds: true,
+                  relativeUnstableThresholdPositive: 10,
+                  configType: 'PRT',
+                  
+                  // display diagram,
+                  excludeResponseTime: true,  // Exclude response time of errored samples
+                  modeThroughput: true,
+                  
+                  persistConstraintLog: true,
+                  sourceDataFiles: '*/target/jmeter/results/*.csv'
+              }
             }
           }
+          sh 'docker network rm ivycluster'
+
         }
       }
     }
-
   }
 }
