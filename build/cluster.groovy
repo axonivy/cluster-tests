@@ -14,18 +14,18 @@ def down() {
   sh "docker-compose -f build/docker-ivy-cluster/docker-compose.yml down"
 }
 
-def waitUntiClusterIsUp() {
-  waitUntilPortIsUp(9081)
-  waitUntilPortIsUp(9082)
-  waitUntilPortIsUp(9083)
-  waitUntilPortIsUp(9084)
-  waitUntilPortIsUp(9080)
+def waitUntilClusterIsUp() {
+  waitUntilNodeIsUp('ivy1')
+  waitUntilNodeIsUp('ivy2')
+  waitUntilNodeIsUp('ivy3')
+  waitUntilNodeIsUp('ivy4')
+  waitUntilNodeIsUp('loadbalancer')
 }
 
-def waitUntilPortIsUp(def port) {
+def waitUntilNodeIsUp(def host) {
   timeout(1) {
     waitUntil {
-      def r = sh script: "wget -q http://${env.NODE_NAME}:${port}/ivy/info/index.jsp -O /dev/null", returnStatus: true
+      def r = sh script: "wget -q http://${host}:8080/ivy/info/index.jsp -O /dev/null", returnStatus: true
       return (r == 0);
     }
   }
@@ -38,26 +38,26 @@ def logStatus(def name) {
 }
 
 def logApacheStatus(def name) {
-  logPage(9080, '/server-status', "${name}-server-status")
-  logPage(9080, '/balancer-manager', "${name}-balancer-manager")
+  logPage('loadbalancer', '/server-status', "${name}-server-status")
+  logPage('loadbalancer', '/balancer-manager', "${name}-balancer-manager")
 }
 
 def logIvyInfoPage(def name) {
-  logPage(9080, '/ivy/info/index.jsp', "${name}-ivy-index")
+  logPage('loadbalancer', '/ivy/info/index.jsp', "${name}-ivy-index")
 }
 
 def logClusterStatus(def name) {
-  logPage(9080, '/ivy/info/index.jsp?pageId=cluster_panel', "${name}-cluster-status")
+  logPage('loadbalancer', '/ivy/info/index.jsp?pageId=cluster_panel', "${name}-cluster-status")
 }
 
-def logPage(def port, def uri, def name) {
+def logPage(def host, def uri, def name) {
   sh 'mkdir -p logs/pages'
-  sh "wget -q http://${env.NODE_NAME}:${port}${uri} -O logs/pages/${name}-${port}.html"
+  sh "wget -q http://${host}:8080${uri} -O logs/pages/${name}-${host}.html"
 }
 
 def collectDockerLogs() {
   collectDockerLog('db')
-  collectDockerLog('apache')
+  collectDockerLog('loadbalancer')
   collectDockerLog('ivy1')
   collectDockerLog('ivy2')
   collectDockerLog('ivy3')
