@@ -23,7 +23,7 @@ services:
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/AXON_IVY_AG_2020_10_21_ivy1.lic:/etc/axonivy-engine/license.lic"
      - ./../../build-maven/module/ivy-projects/target/deploy/:/var/lib/axonivy-engine/deploy/
-     - ./applications:/var/lib/axonivy-engine-7x/applications
+     - ./applications:/var/lib/axonivy-engine-8/applications
 
   ivy2:
     image: "axonivy/axonivy-engine:dev"
@@ -34,7 +34,7 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/AXON_IVY_AG_2020_10_21_ivy2.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-7x/applications
+     - ./applications:/var/lib/axonivy-engine-8/applications
 
   ivy3:
     image: "axonivy/axonivy-engine:dev"
@@ -45,7 +45,7 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/AXON_IVY_AG_2020_10_21_ivy3.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-7x/applications
+     - ./applications:/var/lib/axonivy-engine-8/applications
 
   ivy4:
     image: "axonivy/axonivy-engine:dev"
@@ -56,7 +56,7 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./license/AXON_IVY_AG_2020_10_21_ivy4.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-7x/applications
+     - ./applications:/var/lib/axonivy-engine-8/applications
 
 networks:
   default:
