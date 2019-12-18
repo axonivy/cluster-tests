@@ -11,7 +11,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<engine.page.url>http://zugprojenkins/job/ivy-core_product/job/master/lastSuccessfulBuild/</engine.page.url>
+		<engine.page.url>https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/</engine.page.url>
 		<engine.directory>${project.build.directory}/ivy-engine</engine.directory>
 	</properties>
 
