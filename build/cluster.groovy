@@ -23,7 +23,7 @@ def waitUntilClusterIsUp() {
 }
 
 def waitUntilNodeIsUp(def host) {
-  timeout(1) {
+  timeout(5) {
     waitUntil {
       def r = sh script: "wget -q http://${host}:8080/ivy/info/index.jsp -O /dev/null", returnStatus: true
       return (r == 0);
