@@ -1,16 +1,16 @@
 [Begin Licence]
 #Licence for AxonIvy Axon.ivy Engine (Enterprise Edition)
-#Mon Oct 21 10:23:09 UTC 2019
-licence.keyversion=axonivy/8000
-licence.number=XLSEE-16DE-DD78-E1CI
+#Tue Jul 21 10:43:16 UTC 2020
+licence.keyversion=axonivy/9000
+licence.number=XLSEE-1737-0F86-E0BJ
 licence.type=Enterprise Edition
-licence.valid.from=2019-10-21
-licence.valid.until=2020-10-21
+licence.valid.from=2020-07-21
+licence.valid.until=2021-07-21
 licencee.individual=
-licencee.organisation=AXON IVY AG
+licencee.organisation=Lukas Lieb
 product.name=Axon.ivy Engine
 product.type=Server
-public.urls=ivy4
+public.urls=ivy1
 server.cluster.local.node.id=0
 server.cluster.name=zugtstivycl
 server.elements.limit=0
@@ -18,5 +18,5 @@ server.sessions.limit=0
 server.users.limit=0
 [End Licence]
 [Begin Signature]
-MCwCFBm/ZxoVy5ZtnbrI3f0B40olAK/1AhQbz0x1ucNnwgVS54mBWc2cb2uyUQ==
+MCwCFDMMeTIpZUqYuL6R+YBRubdVdLo6AhRuCa62euV9+tTjMi3LxjJVYpJtUg==
 [End Signature]

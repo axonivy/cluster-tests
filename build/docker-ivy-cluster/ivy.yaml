@@ -9,3 +9,4 @@ Administrators:
     Password: admin
 Data:
   FilesDirectory: files
+WebServer.IvyContextName: "ivy"
