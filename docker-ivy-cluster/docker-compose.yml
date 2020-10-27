@@ -1,0 +1,64 @@
+version: '3.5'
+services:
+  db:
+    image: "mariadb"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+
+  loadbalancer:
+    image: "bitnami/apache"
+    user: root
+    ports:
+     - "9080:8080"
+    volumes:
+     - "./apache-conf/apache-host.conf:/opt/bitnami/apache/conf/vhosts/apache-host.conf:ro"
+
+  ivy1:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln1
+    ports:
+     - "9081:8080"
+    volumes:
+     - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/Lukas_Lieb_2021_07_21_ivy1.lic:/etc/axonivy-engine/license.lic"
+     - ./../../test-app/target/deploy/:/var/lib/axonivy-engine/deploy/
+     - ./applications:/var/lib/axonivy-engine-8/applications
+
+  ivy2:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln2
+    ports:
+     - "9082:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/Lukas_Lieb_2021_07_21_ivy2.lic:/etc/axonivy-engine/license.lic"
+     - ./applications:/var/lib/axonivy-engine-8/applications
+
+  ivy3:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln3
+    ports:
+     - "9083:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/Lukas_Lieb_2021_07_21_ivy3.lic:/etc/axonivy-engine/license.lic"
+     - ./applications:/var/lib/axonivy-engine-8/applications
+
+  ivy4:
+    image: "axonivy/axonivy-engine:dev"
+    hostname: zugtstivycln4
+    ports:
+     - "9084:8080"
+    volumes:
+     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
+     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./license/Lukas_Lieb_2021_07_21_ivy4.lic:/etc/axonivy-engine/license.lic"
+     - ./applications:/var/lib/axonivy-engine-8/applications
+
+networks:
+  default:
+    external:
+      name: ivycluster
