@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>ch.ivyteam.ivy.test.cluster</groupId>
-    <artifactId>build-config-iar</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <relativePath>../build-maven/config/iar</relativePath>
-  </parent>
+
 
   <groupId>ch.ivyteam.ivy.test.cluster</groupId>
   <artifactId>ivy-test-cluster-poject</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>iar</packaging>
 
+  <properties>
+    <engine.page.url>https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/</engine.page.url>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.axonivy.ivy.ci</groupId>
+        <artifactId>project-build-plugin</artifactId>
+        <version>9.1.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <ivyVersion>[9.1.0,]</ivyVersion>
+          <engineListPageUrl>${engine.page.url}</engineListPageUrl>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

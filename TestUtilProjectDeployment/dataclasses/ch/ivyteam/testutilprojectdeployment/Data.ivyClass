@@ -1,6 +1,0 @@
-Data #class
-ch.ivyteam.testutilprojectdeployment #namespace
-string String #field
-string PERSISTENT #fieldModifier
-result String #field
-result PERSISTENT #fieldModifier
