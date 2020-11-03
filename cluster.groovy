@@ -11,7 +11,7 @@ def stop() {
 }
 
 def down() {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml down"
+  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml down -v --rmi local"
 }
 
 def waitUntilClusterIsUp() {
@@ -25,7 +25,7 @@ def waitUntilClusterIsUp() {
 def waitUntilNodeIsUp(def host) {
   timeout(5) {
     waitUntil {
-      def r = sh script: "wget -q http://${host}:8080/ivy/info/index.jsp -O /dev/null", returnStatus: true
+      def r = sh script: "wget -q http://${host}:8080/ivy/system -O /dev/null", returnStatus: true
       return (r == 0);
     }
   }
@@ -33,8 +33,10 @@ def waitUntilNodeIsUp(def host) {
 
 def logStatus(def name) {
   logApacheStatus(name)
-  logIvyInfoPage(name)
-  logClusterStatus(name)
+  logIvyInfoPage('ivy1', name)
+  logIvyInfoPage('ivy2', name)
+  logIvyInfoPage('ivy3', name)
+  logIvyInfoPage('ivy4', name)
 }
 
 def logApacheStatus(def name) {
@@ -42,12 +44,8 @@ def logApacheStatus(def name) {
   logPage('loadbalancer', '/balancer-manager', "${name}-balancer-manager")
 }
 
-def logIvyInfoPage(def name) {
-  logPage('loadbalancer', '/ivy/info/index.jsp', "${name}-ivy-index")
-}
-
-def logClusterStatus(def name) {
-  logPage('loadbalancer', '/ivy/info/index.jsp?pageId=cluster_panel', "${name}-cluster-status")
+def logIvyInfoPage(def host, def name) {
+  logPage(host, '/ivy/system/info.jsp', "${name}-${host}-info-page")
 }
 
 def logPage(def host, def uri, def name) {

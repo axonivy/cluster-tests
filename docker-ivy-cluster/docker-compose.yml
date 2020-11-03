@@ -21,9 +21,15 @@ services:
     volumes:
      - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
      - "./license/Lukas_Lieb_2021_07_21_ivy1.lic:/etc/axonivy-engine/license.lic"
-     - ./../../test-app/target/deploy/:/var/lib/axonivy-engine/deploy/
-     - ./applications:/var/lib/axonivy-engine-8/applications
+     - ./../test-app/target/deploy/:/var/lib/axonivy-engine/deploy/
+     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
+     - applications:/var/lib/axonivy-engine/applications
+    deploy:
+      resources:
+        limits:
+          cpus: '2' 
 
   ivy2:
     image: "axonivy/axonivy-engine:dev"
@@ -33,8 +39,14 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
      - "./license/Lukas_Lieb_2021_07_21_ivy2.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-8/applications
+     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
+     - applications:/var/lib/axonivy-engine/applications
+    deploy:
+      resources:
+        limits:
+          cpus: '2' 
 
   ivy3:
     image: "axonivy/axonivy-engine:dev"
@@ -44,8 +56,14 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
      - "./license/Lukas_Lieb_2021_07_21_ivy3.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-8/applications
+     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
+     - applications:/var/lib/axonivy-engine/applications
+    deploy:
+      resources:
+        limits:
+          cpus: '2' 
 
   ivy4:
     image: "axonivy/axonivy-engine:dev"
@@ -55,8 +73,17 @@ services:
     volumes:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
+     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
      - "./license/Lukas_Lieb_2021_07_21_ivy4.lic:/etc/axonivy-engine/license.lic"
-     - ./applications:/var/lib/axonivy-engine-8/applications
+     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
+     - applications:/var/lib/axonivy-engine/applications
+    deploy:
+      resources:
+        limits:
+          cpus: '2' 
+          
+volumes:
+  applications:
 
 networks:
   default:

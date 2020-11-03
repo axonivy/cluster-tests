@@ -52,6 +52,7 @@ pipeline {
                 .inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container -> 
             def cluster = load 'cluster.groovy'
             try {
+              cluster.down()
               cluster.start()
               cluster.waitUntilClusterIsUp()
               cluster.logStatus('after-start')
@@ -65,7 +66,7 @@ pipeline {
                 } finally {
                   cluster.collectDockerLogs()
                   cluster.down()
-                  archiveArtifacts 'logs/**, */target/jmeter/reports/, */target/jmeter/results/'
+                  archiveArtifacts 'logs/**, */target/jmeter/reports/'
                   createPerformanceReport()
                 }
             }

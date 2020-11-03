@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+  <!--
+    Add here your custom configuration which will be merged with the default configuration of ivy
+    See http://logging.apache.org/log4j/2.x/manual/configuration.html#CompositeConfiguration
+  -->
+  
+  <Appenders>
+    <Console name="ConsoleLog">
+      <ThresholdFilter level="info" />
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Root level="info" />
+  </Loggers>
+
+</Configuration>
