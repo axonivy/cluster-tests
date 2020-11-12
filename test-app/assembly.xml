@@ -13,4 +13,12 @@
       </binaries>
     </moduleSet>
   </moduleSets>
+
+  <fileSets>
+    <fileSet>
+	  <includes>
+	    <include>deploy.options.yaml</include>
+	  </includes>
+	</fileSet>
+  </fileSets>
 </assembly>
