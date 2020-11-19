@@ -2,8 +2,14 @@ def pullEngineImage() {
   sh 'docker pull axonivy/axonivy-engine:dev'
 }
 
-def start() {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml up -d"
+def start(def nodes) {
+  services = "db loadbalancer"
+  for (node = 1; node <= nodes; node++)
+  {
+    services += " ivy"+node
+  }
+  sh "cp docker-ivy-cluster/apache-conf/${nodes}-members.conf docker-ivy-cluster/apache-conf/members.conf"
+  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml up -d $services"
 }
 
 def stop() {
@@ -14,11 +20,11 @@ def down() {
   sh "docker-compose -f docker-ivy-cluster/docker-compose.yml down -v --rmi local"
 }
 
-def waitUntilClusterIsUp() {
-  waitUntilNodeIsUp('ivy1')
-  waitUntilNodeIsUp('ivy2')
-  waitUntilNodeIsUp('ivy3')
-  waitUntilNodeIsUp('ivy4')
+def waitUntilClusterIsUp(def nodes) {
+  for (node = 1; node <= nodes; node++)
+  {
+    waitUntilNodeIsUp('ivy'+node)
+  }
   waitUntilNodeIsUp('loadbalancer')
 }
 
@@ -31,40 +37,40 @@ def waitUntilNodeIsUp(def host) {
   }
 }
 
-def logStatus(def name) {
-  logApacheStatus(name)
-  logIvyInfoPage('ivy1', name)
-  logIvyInfoPage('ivy2', name)
-  logIvyInfoPage('ivy3', name)
-  logIvyInfoPage('ivy4', name)
+def logStatus(def nodes, def name) {
+  logApacheStatus(nodes, name)
+  for (node = 1; node <= nodes; node++)
+  {
+    logIvyInfoPage('ivy'+node, nodes, name)
+  }
 }
 
-def logApacheStatus(def name) {
-  logPage('loadbalancer', '/server-status', "${name}-server-status")
-  logPage('loadbalancer', '/balancer-manager', "${name}-balancer-manager")
+def logApacheStatus(def nodes, def name) {
+  logPage('loadbalancer', '/server-status', nodes, "${name}-server-status")
+  logPage('loadbalancer', '/balancer-manager', nodes, "${name}-balancer-manager")
 }
 
-def logIvyInfoPage(def host, def name) {
-  logPage(host, '/ivy/system/info.jsp', "${name}-${host}-info-page")
+def logIvyInfoPage(def host, def nodes, def name) {
+  logPage(host, '/ivy/system/info.jsp', nodes, "${name}-info-page")
 }
 
-def logPage(def host, def uri, def name) {
-  sh 'mkdir -p logs/pages'
-  sh "wget -q http://${host}:8080${uri} -O logs/pages/${name}-${host}.html"
+def logPage(def host, def uri, def nodes, def name) {
+  sh "mkdir -p nodes${nodes}"
+  sh "wget -q http://${host}:8080${uri} -O nodes${nodes}/${name}-${host}.html"
 }
 
-def collectDockerLogs() {
-  collectDockerLog('db')
-  collectDockerLog('loadbalancer')
-  collectDockerLog('ivy1')
-  collectDockerLog('ivy2')
-  collectDockerLog('ivy3')
-  collectDockerLog('ivy4')
+def collectDockerLogs(def nodes) {
+  collectDockerLog('db', nodes)
+  collectDockerLog('loadbalancer', nodes)
+  for (node = 1; node <= nodes; node++)
+  {
+    collectDockerLog('ivy'+node, nodes)
+  }
 }
 
-def collectDockerLog(def name) {
-  sh 'mkdir -p logs/'
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml logs ${name} > logs/docker-${name}.log"
+def collectDockerLog(def name, def nodes) {
+  sh "mkdir -p nodes${nodes}"
+  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml logs ${name} > nodes${nodes}/docker-${name}.log"
 }
 
 return this
