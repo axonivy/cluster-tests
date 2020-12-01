@@ -10,8 +10,9 @@
     <jmeter.server>localhost</jmeter.server>
     <jmeter.port>9080</jmeter.port>
     <jmeter.threads>20</jmeter.threads>
-    <jmeter.rampUp>60</jmeter.rampUp>
-    <jmeter.duration>120</jmeter.duration>
+    <jmeter.rampUp>10</jmeter.rampUp>
+    <jmeter.duration>30</jmeter.duration>
+    <jmeter.nodes>4</jmeter.nodes>
     <jmeter.reportgenerator.overall_granularity>5000</jmeter.reportgenerator.overall_granularity>
   </properties>
 
@@ -28,6 +29,7 @@
             <jmeter.threads>${jmeter.threads}</jmeter.threads>
             <jmeter.rampUp>${jmeter.rampUp}</jmeter.rampUp>
             <jmeter.duration>${jmeter.duration}</jmeter.duration>
+            <jmeter.nodes>${jmeter.nodes}</jmeter.nodes>
             <jmeter.reportgenerator.overall_granularity>${jmeter.reportgenerator.overall_granularity}</jmeter.reportgenerator.overall_granularity>
           </propertiesJMeter>
           <testResultsTimestamp>false</testResultsTimestamp>
@@ -41,6 +43,30 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+                <execution>
+                    <phase>verify</phase>
+                    <configuration>
+                        <target>
+                            <copy todir="${basedir}/../nodes${jmeter.nodes}">
+                                <fileset dir="${project.build.directory}/jmeter/reports"/>
+                            </copy>
+                            <copy todir="${basedir}/../results/${jmeter.nodes}">
+                                <fileset dir="${project.build.directory}/jmeter/results"/>
+                                <globmapper from="*.csv" to="*-${jmeter.nodes}.csv"/>
+                            </copy>
+                        </target>
+                    </configuration>
+                    <goals>
+                        <goal>run</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
     </plugins>
   </build>
 </project>
