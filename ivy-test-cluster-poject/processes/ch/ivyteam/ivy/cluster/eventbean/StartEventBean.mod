@@ -1,11 +1,9 @@
 [Ivy]
-[>Created: Wed Jan 19 10:46:51 CET 2011]
-12D9878DD11AB6B3 3.15 #module
+12D9878DD11AB6B3 9.2.0 #module
 >Proto >Proto Collection #zClass
 Sn0 StartEventBean Big #zClass
 Sn0 B #cInfo
 Sn0 #process
-Sn0 @TextInP .resExport .resExport #zField
 Sn0 @TextInP .type .type #zField
 Sn0 @TextInP .processKind .processKind #zField
 Sn0 @AnnotationInP-0n ai ai #zField
@@ -37,10 +35,7 @@ Sn0 f0 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Sn0 f0 @C|.responsibility Everybody #txt
 Sn0 f0 67 75 26 26 14 0 #rect
-Sn0 f0 @|StartEventIcon #fIcon
-Sn0 f1 type performancetest.Data #txt
 Sn0 f1 67 179 26 26 14 0 #rect
-Sn0 f1 @|EndIcon #fIcon
 Sn0 f2 expr out #txt
 Sn0 f2 80 101 80 179 #arcP
 Sn0 f3 outerBean "ch.ivyteam.ivy.cluster.eventbean.ClusterStartEventBean" #txt
@@ -61,10 +56,7 @@ Sn0 f3 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Sn0 f3 @C|.responsibility Everybody #txt
 Sn0 f3 251 75 26 26 14 0 #rect
-Sn0 f3 @|StartEventIcon #fIcon
-Sn0 f4 type performancetest.Data #txt
 Sn0 f4 251 179 26 26 14 0 #rect
-Sn0 f4 @|EndIcon #fIcon
 Sn0 f5 expr out #txt
 Sn0 f5 264 101 264 179 #arcP
 Sn0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -81,7 +73,6 @@ Sn0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Sn0 f6 442 39 60 114 -1 -31 #rect
-Sn0 f6 @|IBIcon #fIcon
 Sn0 f6 -1|-1|-16777216 #nodeStyle
 >Proto Sn0 .type performancetest.Data #txt
 >Proto Sn0 .processKind NORMAL #txt

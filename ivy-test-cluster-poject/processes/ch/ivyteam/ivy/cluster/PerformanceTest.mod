@@ -1,10 +1,9 @@
 [Ivy]
-127755AEEB3C441C 3.23 #module
+127755AEEB3C441C 9.2.0 #module
 >Proto >Proto Collection #zClass
 Pt0 PerformanceTest Big #zClass
 Pt0 B #cInfo
 Pt0 #process
-Pt0 @TextInP .resExport .resExport #zField
 Pt0 @TextInP .type .type #zField
 Pt0 @TextInP .processKind .processKind #zField
 Pt0 @AnnotationInP-0n ai ai #zField
@@ -65,52 +64,18 @@ Pt0 @EndTask f40 '' #zField
 Pt0 @PushWFArc f42 '' #zField
 >Proto Pt0 Pt0 PerformanceTest #zField
 Pt0 f0 outLink systemTasks.ivp #txt
-Pt0 f0 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
-Pt0 f0 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f0 requestEnabled true #txt
 Pt0 f0 triggerEnabled false #txt
 Pt0 f0 callSignature systemTasks() #txt
 Pt0 f0 persist false #txt
 Pt0 f0 startName 'Creates Tasks' #txt
-Pt0 f0 taskData '#
-#Fri Mar 19 16:45:54 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-.DESC=
+Pt0 f0 taskData '.NAM=Creates System Tasks
 TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
-.NAM=Creates System Tasks
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f0 caseData '#
-#Fri Mar 19 16:45:54 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f0 showInStartList 1 #txt
 Pt0 f0 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -123,7 +88,6 @@ Pt0 f0 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f0 @C|.responsibility Everybody #txt
 Pt0 f0 43 83 26 26 14 0 #rect
-Pt0 f0 @|StartRequestIcon #fIcon
 Pt0 f3 outTypes "ch.ivyteam.ivy.cluster.PerformanceTest" #txt
 Pt0 f3 outLinks "createTasks.ivp" #txt
 Pt0 f3 template "/ProcessPages/PerformanceTest/taskcreation.ivc" #txt
@@ -141,12 +105,8 @@ Pt0 f3 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f3 @C|.responsibility Everybody #txt
 Pt0 f3 150 300 36 24 20 -2 #rect
-Pt0 f3 @|PageIcon #fIcon
-Pt0 f5 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f5 processCall ch/ivyteam/ivy/cluster/Create:createTasks(ch.ivyteam.ivy.cluster.CreateData) #txt
-Pt0 f5 doCall true #txt
-Pt0 f5 requestActionDecl '<ch.ivyteam.ivy.cluster.CreateData data> param;
-' #txt
+Pt0 f5 requestActionDecl '<ch.ivyteam.ivy.cluster.CreateData data> param;' #txt
 Pt0 f5 requestMappingAction 'param.data=in.craete;
 ' #txt
 Pt0 f5 responseActionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
@@ -163,16 +123,12 @@ Pt0 f5 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f5 38 404 36 24 20 -2 #rect
-Pt0 f5 @|CallSubIcon #fIcon
-Pt0 f1 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f1 actionTable 'out=in;
 ' #txt
 Pt0 f1 actionCode 'in.history = null;
 in.history.start = System.currentTimeMillis();
 
 ' #txt
-Pt0 f1 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f1 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -183,11 +139,8 @@ Pt0 f1 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f1 38 356 36 24 20 -2 #rect
-Pt0 f1 @|StepIcon #fIcon
 Pt0 f6 expr out #txt
 Pt0 f6 56 380 56 404 #arcP
-Pt0 f8 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f8 actionTable 'out=in;
 ' #txt
 Pt0 f8 actionCode 'import ch.ivyteam.ivy.cluster.History;
@@ -209,7 +162,6 @@ if (in.histories.size() > 20) {
 }
 
 ivy.session.setAttribute("ch.ivyteam.ivy.testcluster.history", in.histories);' #txt
-Pt0 f8 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f8 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -220,19 +172,15 @@ Pt0 f8 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f8 38 452 36 24 20 -2 #rect
-Pt0 f8 @|StepIcon #fIcon
 Pt0 f9 expr out #txt
 Pt0 f9 56 428 56 452 #arcP
 Pt0 f9 0 0.6114896700300178 0 0 #arcLabel
-Pt0 f10 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f10 actionTable 'out=in;
 out.craete.countOfTasks=5;
 out.craete.repeat=true;
 out.craete.runningSec=900;
 out.craete.sqlQuery="SELECT TOP 100 * FROM IWA_CASE";
 ' #txt
-Pt0 f10 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f10 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -243,7 +191,6 @@ Pt0 f10 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f10 38 188 36 24 20 -2 #rect
-Pt0 f10 @|StepIcon #fIcon
 Pt0 f13 outTypes "ch.ivyteam.ivy.cluster.PerformanceTest" #txt
 Pt0 f13 outLinks "LinkA.ivp" #txt
 Pt0 f13 template "/ProcessPages/PerformanceTest/endpage.ivc" #txt
@@ -265,15 +212,12 @@ Pt0 f13 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f13 @C|.responsibility Everybody #txt
 Pt0 f13 38 548 36 24 20 -2 #rect
-Pt0 f13 @|PageIcon #fIcon
-Pt0 f7 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f7 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language/>
 </elementInfo>
 ' #txt
 Pt0 f7 42 498 28 28 14 0 #rect
-Pt0 f7 @|AlternativeIcon #fIcon
 Pt0 f14 expr out #txt
 Pt0 f14 56 476 56 498 #arcP
 Pt0 f12 expr in #txt
@@ -300,19 +244,14 @@ Pt0 f15 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f15 @C|.responsibility Everybody #txt
 Pt0 f15 118 500 36 24 20 -2 #rect
-Pt0 f15 @|PageIcon #fIcon
 Pt0 f16 expr in #txt
 Pt0 f16 70 512 118 512 #arcP
-Pt0 f21 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f21 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language/>
 </elementInfo>
 ' #txt
 Pt0 f21 42 298 28 28 14 0 #rect
-Pt0 f21 @|AlternativeIcon #fIcon
-Pt0 f23 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f23 actionTable 'out=in;
 ' #txt
 Pt0 f23 actionCode 'import ch.ivyteam.ivy.cluster.CreateData;
@@ -324,7 +263,6 @@ if (data != null && data instanceof CreateData)
 	in.craete = data as CreateData;
 }
 ' #txt
-Pt0 f23 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f23 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -336,15 +274,11 @@ from session</name>
 </elementInfo>
 ' #txt
 Pt0 f23 38 236 36 24 23 -1 #rect
-Pt0 f23 @|StepIcon #fIcon
-Pt0 f26 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f26 actionTable 'out=in;
 ' #txt
 Pt0 f26 actionCode 'in.startedTime = System.currentTimeMillis();
 
 ivy.session.setAttribute("ch.ivyteam.ivy.testcluster.createdata", in.craete);' #txt
-Pt0 f26 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f26 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -355,7 +289,6 @@ Pt0 f26 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f26 150 356 36 24 20 -2 #rect
-Pt0 f26 @|StepIcon #fIcon
 Pt0 f27 expr data #txt
 Pt0 f27 outCond ivp=="createTasks.ivp" #txt
 Pt0 f27 .xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -380,13 +313,10 @@ Pt0 f25 outCond !in.repeated #txt
 Pt0 f25 70 312 150 312 #arcP
 Pt0 f11 expr out #txt
 Pt0 f11 56 260 56 298 #arcP
-Pt0 f17 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f17 actionTable 'out=in;
 ' #txt
 Pt0 f17 actionCode '
 ivy.session.loginSessionUser("user", "user");' #txt
-Pt0 f17 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f17 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -397,19 +327,14 @@ Pt0 f17 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f17 38 140 36 24 20 -2 #rect
-Pt0 f17 @|StepIcon #fIcon
 Pt0 f18 expr out #txt
 Pt0 f18 56 109 56 140 #arcP
 Pt0 f19 expr out #txt
 Pt0 f19 56 164 56 188 #arcP
-Pt0 f20 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f20 template "" #txt
 Pt0 f20 43 603 26 26 14 0 #rect
-Pt0 f20 @|EndRequestIcon #fIcon
-Pt0 f24 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f24 template "" #txt
 Pt0 f24 203 499 26 26 14 0 #rect
-Pt0 f24 @|EndRequestIcon #fIcon
 Pt0 f28 expr data #txt
 Pt0 f28 outCond ivp=="LinkA.ivp" #txt
 Pt0 f28 154 512 203 512 #arcP
@@ -417,53 +342,19 @@ Pt0 f29 expr data #txt
 Pt0 f29 outCond ivp=="LinkA.ivp" #txt
 Pt0 f29 56 572 56 603 #arcP
 Pt0 f30 outLink createOneTask.ivp #txt
-Pt0 f30 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f30 inParamDecl '<> param;' #txt
 Pt0 f30 inParamTable 'out.craete.countOfTasks=1;
 ' #txt
-Pt0 f30 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
-Pt0 f30 guid 12789E26C96ACFCC #txt
 Pt0 f30 requestEnabled true #txt
 Pt0 f30 triggerEnabled false #txt
 Pt0 f30 callSignature createOneTask() #txt
 Pt0 f30 persist false #txt
-Pt0 f30 taskData '#
-#Tue Mar 23 08:21:43 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f30 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f30 caseData '#
-#Tue Mar 23 08:21:43 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f30 showInStartList 1 #txt
 Pt0 f30 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -474,14 +365,10 @@ Pt0 f30 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f30 @C|.responsibility Everybody #txt
 Pt0 f30 651 75 26 26 14 0 #rect
-Pt0 f30 @|StartRequestIcon #fIcon
-Pt0 f31 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f31 actionTable 'out=in;
 ' #txt
 Pt0 f31 actionCode '
 ivy.session.loginSessionUser("user", "user");' #txt
-Pt0 f31 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f31 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -492,14 +379,10 @@ Pt0 f31 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f31 646 132 36 24 20 -2 #rect
-Pt0 f31 @|StepIcon #fIcon
 Pt0 f32 expr out #txt
 Pt0 f32 664 101 664 132 #arcP
-Pt0 f33 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f33 processCall ch/ivyteam/ivy/cluster/Create:createTasks(ch.ivyteam.ivy.cluster.CreateData) #txt
-Pt0 f33 doCall true #txt
-Pt0 f33 requestActionDecl '<ch.ivyteam.ivy.cluster.CreateData data> param;
-' #txt
+Pt0 f33 requestActionDecl '<ch.ivyteam.ivy.cluster.CreateData data> param;' #txt
 Pt0 f33 requestMappingAction 'param.data.countOfTasks=1;
 param.data.sqlQuery="";
 ' #txt
@@ -515,55 +398,20 @@ Pt0 f33 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f33 646 188 36 24 20 -2 #rect
-Pt0 f33 @|CallSubIcon #fIcon
 Pt0 f34 expr out #txt
 Pt0 f34 664 156 664 188 #arcP
 Pt0 f37 outLink executeSqlQuery.ivp #txt
-Pt0 f37 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f37 inParamDecl '<> param;' #txt
-Pt0 f37 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
-Pt0 f37 guid 12789E6ABE2D0F46 #txt
 Pt0 f37 requestEnabled true #txt
 Pt0 f37 triggerEnabled false #txt
 Pt0 f37 callSignature executeSqlQuery() #txt
 Pt0 f37 persist false #txt
-Pt0 f37 taskData '#
-#Tue Mar 23 11:47:29 CET 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f37 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f37 caseData '#
-#Tue Mar 23 11:47:29 CET 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f37 showInStartList 1 #txt
 Pt0 f37 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -576,53 +424,18 @@ Pt0 f37 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f37 @C|.responsibility Everybody #txt
 Pt0 f37 475 75 26 26 14 0 #rect
-Pt0 f37 @|StartRequestIcon #fIcon
 Pt0 f44 outLink executeIvyScript.ivp #txt
-Pt0 f44 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f44 inParamDecl '<> param;' #txt
-Pt0 f44 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
-Pt0 f44 guid 12789F90F1369181 #txt
 Pt0 f44 requestEnabled true #txt
 Pt0 f44 triggerEnabled false #txt
 Pt0 f44 callSignature executeIvyScript() #txt
 Pt0 f44 persist false #txt
-Pt0 f44 taskData '#
-#Fri Apr 09 17:47:30 CEST 2010
-TaskTriggered.ROL=Everybody
-TaskTriggered.EXTYPE=0
-TaskTriggered.EXPRI=2
-TaskTriggered.TYPE=0
-TaskTriggered.PRI=2
+Pt0 f44 taskData 'TaskTriggered.EXPRI=2
 TaskTriggered.EXROL=Everybody
-' #txt
-Pt0 f44 caseData '#
-#Fri Apr 09 17:47:30 CEST 2010
-businessCreator.user=
-businessMilestone.timestamp=
-businessObject.code=
-businessObject.docDb.code=
-businessObject.folder.id=
-businessObject.name=
-businessPriority=
-businessStart.timestamp=
-case.description=
-case.name=
-correspondent.id=
-mainContact.docDb.code=
-mainContact.folder.id=
-mainContact.id=
-mainContact.name=
-mainContact.type=
-process.code=
-process.name=
-processCategory.code=
-processCategory.name=
-subType.code=
-subType.name=
-type.code=
-type.name=
-' #txt
+TaskTriggered.EXTYPE=0
+TaskTriggered.PRI=2
+TaskTriggered.ROL=Everybody
+TaskTriggered.TYPE=0' #txt
 Pt0 f44 showInStartList 1 #txt
 Pt0 f44 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -635,27 +448,18 @@ Pt0 f44 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Pt0 f44 @C|.responsibility Everybody #txt
 Pt0 f44 299 75 26 26 14 0 #rect
-Pt0 f44 @|StartRequestIcon #fIcon
-Pt0 f45 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f45 299 251 26 26 14 0 #rect
-Pt0 f45 @|EndIcon #fIcon
-Pt0 f47 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f47 actionTable 'out=in;
 ' #txt
 Pt0 f47 actionCode 'String str = "start";
 for (int i = 0; i < 2000; i++) {
 	str = str + i.toString();
 }' #txt
-Pt0 f47 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f47 294 132 36 24 20 -2 #rect
-Pt0 f47 @|StepIcon #fIcon
 Pt0 f48 expr out #txt
 Pt0 f48 312 101 312 132 #arcP
 Pt0 f46 expr out #txt
 Pt0 f46 312 156 312 251 #arcP
-Pt0 f39 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f39 actionTable 'out=in;
 ' #txt
 Pt0 f39 actionCode 'import ch.ivyteam.ivy.data.cache.IDataCacheGroup;
@@ -667,7 +471,6 @@ if (#group != null)
 }
 
 ' #txt
-Pt0 f39 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f39 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
@@ -678,7 +481,6 @@ Pt0 f39 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f39 470 164 36 24 20 -2 #rect
-Pt0 f39 @|StepIcon #fIcon
 Pt0 f43 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
 ' #txt
 Pt0 f43 actionTable 'out=in;
@@ -705,29 +507,20 @@ Pt0 f43 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Pt0 f43 470 204 36 24 20 -2 #rect
-Pt0 f43 @|DBStepIcon #fIcon
 Pt0 f50 expr out #txt
 Pt0 f50 488 188 488 204 #arcP
-Pt0 f38 actionDecl 'ch.ivyteam.ivy.cluster.PerformanceTest out;
-' #txt
 Pt0 f38 actionTable 'out=in;
 out.cacheGroup="ch.ivyteam.ivy.cluster.performance-" + (ivy.case.getId() % 20);
 ' #txt
-Pt0 f38 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f38 470 124 36 24 20 -2 #rect
-Pt0 f38 @|StepIcon #fIcon
 Pt0 f49 expr out #txt
 Pt0 f49 488 101 488 124 #arcP
 Pt0 f41 expr out #txt
 Pt0 f41 488 148 488 164 #arcP
-Pt0 f51 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f51 475 251 26 26 14 0 #rect
-Pt0 f51 @|EndIcon #fIcon
 Pt0 f52 expr out #txt
 Pt0 f52 488 228 488 251 #arcP
-Pt0 f40 type ch.ivyteam.ivy.cluster.PerformanceTest #txt
 Pt0 f40 651 251 26 26 14 0 #rect
-Pt0 f40 @|EndIcon #fIcon
 Pt0 f42 expr out #txt
 Pt0 f42 664 212 664 251 #arcP
 >Proto Pt0 .type ch.ivyteam.ivy.cluster.PerformanceTest #txt
