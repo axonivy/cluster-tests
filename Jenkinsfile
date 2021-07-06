@@ -143,6 +143,10 @@ def readStandardResults(def standardResults)
          records[1].add(average);
       }
     }
+    else if (currentBuild.resultIsBetterOrEqualTo("SUCCESS"))
+    {
+      unstable("There are errors in the http responses") 
+    }
   }
   return plots;
 }
