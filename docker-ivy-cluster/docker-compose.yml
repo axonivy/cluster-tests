@@ -23,10 +23,11 @@ services:
      - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
-     - "./license/Lukas_Lieb_2021_07_21_ivy1.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
      - ./../test-app/target/deploy/:/var/lib/axonivy-engine/deploy/
      - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
      - applications:/var/lib/axonivy-engine/applications
+
     deploy:
       resources:
         limits:
@@ -41,9 +42,10 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
-     - "./license/Lukas_Lieb_2021_07_21_ivy2.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
      - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
      - applications:/var/lib/axonivy-engine/applications
+
     deploy:
       resources:
         limits:
@@ -58,9 +60,10 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
-     - "./license/Lukas_Lieb_2021_07_21_ivy3.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
      - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
      - applications:/var/lib/axonivy-engine/applications
+
     deploy:
       resources:
         limits:
@@ -75,9 +78,10 @@ services:
      - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
      - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
      - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
-     - "./license/Lukas_Lieb_2021_07_21_ivy4.lic:/etc/axonivy-engine/license.lic"
+     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
      - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
      - applications:/var/lib/axonivy-engine/applications
+
     deploy:
       resources:
         limits:
