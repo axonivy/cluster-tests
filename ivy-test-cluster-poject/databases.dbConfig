@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<databaseconfigs>
-    <databaseconfig maxconnections="50" password="" user="" driver="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:mem:Test" name="AnyIvySystemDb"/>
-</databaseconfigs>

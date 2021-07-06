@@ -1,0 +1,6 @@
+Databases:
+  AnyIvySystemDb:
+    Url: jdbc:hsqldb:mem:Test
+    Driver: org.hsqldb.jdbcDriver
+    UserName: ''
+    MaxConnections: 50
