@@ -7,6 +7,4 @@ SystemDb:
 Administrators:
   admin:
     Password: admin
-Data:
-  FilesDirectory: files
 WebServer.IvyContextName: "ivy"

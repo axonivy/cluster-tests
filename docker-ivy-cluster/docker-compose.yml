@@ -15,81 +15,41 @@ services:
      - "./apache-conf/members.conf:/opt/bitnami/apache/conf/vhosts/members.conf:ro"
 
   ivy1:
-    image: "axonivy/axonivy-engine:dev"
-    hostname: zugtstivycln1
+    image: "axonivy-engine-cluster-test:latest"
     ports:
      - "9081:8080"
-    volumes:
-     - "./entrypoint-master.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
-     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
-     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
-     - ./../test-app/target/deploy/:/var/lib/axonivy-engine/deploy/
-     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
-     - applications:/var/lib/axonivy-engine/applications
-
     deploy:
       resources:
         limits:
           cpus: '2' 
 
   ivy2:
-    image: "axonivy/axonivy-engine:dev"
-    hostname: zugtstivycln2
+    image: "axonivy-engine-cluster-test:latest"
     ports:
      - "9082:8080"
-    volumes:
-     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
-     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
-     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
-     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
-     - applications:/var/lib/axonivy-engine/applications
-
     deploy:
       resources:
         limits:
           cpus: '2' 
 
   ivy3:
-    image: "axonivy/axonivy-engine:dev"
-    hostname: zugtstivycln3
+    image: "axonivy-engine-cluster-test:latest"
     ports:
      - "9083:8080"
-    volumes:
-     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
-     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"     
-     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
-     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
-     - applications:/var/lib/axonivy-engine/applications
-
     deploy:
       resources:
         limits:
           cpus: '2' 
 
   ivy4:
-    image: "axonivy/axonivy-engine:dev"
-    hostname: zugtstivycln4
+    image: "axonivy-engine-cluster-test:latest"
     ports:
      - "9084:8080"
-    volumes:
-     - "./entrypoint-slave.sh:/usr/lib/axonivy-engine/bin/docker-entrypoint.sh"
-     - "./ivy.yaml:/etc/axonivy-engine/ivy.yaml"
-     - "./log4j2.xml:/etc/axonivy-engine/log4j2.xml"
-     - "./license/AXON_IVY_AG_2023_06_22_ivy_9000.lic:/etc/axonivy-engine/license.lic"
-     - "./info.jsp:/usr/lib/axonivy-engine/webapps/system/info.jsp"
-     - applications:/var/lib/axonivy-engine/applications
-
     deploy:
       resources:
         limits:
           cpus: '2' 
           
-volumes:
-  applications:
-
 networks:
   default:
     external:
