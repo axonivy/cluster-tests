@@ -30,8 +30,8 @@ pipeline {
               maven cmd: "clean verify -Dengine.page.url=${params.engineSource}"            
             }
           }
-          stash name: 'test-project', includes: '**/target/deploy/*.zip'
           archiveArtifacts '**/target/deploy/*.zip'
+          docker.build('axonivy-engine-cluster-test', '-f docker-ivy-cluster/Dockerfile .')
         }
       }
     }
@@ -57,8 +57,6 @@ pipeline {
 
 def testWithNodes(def nodes)
 {
-  unstash 'test-project'
-
   try {
     sh 'docker network create ivycluster'
   } catch (Exception ex) {
