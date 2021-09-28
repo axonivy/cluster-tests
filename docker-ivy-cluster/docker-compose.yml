@@ -4,6 +4,8 @@ services:
     image: "mariadb"
     environment:
       MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+     - "./mariadb/ivy.cnf:/etc/mysql/conf.d/ivy.cnf"
 
   loadbalancer:
     image: "bitnami/apache"

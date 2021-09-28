@@ -1,0 +1,2 @@
+[mariadb]
+innodb_print_all_deadlocks=on
