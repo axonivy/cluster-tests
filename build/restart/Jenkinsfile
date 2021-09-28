@@ -1,0 +1,106 @@
+pipeline {
+  agent {
+    label 'performance-test'
+  }
+
+  triggers {
+    pollSCM '@hourly'
+    cron '@midnight'
+  }
+
+  parameters {
+    string(
+      name: 'engineSource',
+      description: 'Engine page url',
+      defaultValue: 'https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/'
+    )
+  }
+
+  options {
+    buildDiscarder logRotator(artifactNumToKeepStr: '10', numToKeepStr: '180')
+    disableConcurrentBuilds()
+  }
+
+  stages {
+    stage('build') {
+      steps {
+        script {
+          docker.build('maven-build', '.').inside {
+            dir ('test-app') {
+              maven cmd: "clean verify -Dengine.page.url=${params.engineSource}"            
+            }
+          }
+          archiveArtifacts '**/target/deploy/*.zip'
+          docker.build('axonivy-engine-cluster-test', '-f docker-ivy-cluster/Dockerfile .')
+        }
+      }
+    }
+
+    stage('test-restart-node') {
+      steps {
+        script {
+          def cluster = load 'build/cluster.groovy'
+          try {
+            test(cluster);
+          } finally {
+            archiveArtifacts 'nodes*/**'
+            cluster.createPerformanceReport()
+            cluster.createPerformancePlot()
+          }
+        } 
+      }
+    }
+  }
+}
+
+def test(def cluster)
+{
+  try {
+    sh 'docker network create ivycluster'
+  } catch (Exception ex) {
+    // it may already exist 
+  }
+
+  def mvnImage = docker.build('maven-build', '.');
+  mvnImage.inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container ->     
+    try {
+      cluster.down()
+      cluster.start(2)
+      cluster.waitUntilClusterIsUp(2)
+      cluster.logStatus(2, 'after-start')
+      def jmeter = mvnImage.run("--network=ivycluster -v ${env.WORKSPACE}:/tmp/workspace --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1 -u 1000:1000", 
+                                '/bin/bash -c "cd /tmp/workspace/test-cluster-performance; mvn clean verify -Djmeter.server=ivy1 -Djmeter.port=8080 -Djmeter.nodes=2 -Djmeter.duration=120"')
+      try {
+        sleep 10;   
+        while (isRunning(jmeter)) {
+          cluster.stopNode(2);
+          sleep 10;
+          cluster.startNode(2);
+          cluster.waitUntilNodeIsUp(2);
+          sleep 10;
+        }
+      }
+      finally {
+        sh "docker logs ${jmeter.id} > nodes2/docker-jmeter.log 2>&1"
+        jmeter.stop();        
+      }      
+    } catch (Exception ex) {
+        echo "Caught: ${ex}"
+        currentBuild.result = 'FAILURE'
+    } finally {             
+      try {
+        cluster.logStatus(2, 'before-stop')
+        cluster.stop()
+      } finally {
+        cluster.collectDockerLogs(2)
+        cluster.down()
+      }
+    }
+  }    
+  sh 'docker network rm ivycluster'
+}
+
+def isRunning(def container) {
+  def r = sh script: "docker ps -q --filter id=${container.id}", returnStdout: true
+  return !r.isEmpty();
+}

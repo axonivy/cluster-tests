@@ -1,0 +1,88 @@
+pipeline {
+  agent {
+    label 'performance-test'
+  }
+
+  triggers {
+    pollSCM '@hourly'
+    cron '@midnight'
+  }
+
+  parameters {
+    string(
+      name: 'engineSource',
+      description: 'Engine page url',
+      defaultValue: 'https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/'
+    )
+  }
+
+  options {
+    buildDiscarder logRotator(artifactNumToKeepStr: '10', numToKeepStr: '180')
+    disableConcurrentBuilds()
+  }
+
+  stages {
+    stage('build') {
+      steps {
+        script {
+          docker.build('maven-build', '.').inside {
+            dir ('test-app') {
+              maven cmd: "clean verify -Dengine.page.url=${params.engineSource}"            
+            }
+          }
+          archiveArtifacts '**/target/deploy/*.zip'
+          docker.build('axonivy-engine-cluster-test', '-f docker-ivy-cluster/Dockerfile .')
+        }
+      }
+    }
+
+    stage('test-performance') {
+      steps {
+        script {
+          def cluster = load 'build/cluster.groovy'
+          try {
+            for(nodes=4; nodes > 0; nodes--)
+            {
+              testWithNodes(cluster, nodes);
+            }
+          } finally {
+            archiveArtifacts 'nodes*/**'
+            cluster.createPerformanceReport()
+            cluster.createPerformancePlot()
+          }
+        } 
+      }
+    }
+  }
+}
+
+def testWithNodes(def cluster, def nodes)
+{
+  try {
+    sh 'docker network create ivycluster'
+  } catch (Exception ex) {
+    // it may already exist 
+  }
+
+  docker.build('maven-build', '.')
+        .inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container ->     
+    try {
+      cluster.down()
+      cluster.start(nodes)
+      cluster.waitUntilClusterIsUp(nodes)
+      cluster.logStatus(nodes, 'after-start')
+      dir ('test-cluster-performance') {
+        maven cmd: "clean verify -Djmeter.server=loadbalancer -Djmeter.port=8080 -Djmeter.nodes=$nodes"
+      }
+    } finally {             
+      try {
+        cluster.logStatus(nodes, 'before-stop')
+        cluster.stop()
+      } finally {
+        cluster.collectDockerLogs(nodes)
+        cluster.down()
+      }
+    }    
+  }
+  sh 'docker network rm ivycluster'
+}
