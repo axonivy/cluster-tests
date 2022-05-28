@@ -12,7 +12,7 @@ pipeline {
     string(
       name: 'engineSource',
       description: 'Engine page url',
-      defaultValue: 'https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/'
+      defaultValue: 'https://jenkins.ivyteam.io/job/core_product/job/master/lastSuccessfulBuild/'
     )
   }
 
