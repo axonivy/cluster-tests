@@ -9,7 +9,7 @@
   <packaging>iar</packaging>
 
   <properties>
-    <engine.page.url>https://jenkins.ivyteam.io/job/ivy-core_product/job/master/lastSuccessfulBuild/</engine.page.url>
+    <engine.page.url>https://jenkins.ivyteam.io/job/core_product/job/master/lastSuccessfulBuild/</engine.page.url>
   </properties>
 
   <build>
