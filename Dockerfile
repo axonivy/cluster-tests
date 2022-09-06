@@ -1,4 +1,4 @@
-FROM maven:3.6.3-jdk-11
+FROM maven:3.8.6-eclipse-temurin-17
 
 # Install docker-ce and docker-compose
 RUN apt-get update && \
