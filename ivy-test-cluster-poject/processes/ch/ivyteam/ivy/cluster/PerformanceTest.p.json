@@ -1,0 +1,197 @@
+{
+  "format" : "9.4.21",
+  "id" : "127755AEEB3C441C",
+  "config" : {
+    "data" : "ch.ivyteam.ivy.cluster.PerformanceTest"
+  },
+  "elements" : [ {
+      "id" : "f30",
+      "type" : "RequestStart",
+      "name" : "createOneTask.ivp",
+      "config" : {
+        "callSignature" : "createOneTask",
+        "input" : {
+          "map" : {
+            "out.craete.countOfTasks" : "1"
+          }
+        },
+        "outLink" : "createOneTask.ivp"
+      },
+      "visual" : {
+        "at" : { "x" : 664, "y" : 88 },
+        "labelOffset" : { "x" : 81, "y" : 9 }
+      },
+      "connect" : { "id" : "f32", "to" : "f31" }
+    }, {
+      "id" : "f31",
+      "type" : "Script",
+      "name" : "login as user",
+      "config" : {
+        "output" : {
+          "code" : [
+            "",
+            "ivy.session.loginSessionUser(\"user\", \"user\");"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 664, "y" : 160 }
+      },
+      "connect" : { "id" : "f34", "to" : "f33" }
+    }, {
+      "id" : "f33",
+      "type" : "SubProcessCall",
+      "name" : "createTasks(CreateData)",
+      "config" : {
+        "processCall" : "ch/ivyteam/ivy/cluster/Create:createTasks(ch.ivyteam.ivy.cluster.CreateData)",
+        "call" : {
+          "params" : [
+            { "name" : "data", "type" : "ch.ivyteam.ivy.cluster.CreateData" }
+          ],
+          "map" : {
+            "param.data.countOfTasks" : "1",
+            "param.data.sqlQuery" : "\"\""
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 664, "y" : 248 }
+      },
+      "connect" : { "id" : "f42", "to" : "f40" }
+    }, {
+      "id" : "f37",
+      "type" : "RequestStart",
+      "name" : "executeSqlQuery.ivp",
+      "config" : {
+        "callSignature" : "executeSqlQuery",
+        "outLink" : "executeSqlQuery.ivp"
+      },
+      "visual" : {
+        "at" : { "x" : 488, "y" : 88 },
+        "labelOffset" : { "x" : 89, "y" : 9 }
+      },
+      "connect" : { "id" : "f49", "to" : "f38" }
+    }, {
+      "id" : "f44",
+      "type" : "RequestStart",
+      "name" : "executeIvyScript.ivp",
+      "config" : {
+        "callSignature" : "executeIvyScript",
+        "outLink" : "executeIvyScript.ivp"
+      },
+      "visual" : {
+        "at" : { "x" : 312, "y" : 88 },
+        "labelOffset" : { "x" : 89, "y" : 9 }
+      },
+      "connect" : { "id" : "f48", "to" : "f47" }
+    }, {
+      "id" : "f45",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 312, "y" : 264 }
+      }
+    }, {
+      "id" : "f47",
+      "type" : "Script",
+      "config" : {
+        "output" : {
+          "code" : [
+            "String str = \"start\";",
+            "for (int i = 0; i < 2000; i++) {",
+            "  str = str + i.toString();",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 312, "y" : 176 }
+      },
+      "connect" : { "id" : "f46", "to" : "f45" }
+    }, {
+      "id" : "f39",
+      "type" : "Script",
+      "name" : "invalidate app cache",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import ch.ivyteam.ivy.data.cache.IDataCacheGroup;",
+            "",
+            "IDataCacheGroup group = ivy.datacache.getAppCache().getGroup(in.cacheGroup);",
+            "if (#group != null)",
+            "{",
+            "  ivy.datacache.getAppCache().invalidateGroup(group);",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 488, "y" : 232 }
+      },
+      "connect" : { "id" : "f50", "to" : "f43" }
+    }, {
+      "id" : "f43",
+      "type" : "Database",
+      "name" : "execute db query",
+      "config" : {
+        "cache" : {
+          "mode" : "CACHE",
+          "scope" : "APPLICATION",
+          "group" : {
+            "name" : "in.cacheGroup",
+            "invalidation" : "NONE",
+            "time" : ""
+          },
+          "entry" : {
+            "name" : "\"bubu\"",
+            "invalidation" : "NONE",
+            "time" : ""
+          }
+        },
+        "query" : {
+          "kind" : "any",
+          "stmt" : [
+            "SELECT *",
+            "FROM   INFORMATION_SCHEMA.SYSTEM_TABLES"
+          ]
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.recordset" : "recordset"
+          }
+        },
+        "dbUrl" : "AnyIvySystemDb"
+      },
+      "visual" : {
+        "at" : { "x" : 488, "y" : 312 }
+      },
+      "connect" : { "id" : "f52", "to" : "f51" }
+    }, {
+      "id" : "f38",
+      "type" : "Script",
+      "config" : {
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.cacheGroup" : "\"ch.ivyteam.ivy.cluster.performance-\" + (ivy.case.getId() % 20)"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 488, "y" : 152 }
+      },
+      "connect" : { "id" : "f41", "to" : "f39" }
+    }, {
+      "id" : "f51",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 488, "y" : 384 }
+      }
+    }, {
+      "id" : "f40",
+      "type" : "TaskEnd",
+      "visual" : {
+        "at" : { "x" : 664, "y" : 336 }
+      }
+    } ]
+}
