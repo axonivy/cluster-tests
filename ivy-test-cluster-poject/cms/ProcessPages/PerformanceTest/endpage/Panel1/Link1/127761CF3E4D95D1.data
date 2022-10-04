@@ -1,3 +1,0 @@
-<SCRIPT LANGUAGE="JavaScript">
-setTimeout("document.location.href = '<%=ivy.html.startref("ch/ivyteam/ivy/cluster/PerformanceTest/systemTasks.ivp")%>?repeated=true&startedTime=<%=in.startedTime.toString()%>'",0);
-</SCRIPT>

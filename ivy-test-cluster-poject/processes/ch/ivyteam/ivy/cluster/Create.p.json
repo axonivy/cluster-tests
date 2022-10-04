@@ -1,0 +1,143 @@
+{
+  "format" : "9.4.21",
+  "id" : "127755F12451D4E4",
+  "kind" : "CALLABLE_SUB",
+  "config" : {
+    "data" : "ch.ivyteam.ivy.cluster.CreateData"
+  },
+  "elements" : [ {
+      "id" : "f0",
+      "type" : "CallSubStart",
+      "name" : "createTasks",
+      "config" : {
+        "callSignature" : "createTasks",
+        "input" : {
+          "params" : [
+            { "name" : "data", "type" : "ch.ivyteam.ivy.cluster.CreateData" }
+          ],
+          "map" : {
+            "out" : "param.data",
+            "out.counter" : "0"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 64 },
+        "labelOffset" : { "x" : 56, "y" : 20 }
+      },
+      "connect" : { "id" : "f9", "to" : "f6" }
+    }, {
+      "id" : "f1",
+      "type" : "CallSubEnd",
+      "visual" : {
+        "at" : { "x" : 80, "y" : 248 }
+      }
+    }, {
+      "id" : "f5",
+      "type" : "TaskSwitchGateway",
+      "name" : "create self task",
+      "config" : {
+        "outLinks" : [ "TaskA.ivp" ],
+        "tasks" : {
+          "TaskA" : {
+            "name" : "System Task <%=in1.counter%> of <%=in1.countOfTasks%>",
+            "responsible" : {
+              "role" : "SELF1"
+            },
+            "skipTasklist" : true,
+            "customFields" : [
+              { "name" : "BusinessMilestoneTimestamp", "type" : "Timestamp", "value" : "new DateTime()" },
+              { "name" : "CustomVarCharField1", "type" : "String", "value" : "\"task custom value from \" + new Date()" }
+            ]
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 296 },
+        "labelOffset" : { "x" : 64, "y" : 24 }
+      },
+      "connect" : [
+        { "id" : "f8", "to" : "f7", "condition" : "ivp==\"TaskA.ivp\"" }
+      ]
+    }, {
+      "id" : "f7",
+      "type" : "Script",
+      "name" : "counter +1",
+      "config" : {
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.counter" : "in.counter+1"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 368 }
+      },
+      "connect" : { "id" : "f4", "to" : "f20" }
+    }, {
+      "id" : "f10",
+      "type" : "Alternative",
+      "visual" : {
+        "at" : { "x" : 152, "y" : 248 }
+      },
+      "connect" : [
+        { "id" : "f3", "to" : "f5", "condition" : "in.counter < in.countOfTasks", "var" : "in1" },
+        { "id" : "f2", "to" : "f1" }
+      ]
+    }, {
+      "id" : "f17",
+      "type" : "Script",
+      "name" : "update task/case",
+      "config" : {
+        "output" : {
+          "code" : [
+            "//ivy.case.setBusinessMilestoneTimestamp(new Date());",
+            "//ivy.case.setCustomVarCharField1(\"case custom value from \" + new Date());",
+            "",
+            "//ivy.task.setBusinessMilestoneTimestamp(new Date());",
+            "//ivy.task.setCustomVarCharField1(\"task custom value from \" + new Date());"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 560 }
+      },
+      "connect" : { "id" : "f16", "to" : "f10", "via" : [ { "x" : 272, "y" : 560 }, { "x" : 272, "y" : 248 } ] }
+    }, {
+      "id" : "f20",
+      "type" : "Script",
+      "name" : "add 2 notes",
+      "config" : {
+        "output" : {
+          "code" : [
+            "for (int i = 0; i < 2; i++) {",
+            "  ivy.task.createNote(ivy.session, ",
+            "       \"Add note \" + i + \" for case \" + ivy.case.getId() ",
+            "    + \" and task \" + ivy.task.getId());",
+            "  ",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 464 }
+      },
+      "connect" : { "id" : "f18", "to" : "f17" }
+    }, {
+      "id" : "f6",
+      "type" : "Script",
+      "config" : {
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.counter" : "0"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 152, "y" : 168 }
+      },
+      "connect" : { "id" : "f11", "to" : "f10" }
+    } ]
+}

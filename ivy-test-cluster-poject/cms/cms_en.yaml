@@ -1,0 +1,20 @@
+ProcessPages:
+  EventBeanLog:
+    infoPage:
+      Caption: Info
+      Panel1:
+        Text1: "<P>\r\nTo execute this process, you have to define as parameter the name of the bean. e.g.\r\n</P>\r\n<P>\r\n..ivp?beanName=[BeanName]\r\n</P>"
+  PerformanceTest:
+    endpage:
+      Caption: ''
+      Panel1:
+        Text1: "<P>\r\n<B><FONT size=5>Last time in millis</B></FONT>\r\n</P>\r\n<P>\r\n<B><FONT color=\"#FF9933\" size=5><%=ivy.html.get(\"in.duration\")%> </B></FONT>\r\n</P>"
+    finalpage:
+      Caption: ''
+    simpleEndPage:
+      Caption: Anfrage wurde beended
+    taskcreation:
+      Caption: ''
+Project:
+  FooterText: "<P>\r\nPowered by <%=ch.ivyteam.ivy.Advisor.getAdvisor().getApplicationName()%> <%=ch.ivyteam.ivy.Advisor.getAdvisor().getVersion()%>. Copyright © 2001 - 2007 <A href=\"http://www.ivyteam.com\">ivyTeam</A>\r\n</P>"
+  HeaderText: "<H1>\r\nMy Project\r\n</H1>"
