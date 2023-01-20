@@ -1,5 +1,5 @@
 {
-  "format" : "11.1.2",
+  "format" : "11.1.6",
   "id" : "127755AEEB3C441C",
   "config" : {
     "data" : "ch.ivyteam.ivy.cluster.PerformanceTest"
@@ -45,9 +45,6 @@
       "config" : {
         "processCall" : "ch/ivyteam/ivy/cluster/Create:createTasks(ch.ivyteam.ivy.cluster.CreateData)",
         "call" : {
-          "params" : [
-            { "name" : "data", "type" : "ch.ivyteam.ivy.cluster.CreateData" }
-          ],
           "map" : {
             "param.data.countOfTasks" : "1",
             "param.data.sqlQuery" : "\"\""
