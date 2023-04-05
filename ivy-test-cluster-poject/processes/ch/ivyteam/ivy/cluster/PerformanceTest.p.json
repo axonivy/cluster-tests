@@ -1,5 +1,5 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/process/11.1.15/schema.json",
+  "$schema" : "https://json-schema.axonivy.com/process/11.1.19/schema.json",
   "id" : "127755AEEB3C441C",
   "config" : {
     "data" : "ch.ivyteam.ivy.cluster.PerformanceTest"
@@ -9,13 +9,12 @@
       "type" : "RequestStart",
       "name" : "createOneTask.ivp",
       "config" : {
-        "callSignature" : "createOneTask",
+        "signature" : "createOneTask",
         "input" : {
           "map" : {
             "out.craete.countOfTasks" : "1"
           }
-        },
-        "outLink" : "createOneTask.ivp"
+        }
       },
       "visual" : {
         "at" : { "x" : 664, "y" : 88 },
@@ -66,8 +65,7 @@
       "type" : "RequestStart",
       "name" : "executeSqlQuery.ivp",
       "config" : {
-        "callSignature" : "executeSqlQuery",
-        "outLink" : "executeSqlQuery.ivp"
+        "signature" : "executeSqlQuery"
       },
       "visual" : {
         "at" : { "x" : 488, "y" : 88 },
@@ -81,8 +79,7 @@
       "type" : "RequestStart",
       "name" : "executeIvyScript.ivp",
       "config" : {
-        "callSignature" : "executeIvyScript",
-        "outLink" : "executeIvyScript.ivp"
+        "signature" : "executeIvyScript"
       },
       "visual" : {
         "at" : { "x" : 312, "y" : 88 },
