@@ -3,6 +3,6 @@ ch.ivyteam.ivy.designer.preferences.DataClassPreferencePage\:DEFAULT_NAMESPACE=p
 ch.ivyteam.ivy.designer.preferences.editor.ProcessEditorPreferencePage\:ELEMENT_STYLE=CLASSIC
 ch.ivyteam.ivy.designer.preferences.editor.ProcessEditorPreferencePage\:useProjectSettings=true
 ch.ivyteam.ivy.project.preferences\:PRIMEFACES_VERSION=11
-ch.ivyteam.ivy.project.preferences\:PROJECT_VERSION=111000
+ch.ivyteam.ivy.project.preferences\:PROJECT_VERSION=112000
 ch.ivyteam.ivy.project.preferences\:SYNC_TEST_USERS=true
 eclipse.preferences.version=1
