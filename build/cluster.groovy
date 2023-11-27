@@ -1,5 +1,5 @@
 def pullEngineImage() {
-  sh 'docker pull axonivy/axonivy-engine:dev'
+  sh 'docker pull axonivy/axonivy-engine:nightly-11.2'
 }
 
 def start(def nodes) {
