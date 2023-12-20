@@ -12,6 +12,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.core.resources.IProject;
 
 import ch.ivyteam.ivy.environment.Ivy;
+import ch.ivyteam.ivy.project.IIvyProject;
 import ch.ivyteam.ivy.security.SecurityManagerFactory;
 
 public class ClusterLogger
@@ -43,7 +44,7 @@ public class ClusterLogger
 			@SuppressWarnings("restriction")
 			@Override
 			public String call() throws Exception {
-				IProject project = Ivy.request().getProject().getProject(); 
+				IProject project = IIvyProject.of(Ivy.request().project()).getProject(); 
 				return ClusterLogger.getContentAsString(project, beanName);
 			}
 		});
@@ -60,7 +61,7 @@ public class ClusterLogger
 			@SuppressWarnings("restriction")
 			@Override
 			public Void call() throws Exception {
-				IProject project = Ivy.request().getProject().getProject();
+				IProject project = IIvyProject.of(Ivy.request().project()).getProject(); 
 				ClusterLogger.deleteEventBeanLog(project, beanName);
 				return null;
 			}
