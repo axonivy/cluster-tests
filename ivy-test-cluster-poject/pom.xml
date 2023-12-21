@@ -18,8 +18,8 @@
         <version>${project.build.plugin.version}</version>
         <extensions>true</extensions>
         <configuration>
-          <ivyVersion>[11.2,]</ivyVersion>
           <engineListPageUrl>${engine.page.url}</engineListPageUrl>
+          <useLatestMinor>true</useLatestMinor>
         </configuration>
       </plugin>
     </plugins>
