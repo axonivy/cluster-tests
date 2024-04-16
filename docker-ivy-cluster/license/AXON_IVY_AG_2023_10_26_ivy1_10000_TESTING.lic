@@ -1,21 +1,21 @@
 [Begin Licence]
 #Licence for AxonIvy Axon Ivy Engine (Enterprise Edition)
-#Thu Nov 02 09:06:23 CET 2023
+#Tue Apr 16 12:38:44 CEST 2024
 licence.keyversion=axonivy/10000
-licence.number=XLSEE-18B8-F11B-087B
+licence.number=XLSEE-18EE-67CD-558B
 licence.type=Enterprise Edition
-licence.valid.from=2023-11-02
+licence.valid.from=2024-04-16
 licence.valid.until=2025-10-28
 licencee.individual=reto.weiss@axonivy.com
 licencee.organisation=AXON IVY AG
 product.name=Axon Ivy Engine
 product.type=Server
-public.urls=ivy1,ivy2,ivy3,ivy4
+public.urls=ivy1,ivy2,ivy3,ivy4,loadbalancer
 server.elements.limit=0
 server.nodes.limit=10
 server.sessions.limit=0
 server.users.limit=0
 [End Licence]
 [Begin Signature]
-MCwCFCF+k4a/+Py1pLOaxhtRyzf097G8AhRrl0s8XBnnZHiRU/hQmJGwa14hQw==
+MCwCFHfgaD9AzQJB/d68RgeZmEVac+dHAhQJ52ODu03WsxjbGM8qQV8SyvPaBQ==
 [End Signature]
