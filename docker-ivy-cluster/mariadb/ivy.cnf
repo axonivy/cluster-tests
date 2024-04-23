@@ -1,2 +1,3 @@
 [mariadb]
 innodb_print_all_deadlocks=on
+max_connections=210
