@@ -1,0 +1,17 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "History",
+  "namespace" : "ch.ivyteam.ivy.cluster",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "start",
+    "type" : "Number",
+    "comment" : "In millis",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "end",
+    "type" : "Number",
+    "comment" : "In millis",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

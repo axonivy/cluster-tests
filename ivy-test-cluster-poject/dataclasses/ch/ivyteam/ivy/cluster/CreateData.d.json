@@ -1,0 +1,34 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "CreateData",
+  "namespace" : "ch.ivyteam.ivy.cluster",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "repeat",
+    "type" : "Boolean",
+    "comment" : "True, if the process should repeated (after the delay)",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "runningSec",
+    "type" : "Number",
+    "comment" : "Running seconds",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "countOfTasks",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "counter",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "sqlQuery",
+    "type" : "String",
+    "comment" : "The executed sql query for each task",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "recordset",
+    "type" : "Recordset",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

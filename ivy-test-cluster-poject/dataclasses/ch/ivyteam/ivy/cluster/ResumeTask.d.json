@@ -1,0 +1,11 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "ResumeTask",
+  "namespace" : "ch.ivyteam.ivy.cluster",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "taskStartUri",
+    "type" : "String",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}

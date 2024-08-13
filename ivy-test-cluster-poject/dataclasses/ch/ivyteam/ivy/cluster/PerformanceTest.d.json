@@ -1,0 +1,40 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/11.4.0/data-class.json",
+  "simpleName" : "PerformanceTest",
+  "namespace" : "ch.ivyteam.ivy.cluster",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "craete",
+    "type" : "ch.ivyteam.ivy.cluster.CreateData",
+    "comment" : "True, if the process should repeated (after the delay)",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "history",
+    "type" : "ch.ivyteam.ivy.cluster.History",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "histories",
+    "type" : "List<ch.ivyteam.ivy.cluster.History>",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "repeated",
+    "type" : "Boolean",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "startedTime",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "duration",
+    "type" : "Number",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "cacheGroup",
+    "type" : "String",
+    "modifiers" : [ "PERSISTENT" ]
+  }, {
+    "name" : "recordset",
+    "type" : "Recordset",
+    "modifiers" : [ "PERSISTENT" ]
+  } ]
+}
