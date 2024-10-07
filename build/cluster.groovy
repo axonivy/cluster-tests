@@ -62,7 +62,7 @@ def logApacheStatus(def nodes, def name) {
 }
 
 def logIvyInfoPage(def host, def nodes, def name) {
-  logPage(host, '/ivy/system/info.jsp', nodes, "${name}-info-page")
+  logPage(host, '/ivy/system/engine-cockpit/faces/info.xhtml', nodes, "${name}-info-page")
 }
 
 def logPage(def host, def uri, def nodes, def name) {
