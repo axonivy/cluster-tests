@@ -1,4 +1,4 @@
-FROM maven:3.9.8-eclipse-temurin-21-jammy
+FROM maven:3.9.9-eclipse-temurin-21-jammy
 
 # Install docker-ce and docker-compose
 RUN apt-get update && \
