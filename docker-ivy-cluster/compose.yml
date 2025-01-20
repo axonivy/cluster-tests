@@ -1,6 +1,6 @@
 services:
   db:
-    image: mariadb:10.8.2
+    image: mariadb:11.6.2
     environment:
       MYSQL_ROOT_PASSWORD: 1234
     volumes:
