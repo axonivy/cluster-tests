@@ -1,5 +1,5 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/process/12.0.0/process.json",
+  "$schema" : "https://json-schema.axonivy.com/process/13.1.2/process.json",
   "id" : "127755F12451D4E4",
   "kind" : "CALLABLE_SUB",
   "config" : {
@@ -43,7 +43,9 @@
             "id" : "TaskA",
             "name" : "System Task <%=in1.counter%> of <%=in1.countOfTasks%>",
             "responsible" : {
-              "activator" : "SELF1"
+              "roles" : [
+                "SELF1"
+              ]
             },
             "skipTasklist" : true,
             "customFields" : [
