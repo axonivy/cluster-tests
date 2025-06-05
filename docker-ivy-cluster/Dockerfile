@@ -1,4 +1,4 @@
-FROM axonivy/axonivy-engine:dev
+FROM axonivy/axonivy-engine:nightly-13.1
 
 ADD --chown=ivy:ivy docker-ivy-cluster/ivy.yaml /ivy/configuration/ivy.yaml
 ADD --chown=ivy:ivy docker-ivy-cluster/log4j2.xml /ivy/configuration/log4j2.xml
