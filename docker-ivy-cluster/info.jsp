@@ -2,7 +2,7 @@
 <%@ page import="ch.ivyteam.ivy.cluster.restricted.IClusterNode"%>
 <%@ page import="ch.ivyteam.ivy.cluster.restricted.ClusterNodeState"%>
 <%@ page import="ch.ivyteam.ivy.cluster.restricted.ClusterNodeCommunicationState"%>
-<%@ page import="ch.ivyteam.ivy.application.IApplicationConfigurationManager"%>
+<%@ page import="ch.ivyteam.ivy.application.restricted.IApplicationConfigurationManager"%>
 <%@ page import="ch.ivyteam.ivy.application.IProcessModelVersion"%>
 <%@ page import="ch.ivyteam.ivy.application.ActivityState"%>
 <%@ page import="ch.ivyteam.ivy.application.ActivityOperationState"%>
@@ -183,8 +183,7 @@
 </tr>
 </thead>
 <%
-  IApplicationConfigurationManager apps = DiCore.getGlobalInjector().getInstance(IApplicationConfigurationManager.class);
-  for (IProcessModelVersion pmv : apps.getProcessModelVersions())
+  for (IProcessModelVersion pmv : IApplicationConfigurationManager.instance().getProcessModelVersions())
   {
 %>
 <tbody>
