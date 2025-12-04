@@ -1,7 +1,5 @@
 package ch.ivyteam.ivy.cluster.eventbean;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 import ch.ivyteam.ivy.process.eventstart.AbstractProcessStartEventBean;
 import ch.ivyteam.ivy.service.ServiceException;
 
@@ -12,20 +10,20 @@ public abstract class AbstractTestStartEventBean extends AbstractProcessStartEve
   }
 
   @Override
-  public void start(IProgressMonitor monitor) throws ServiceException {
-    super.start(monitor);
-    printStateChange();
+  public void start() throws ServiceException {
+    super.start();
+    printStateChange(true);
   }
 
   @Override
-  public void stop(IProgressMonitor monitor) throws ServiceException {
-    super.stop(monitor);
-    printStateChange();
+  public void stop() throws ServiceException {
+    super.stop();
+    printStateChange(false);
   }
 
-  private void printStateChange() {
+  private void printStateChange(boolean starting) {
     try {
-      ClusterLogger.logBeanRunningStateChange(this.getClass().getSimpleName(), isRunning());
+      ClusterLogger.logBeanRunningStateChange(this.getClass().getSimpleName(), starting);
     } catch (Exception ex) {
       throw new IllegalStateException("Test case / environment is not set up correctly.", ex);
     }
