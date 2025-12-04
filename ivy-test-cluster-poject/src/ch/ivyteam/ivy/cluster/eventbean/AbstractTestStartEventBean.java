@@ -1,7 +1,5 @@
 package ch.ivyteam.ivy.cluster.eventbean;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 import ch.ivyteam.ivy.process.eventstart.AbstractProcessStartEventBean;
 import ch.ivyteam.ivy.service.ServiceException;
 
@@ -12,14 +10,14 @@ public abstract class AbstractTestStartEventBean extends AbstractProcessStartEve
   }
 
   @Override
-  public void start(IProgressMonitor monitor) throws ServiceException {
-    super.start(monitor);
+  public void start() throws ServiceException {
+    super.start();
     printStateChange();
   }
 
   @Override
-  public void stop(IProgressMonitor monitor) throws ServiceException {
-    super.stop(monitor);
+  public void stop() throws ServiceException {
+    super.stop();
     printStateChange();
   }
 
