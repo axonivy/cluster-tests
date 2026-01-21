@@ -65,7 +65,7 @@ def testWithNodes(def cluster, def nodes)
   }
 
   docker.build('maven-build', '.')
-        .inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container ->     
+        .inside('--network=ivycluster -v /var/run/docker.sock:/var/run/docker.sock -u 1000:${DOCKER_GROUP_ID} --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1') { container ->     
     try {
       cluster.down()
       cluster.start(nodes)
