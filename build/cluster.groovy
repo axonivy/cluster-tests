@@ -42,7 +42,7 @@ def waitUntilNodeIsUp(def node) {
 def waitUntilHostIsUp(def host) {
   timeout(5) {
     waitUntil {
-      def r = sh script: "wget -q http://${host}:8080/ivy/system -O /dev/null", returnStatus: true
+      def r = sh script: "curl -fs http://${host}:8080/ivy/system > /dev/null", returnStatus: true
       return (r == 0);
     }
   }
@@ -67,7 +67,7 @@ def logIvyInfoPage(def host, def nodes, def name) {
 
 def logPage(def host, def uri, def nodes, def name) {
   sh "mkdir -p nodes${nodes}"
-  sh "wget -q http://${host}:8080${uri} -O nodes${nodes}/${name}-${host}.html"
+  sh "curl -s http://${host}:8080${uri} -o nodes${nodes}/${name}-${host}.html"
 }
 
 def collectDockerLogs(def nodes) {
