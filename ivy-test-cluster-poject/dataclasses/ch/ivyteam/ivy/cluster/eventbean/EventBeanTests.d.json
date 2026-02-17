@@ -1,15 +1,10 @@
 {
-  "$schema" : "https://json-schema.axonivy.com/data-class/12.0.0/data-class.json",
+  "$schema" : "https://json-schema.axonivy.com/14.0-dev/project/data-class.json",
   "simpleName" : "EventBeanTests",
   "namespace" : "ch.ivyteam.ivy.cluster.eventbean",
-  "isBusinessCaseData" : false,
   "fields" : [ {
-    "name" : "beanName",
-    "type" : "String",
-    "modifiers" : [ "PERSISTENT" ]
+    "name" : "beanName"
   }, {
-    "name" : "output",
-    "type" : "String",
-    "modifiers" : [ "PERSISTENT" ]
+    "name" : "output"
   } ]
 }
