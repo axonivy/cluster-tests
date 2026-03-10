@@ -1,4 +1,4 @@
-FROM maven:3.9.12-eclipse-temurin-25
+FROM maven:3.9.13-eclipse-temurin-25
 
 # Install docker-ce and docker-compose
 RUN apt-get update && \
