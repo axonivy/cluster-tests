@@ -7,7 +7,9 @@ services:
      - "./mariadb/ivy.cnf:/etc/mysql/conf.d/ivy.cnf"
 
   loadbalancer:
-    image: httpd:2.4
+    build:
+      context: .
+      dockerfile: Dockerfile.apache
     user: root
     ports:
      - 9080:80
