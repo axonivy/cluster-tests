@@ -41,8 +41,7 @@ pipeline {
         script {
           def cluster = load 'build/cluster.groovy'
           try {
-            for(nodes=4; nodes > 0; nodes--)
-            {
+            for (def nodes = 4; nodes > 0; nodes--) {
               testWithNodes(cluster, nodes);
             }
           } finally {
@@ -56,8 +55,7 @@ pipeline {
   }
 }
 
-def testWithNodes(def cluster, def nodes)
-{
+def testWithNodes(def cluster, def nodes) {
   try {
     sh 'docker network create ivycluster'
   } catch (Exception ex) {

@@ -53,8 +53,7 @@ pipeline {
   }
 }
 
-def test(def cluster)
-{
+def test(def cluster) {
   try {
     sh 'docker network create ivycluster'
   } catch (Exception ex) {
