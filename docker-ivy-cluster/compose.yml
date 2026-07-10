@@ -13,6 +13,9 @@ services:
     user: root
     ports:
      - 9080:80
+    volumes:
+     - "./apache-conf/apache-host.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf:ro"
+     - "./apache-conf/members.conf:/usr/local/apache2/conf/extra/members.conf:ro"
 
   ivy1:
     image: axonivy-engine-cluster-test:latest
