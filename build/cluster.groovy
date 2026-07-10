@@ -9,23 +9,23 @@ def start(def nodes) {
     services += " ivy"+node
   }
   sh "cp docker-ivy-cluster/apache-conf/${nodes}-members.conf docker-ivy-cluster/apache-conf/members.conf"
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml up -d $services"
+  sh "docker compose -f docker-ivy-cluster/compose.yml up -d $services"
 }
 
 def stop() {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml stop"
+  sh "docker compose -f docker-ivy-cluster/compose.yml stop"
 }
 
 def stopNode(def node) {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml stop ivy${node}"
+  sh "docker compose -f docker-ivy-cluster/compose.yml stop ivy${node}"
 }
 
 def startNode(def node) {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml start ivy${node}"
+  sh "docker compose -f docker-ivy-cluster/compose.yml start ivy${node}"
 }
 
 def down() {
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml down -v --rmi local"
+  sh "docker compose -f docker-ivy-cluster/compose.yml down -v --rmi local"
 }
 
 def waitUntilClusterIsUp(def nodes) {
@@ -81,7 +81,7 @@ def collectDockerLogs(def nodes) {
 
 def collectDockerLog(def name, def nodes) {
   sh "mkdir -p nodes${nodes}"
-  sh "docker-compose -f docker-ivy-cluster/docker-compose.yml logs ${name} > nodes${nodes}/docker-${name}.log"
+  sh "docker compose -f docker-ivy-cluster/compose.yml logs ${name} > nodes${nodes}/docker-${name}.log"
 }
 
 def createPerformanceReport() {
