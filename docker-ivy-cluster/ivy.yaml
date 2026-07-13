@@ -1,10 +1,8 @@
 SystemDb:
-  Driver: org.mariadb.jdbc.Driver
-  Url: jdbc:mariadb://db:3306/AxonIvySystemDatabase
-  UserName: root
+  Url: jdbc:postgresql://postgres:5432/AxonIvySystemDatabase
+  UserName: admin
   Password: 1234
-  Autoconvert: false
 Administrators:
   admin:
     Password: admin
-WebServer.IvyContextName: "ivy"
+WebServer.IvyContextName: ivy
