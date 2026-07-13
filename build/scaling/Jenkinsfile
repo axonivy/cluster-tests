@@ -41,7 +41,7 @@ pipeline {
         script {
           def cluster = load 'build/cluster.groovy'
           try {
-            for(nodes=4; nodes > 0; nodes--) {
+            for(def nodes = 4; nodes > 0; nodes--) {
               testWithNodes(cluster, nodes);
             }
           } finally {
