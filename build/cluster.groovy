@@ -1,6 +1,6 @@
 def start(def nodes) {
   def services = "db loadbalancer"
-  for (node = 1; node <= nodes; node++) {
+  for (def node = 1; node <= nodes; node++) {
     services += " ivy" + node
   }
   sh "cp docker-ivy-cluster/apache-conf/${nodes}-members.conf docker-ivy-cluster/apache-conf/members.conf"
@@ -120,7 +120,7 @@ def readStandardResults(def standardResults) {
         records = [[], []]
         plots[name] = records            
       }
-      if (! records[0].contains(nodes)) {
+      if (!records[0].contains(nodes)) {
         records[0].add(nodes);
         records[1].add(average);
       }
