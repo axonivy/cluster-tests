@@ -3,8 +3,7 @@ def start(def nodes) {
   for (node = 1; node <= nodes; node++) {
     services += " ivy" + node
   }
-  sh "cp docker-ivy-cluster/apache-conf/${nodes}-members.conf docker-ivy-cluster/apache-conf/members.conf"
-  sh "docker compose -f docker-ivy-cluster/compose.yml up -d $services"
+  sh "docker compose -f docker-ivy-cluster/compose.yml -e NODE_COUNT=${nodes} up -d $services"
 }
 
 def stop() {
