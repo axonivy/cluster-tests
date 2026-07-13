@@ -53,8 +53,7 @@ pipeline {
   }
 }
 
-def test(def cluster)
-{
+def test(def cluster) {
   try {
     sh 'docker network create ivycluster'
   } catch (Exception ex) {
@@ -79,15 +78,14 @@ def test(def cluster)
           cluster.waitUntilNodeIsUp(2);
           sleep 10;
         }
-      }
-      finally {
+      } finally {
         sh "docker logs ${jmeter.id} > nodes2/docker-jmeter.log 2>&1"
         jmeter.stop();        
       }      
     } catch (Exception ex) {
         echo "Caught: ${ex}"
         currentBuild.result = 'FAILURE'
-    } finally {             
+    } finally {
       try {
         cluster.logStatus(2, 'before-stop')
         cluster.stop()
@@ -96,7 +94,7 @@ def test(def cluster)
         cluster.down()
       }
     }
-  }    
+  }
   sh 'docker network rm ivycluster'
 }
 
