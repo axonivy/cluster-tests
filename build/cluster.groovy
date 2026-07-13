@@ -3,7 +3,7 @@ def start(def nodes) {
   for (node = 1; node <= nodes; node++) {
     services += " ivy" + node
   }
-  sh "docker compose -f docker-ivy-cluster/compose.yml -e NODE_COUNT=${nodes} up -d $services"
+  sh "export NODE_COUNT=${nodes} && docker compose -f docker-ivy-cluster/compose.yml up -d $services"
 }
 
 def stop() {
