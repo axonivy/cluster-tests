@@ -1,10 +1,9 @@
 services:
   db:
-    image: mariadb:11.8.8
+    image: postgres:18
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-    volumes:
-     - "./mariadb/ivy.cnf:/etc/mysql/conf.d/ivy.cnf"
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
 
   loadbalancer:
     build: apache-conf
