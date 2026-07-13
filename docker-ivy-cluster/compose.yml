@@ -7,13 +7,13 @@ services:
      - ./mariadb/ivy.cnf:/etc/mysql/conf.d/ivy.cnf
 
   loadbalancer:
-    image: bitnami/apache
+    build: apache-conf
     user: root
     ports:
      - 9080:8080
     volumes:
-     - ./apache-conf/apache-host.conf:/opt/bitnami/apache/conf/vhosts/apache-host.conf:ro
-     - ./apache-conf/members.conf:/opt/bitnami/apache/conf/vhosts/members.conf:ro
+     - ./apache-conf/apache-host.conf:/usr/local/apache2/conf/vhost.conf:ro
+     - ./apache-conf/members.conf:/usr/local/apache2/conf/members.conf:ro
 
   ivy1:
     image: axonivy-engine-cluster-test:latest
