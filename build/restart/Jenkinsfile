@@ -23,7 +23,6 @@ pipeline {
             }
           }
           archiveArtifacts '**/target/deploy/*.zip'
-          docker.build('axonivy-engine-cluster-test', '-f docker-ivy-cluster/Dockerfile .')
         }
       }
     }
@@ -59,6 +58,7 @@ def test(def cluster)
       cluster.down()
       cluster.start(2)
       cluster.waitUntilClusterIsUp(2)
+      cluster.deploy()
       cluster.logStatus(2, 'after-start')
       def jmeter = mvnImage.run("--network=ivycluster -v ${env.WORKSPACE}:/tmp/workspace --group-add docker --sysctl net.ipv4.tcp_tw_reuse=1 -u 1000:1000", 
                                 '/bin/bash -c "cd /tmp/workspace/test-cluster-performance; mvn clean verify -Djmeter.server=ivy1 -Djmeter.port=8080 -Djmeter.nodes=2 -Djmeter.duration=120"')
@@ -71,15 +71,14 @@ def test(def cluster)
           cluster.waitUntilNodeIsUp(2);
           sleep 10;
         }
-      }
-      finally {
+      } finally {
         sh "docker logs ${jmeter.id} > nodes2/docker-jmeter.log 2>&1"
         jmeter.stop();        
       }      
     } catch (Exception ex) {
         echo "Caught: ${ex}"
         currentBuild.result = 'FAILURE'
-    } finally {             
+    } finally {
       try {
         cluster.logStatus(2, 'before-stop')
         cluster.stop()

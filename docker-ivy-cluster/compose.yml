@@ -15,7 +15,12 @@ services:
      - ./apache-conf/members.conf:/usr/local/apache2/conf/members.conf:ro
 
   ivy1:
-    image: axonivy-engine-cluster-test:latest
+    image: axonivy/axonivy-engine:dev
+    volumes:
+      - ./apps:/ivy/applications
+      - ./ivy.yaml:/ivy/configuration/ivy.yaml
+      - ./log4j2.xml:/ivy/configuration/log4j2.xml
+      - ./license.lic:/ivy/configuration/license.lic
     ports:
      - 9081:8080
     deploy:
@@ -24,7 +29,12 @@ services:
           cpus: '2' 
 
   ivy2:
-    image: axonivy-engine-cluster-test:latest
+    image: axonivy/axonivy-engine:dev
+    volumes:
+      - ./apps:/ivy/applications
+      - ./ivy.yaml:/ivy/configuration/ivy.yaml
+      - ./log4j2.xml:/ivy/configuration/log4j2.xml
+      - ./license.lic:/ivy/configuration/license.lic
     ports:
      - 9082:8080
     deploy:
@@ -33,7 +43,12 @@ services:
           cpus: '2' 
 
   ivy3:
-    image: axonivy-engine-cluster-test:latest
+    image: axonivy/axonivy-engine:dev
+    volumes:
+      - ./apps:/ivy/applications
+      - ./ivy.yaml:/ivy/configuration/ivy.yaml
+      - ./log4j2.xml:/ivy/configuration/log4j2.xml
+      - ./license.lic:/ivy/configuration/license.lic
     ports:
      - 9083:8080
     deploy:
@@ -42,7 +57,12 @@ services:
           cpus: '2' 
 
   ivy4:
-    image: axonivy-engine-cluster-test:latest
+    image: axonivy/axonivy-engine:dev
+    volumes:
+      - ./apps:/ivy/applications
+      - ./ivy.yaml:/ivy/configuration/ivy.yaml
+      - ./log4j2.xml:/ivy/configuration/log4j2.xml
+      - ./license.lic:/ivy/configuration/license.lic
     ports:
      - 9084:8080
     deploy:
