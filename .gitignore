@@ -1,6 +1,7 @@
 /.metadata/
 /.ivy-engine
 /build/docker-ivy-cluster/applications/**/*.zip
+docker-ivy-cluster/apps/
 
 # general
 Thumbs.db

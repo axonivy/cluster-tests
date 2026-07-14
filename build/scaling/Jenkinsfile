@@ -23,7 +23,6 @@ pipeline {
             }
           }
           archiveArtifacts '**/target/deploy/*.zip'
-          docker.build('axonivy-engine-cluster-test', '-f docker-ivy-cluster/Dockerfile .')
         }
       }
     }
@@ -33,10 +32,10 @@ pipeline {
         script {
           def cluster = load 'build/cluster.groovy'
           try {
-            for(nodes=4; nodes > 0; nodes--)
-            {
-              testWithNodes(cluster, nodes);
-            }
+            testWithNodes(cluster, 4)
+            testWithNodes(cluster, 3)
+            testWithNodes(cluster, 2)
+            testWithNodes(cluster, 1)
           } finally {
             archiveArtifacts 'nodes*/**'
             cluster.createPerformanceReport()
@@ -48,8 +47,7 @@ pipeline {
   }
 }
 
-def testWithNodes(def cluster, def nodes)
-{
+def testWithNodes(def cluster, def nodes) {
   try {
     sh 'docker network create ivycluster'
   } catch (Exception ex) {
@@ -62,11 +60,12 @@ def testWithNodes(def cluster, def nodes)
       cluster.down()
       cluster.start(nodes)
       cluster.waitUntilClusterIsUp(nodes)
+      cluster.deploy()
       cluster.logStatus(nodes, 'after-start')
       dir ('test-cluster-performance') {
         maven cmd: "clean verify -Djmeter.server=loadbalancer -Djmeter.port=8080 -Djmeter.nodes=$nodes"
       }
-    } finally {             
+    } finally {
       try {
         cluster.logStatus(nodes, 'before-stop')
         cluster.stop()
@@ -74,7 +73,7 @@ def testWithNodes(def cluster, def nodes)
         cluster.collectDockerLogs(nodes)
         cluster.down()
       }
-    }    
+    }
   }
   sh 'docker network rm ivycluster'
 }
