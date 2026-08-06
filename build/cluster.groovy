@@ -4,6 +4,7 @@ def start(def nodes) {
     services += " ivy"+node
   }
   sh "cp docker-ivy-cluster/apache-conf/${nodes}-members.conf docker-ivy-cluster/apache-conf/members.conf"
+  sh "rm -rf docker-ivy-cluster/apps"
   sh "mkdir docker-ivy-cluster/apps"
   sh "docker compose -f docker-ivy-cluster/compose.yml pull"
   sh "docker compose -f docker-ivy-cluster/compose.yml up -d $services"
