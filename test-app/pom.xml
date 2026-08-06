@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>../ivy-test-cluster-poject</module>
+		<module>../ivy-test-cluster-project</module>
 	</modules>
 
 	<build>

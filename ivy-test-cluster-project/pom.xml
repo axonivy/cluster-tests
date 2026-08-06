@@ -9,7 +9,7 @@
     <relativePath></relativePath>
   </parent>
   <groupId>ch.ivyteam.ivy.test.cluster</groupId>
-  <artifactId>ivy-test-cluster-poject</artifactId>
+  <artifactId>ivy-test-cluster-project</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>iar</packaging>
   <dependencies>
