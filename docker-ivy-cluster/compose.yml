@@ -53,5 +53,5 @@ services:
           
 networks:
   default:
-    external:
-      name: ivycluster
+    name: ivycluster
+    external: true
