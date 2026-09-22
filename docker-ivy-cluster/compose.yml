@@ -16,7 +16,7 @@ services:
      - ./apache-conf/members.conf:/usr/local/apache2/conf/members.conf:ro
 
   ivy1:
-    image: axonivy/axonivy-engine:dev
+    image: axonivy/axonivy-engine:nightly-14.0
     volumes:
       - ./apps:/ivy/applications
       - ./ivy.yaml:/ivy/configuration/ivy.yaml
@@ -30,7 +30,7 @@ services:
           cpus: '2' 
 
   ivy2:
-    image: axonivy/axonivy-engine:dev
+    image: axonivy/axonivy-engine:nightly-14.0
     volumes:
       - ./apps:/ivy/applications
       - ./ivy.yaml:/ivy/configuration/ivy.yaml
@@ -44,7 +44,7 @@ services:
           cpus: '2' 
 
   ivy3:
-    image: axonivy/axonivy-engine:dev
+    image: axonivy/axonivy-engine:nightly-14.0
     volumes:
       - ./apps:/ivy/applications
       - ./ivy.yaml:/ivy/configuration/ivy.yaml
@@ -58,7 +58,7 @@ services:
           cpus: '2' 
 
   ivy4:
-    image: axonivy/axonivy-engine:dev
+    image: axonivy/axonivy-engine:nightly-14.0
     volumes:
       - ./apps:/ivy/applications
       - ./ivy.yaml:/ivy/configuration/ivy.yaml
